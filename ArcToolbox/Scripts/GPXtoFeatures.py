@@ -1,7 +1,7 @@
 '''
 Tool Name:  GPX to Features
 Source Name: GPXtoFeatures.py
-Version: ArcGIS 10.1.1
+Version: ArcGIS 10.1-env.1
 Author: ESRI
 
 Required Arguments:
