@@ -1,7 +1,7 @@
 '''
 Tool Name:  GPX to Features
 Source Name: GPXtoFeatures.py
-Version: ArcGIS 10.1
+Version: ArcGIS 10.1.1
 Author: ESRI
 
 Required Arguments:
@@ -12,6 +12,9 @@ Description:
          This tool takes a .GPX file (a common output from handheld GPS receivers). The tool will parse all points
          which particpate as either a waypoint (WPT) or inside a track as a track point (TRKPT). The output feature class
          will create fields for the shape, time, and elevation and description.
+
+Modified by Matt.Wilkie@gov.yk.ca for Environment Yukon, 2013-May-16
+  * add X and Y as attribute fields in addition to same as geometry fields.
 '''
 
 # Imports
@@ -67,12 +70,14 @@ def gpxToPoints(gpxfile, outFC):
                                    ('Type', '|S'),
                                    ('DateTimeS', '|S'),
                                    ('Elevation', numpy.float),
+                                   ('X', numpy.float),
+                                   ('Y', numpy.float),
                                    ]))
     
     arcpy.da.ExtendTable(outFC, "OID@", inarray, "intfield")
 
 
-    rowsDA = da.InsertCursor(outFC, ['Name', 'Descript', 'Type', 'DateTimeS', 'Elevation', 'SHAPE@X', 'SHAPE@Y', 'SHAPE@Z'])
+    rowsDA = da.InsertCursor(outFC, ['Name', 'Descript', 'Type', 'DateTimeS', 'Elevation', 'X', 'Y', 'SHAPE@X', 'SHAPE@Y', 'SHAPE@Z'])
 
 
     # Loop over each point in the tree and put the information inside a new row
@@ -80,7 +85,7 @@ def gpxToPoints(gpxfile, outFC):
     for index, trkPoint in enumerate(GeneratePointFromXML(tree)):
         if trkPoint.asPoint() is not None:
             rowsDA.insertRow([trkPoint.name, trkPoint.desc, trkPoint.gpxtype, trkPoint.t,
-                              trkPoint.z, trkPoint.x, trkPoint.y, trkPoint.z])
+                              trkPoint.z, trkPoint.x, trkPoint.y, trkPoint.x, trkPoint.y, trkPoint.z])
         else:
             badPt +=1
 
