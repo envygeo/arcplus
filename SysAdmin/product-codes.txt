@@ -1,6 +1,3 @@
-:: The following are the product codes for ArcGIS products:
-:: Product Codes for most Esri setups can be found in the setup.ini file delivered with the other installation files.
-
 ArcGIS 8.2
 ArcGIS Desktop {A149DEA2-1D5B-11D5-9F76-00C04F6BC7A1}
 ArcGIS ArcObjects Developer Kit {52069752-B5E9-11D5-8110-00C04FA070E5}
