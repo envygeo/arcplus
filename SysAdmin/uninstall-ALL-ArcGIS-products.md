@@ -4,6 +4,10 @@ Uninstall ArcGIS products using the Windows Installer `msiexec`, feeding it a te
 
 Will not work for programs like ArcPad which don't use msi to install in the first place.  
 
+## Install
+Download [uninstall-ALL-ArcGIS-products.bat](https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.bat) and save somewhere handy. Also save the [product list](https://github.com/maphew/arcplus/blob/master/SysAdmin/product-codes.txt), or make your own.
+
+
 ## Usage  
     uninstall-ALL-ArcGIS-products product-codes.txt
     uninstall-ALL-ArcGIS-products product-codes.txt /silent
@@ -13,7 +17,7 @@ Product codes were taken from [Esri KB 28709 - Silently uninstall ArcGIS product
 
 The list in that page is not complete, it's missing ArcPad and maybe others. Product Codes for most Esri setups can be found in the setup.ini file delivered with the other installation files.
 
-Syntax of **product-codes.txt**:
+### Syntax of *product-codes.txt*
 
     Product Name {a1a1a1a-a1a1a-a1a1a...}
     
