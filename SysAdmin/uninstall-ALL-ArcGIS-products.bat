@@ -1,4 +1,8 @@
 @echo off
+:: Homepage:  https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.md
+:: Copyright 2013 Environment Yukon, License: MIT/X (open source)
+:: Author:  Matt.Wilkie@gov.yk.ca
+::
 set _product_codes=%1
 echo. ---------------------------------------------------------------------------
 echo.
