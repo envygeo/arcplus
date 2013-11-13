@@ -33,32 +33,6 @@ goto :eof
   %SystemRoot%\System32\msiexec.exe /x %1 /qn /norestart /l*+ %temp%\%~n0-%COMPUTERNAME%.log %_opt%
   goto :eof
 
-
-:: ---------------------------------------------------------------------------
-:: Product codes are from 
-::  http://support.esri.com/en/knowledgebase/techarticles/detail/28709
-::
-:: The list above is not complete, it's missing ArcPad and maybe others.
-:: Product Codes for most Esri setups can be found in the setup.ini file delivered with 
-:: the other installation files.
-::
-:: Syntax of "product-codes.txt":
-::
-::    Product Name {a1a1a1a-a1a1a-a1a1a...}
-::
-::    ArcGIS 8.2
-::    ArcGIS Desktop {A149DEA2-1D5B-11D5-9F76-00C04F6BC7A1}
-::    ArcGIS ArcObjects Developer Kit {52069752-B5E9-11D5-8110-00C04FA070E5}
-::    ArcGIS Tutorial Data {440A069B-9016-11D4-80CB-00C04FA070E5}
-::    ...etc.
-::
-:: -----
-:: An alternate approach is to retrieve dynamically with (be patient, takes a long time):
-::
-::  wmic product where "Name like '%ArcGIS%'" ^
-::    get Name, IdentifyingNumber, Version 
-::
-
 :from_file
   :: Parse product name and id code from Product-Codes.txt
   :: http://ss64.com/nt/for_f.html
