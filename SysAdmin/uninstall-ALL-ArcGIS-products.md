@@ -5,7 +5,8 @@ Uninstall ArcGIS products using the Windows Installer `msiexec`, feeding it a te
 Will not work for programs like ArcPad which don't use msi to install in the first place.  
 
 ## Install
-Download [uninstall-ALL-ArcGIS-products.bat](https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.bat) and save somewhere handy. Also save the [product list](https://github.com/maphew/arcplus/blob/master/SysAdmin/product-codes.txt), or make your own.
+1. Download [uninstall-ALL-ArcGIS-products.bat](https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.bat) and save somewhere handy. 
+2. Ditto for save the [product list](https://github.com/maphew/arcplus/blob/master/SysAdmin/product-codes.txt) *(last updated 2014-May-09)*, or make your own.
 
 
 ## Usage  
@@ -15,7 +16,7 @@ Download [uninstall-ALL-ArcGIS-products.bat](https://github.com/maphew/arcplus/b
 ---------
 Product codes were taken from [Esri KB 28709 - Silently uninstall ArcGIS products](http://support.esri.com/en/knowledgebase/techarticles/detail/28709) *(Last Modified: 11/2/2012)*
 
-The list in that page is not complete, it's missing ArcPad and maybe others. Product Codes for most Esri setups can be found in the setup.ini file delivered with the other installation files.
+The list in that page is not complete. Product Codes for most Esri setups can be found in the setup.ini file delivered with the other installation files. (Please feel free to issue a pull request if you find product codes we're missing here.)
 
 ### Syntax of *product-codes.txt*
 
@@ -31,7 +32,7 @@ The list in that page is not complete, it's missing ArcPad and maybe others. Pro
 -----
 ### Notes
 
-An alternate approach, not used here, is to retrieve the product list dynamically from the local machine with the below (be patient, takes a very long time, appearing frozen, but isn't).
+An alternate approach for uninstalling, not used here, is to retrieve the product list dynamically from the local machine with [`wmic`](http://technet.microsoft.com/en-us/library/bb742610.aspx) (be patient, takes a very long time, appearing frozen, but isn't).
 
 	wmic product where "Name like '%ArcGIS%'" ^
 	get Name, IdentifyingNumber, Version 
