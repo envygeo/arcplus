@@ -1,7 +1,7 @@
 '''
 Tool Name:  GPX to Features
 Source Name: GPXtoFeatures.py
-Version: ArcGIS 10.1-env.1
+Version: ArcGIS 10.1-env.2
 Author: ESRI
 
 Required Arguments:
@@ -47,7 +47,7 @@ def gpxToPoints(gpxfile, outFC):
     # Inspection of the GPX file will yield and set the appropraite namespace. If 1.0 or 1.1
     # is not found, empty output will be generated
     #
-    for TRKorWPT in ['wpt', 'trk']:
+    for TRKorWPT in ['wpt', 'trk', 'rte']:   
         if tree.findall(TOPOGRAFIX_NS10 + TRKorWPT):
             TOPOGRAFIX_NS = TOPOGRAFIX_NS10
         elif tree.findall(TOPOGRAFIX_NS11 + TRKorWPT):
@@ -68,7 +68,9 @@ def gpxToPoints(gpxfile, outFC):
                                    ('Name', '|S'),
                                    ('Descript', '|S'),
                                    ('Type', '|S'),
-                                   ('DateTimeS', '|S'),
+                                   ('Comment', '|S'),
+                                   ('Symbol', '|S'),
+                                   ('DateTimeS', '|S'),                                   
                                    ('Elevation', numpy.float),
                                    ('X', numpy.float),
                                    ('Y', numpy.float),
@@ -77,15 +79,15 @@ def gpxToPoints(gpxfile, outFC):
     arcpy.da.ExtendTable(outFC, "OID@", inarray, "intfield")
 
 
-    rowsDA = da.InsertCursor(outFC, ['Name', 'Descript', 'Type', 'DateTimeS', 'Elevation', 'X', 'Y', 'SHAPE@X', 'SHAPE@Y', 'SHAPE@Z'])
+    rowsDA = da.InsertCursor(outFC, ['Name', 'Descript', 'Type', 'Comment', 'Symbol', 'DateTimeS', 'Elevation', 'X', 'Y', 'SHAPE@X', 'SHAPE@Y', 'SHAPE@Z'])
 
 
     # Loop over each point in the tree and put the information inside a new row
     #
     for index, trkPoint in enumerate(GeneratePointFromXML(tree)):
         if trkPoint.asPoint() is not None:
-            rowsDA.insertRow([trkPoint.name, trkPoint.desc, trkPoint.gpxtype, trkPoint.t,
-                              trkPoint.z, trkPoint.x, trkPoint.y, trkPoint.x, trkPoint.y, trkPoint.z])
+            rowsDA.insertRow([trkPoint.name, trkPoint.desc, trkPoint.gpxtype, trkPoint.cmt, trkPoint.sym, 
+                              trkPoint.t, trkPoint.z, trkPoint.x, trkPoint.y, trkPoint.z])
         else:
             badPt +=1
 
@@ -121,6 +123,8 @@ class classGPXPoint(object):
 
     name = ''
     desc = ''
+    cmt = ''
+    sym = ''
     gpxtype = 'WPT'
     x = None
     y = None
@@ -128,9 +132,11 @@ class classGPXPoint(object):
     t = ''
 
 
-    def __init__(self, node, gpxtype, name, desc):
+    def __init__(self, node, gpxtype, name, desc, cmt, sym):
         self.name = name
         self.desc = desc
+        self.cmt = cmt
+        self.sym = sym
         self.gpxtype = gpxtype
         self.y = node.attrib.get('lat')
         self.x = node.attrib.get('lon')
@@ -161,16 +167,23 @@ def GeneratePointFromXML(tree):
     def _getNameDesc(node):
         name = node.find(TOPOGRAFIX_NS + 'name').text or '' if node.find(TOPOGRAFIX_NS + 'name') is not None else ''
         desc = node.find(TOPOGRAFIX_NS + 'desc').text or '' if node.find(TOPOGRAFIX_NS + 'desc') is not None else ''
-        return name, desc
+        cmt = node.find(TOPOGRAFIX_NS + 'cmt').text or '' if node.find(TOPOGRAFIX_NS + 'cmt') is not None else ''
+        sym = node.find(TOPOGRAFIX_NS + 'sym').text or '' if node.find(TOPOGRAFIX_NS + 'sym') is not None else ''
+        return name, desc, cmt, sym
 
     for node in tree.findall(TOPOGRAFIX_NS + 'trk'):
-        name, desc = _getNameDesc(node)
+        name, desc, cmt, sym = _getNameDesc(node)
         for node in node.findall(TOPOGRAFIX_NS + 'trkpt') :
-            yield (classGPXPoint(node, 'TRKPT', name, desc))
+            yield (classGPXPoint(node, 'TRKPT', name, desc, cmt, sym))
+         
+    for node in tree.findall(TOPOGRAFIX_NS + 'rte'):
+        name, desc, cmt, sym = _getNameDesc(node)
+        for node in node.findall(TOPOGRAFIX_NS + 'rtept') :
+            yield (classGPXPoint(node, 'RTEPT', name, desc, cmt, sym))
 
     for node in tree.findall(TOPOGRAFIX_NS + 'wpt'):
-        name, desc = _getNameDesc(node)
-        yield classGPXPoint(node, 'WPT', name, desc)
+        name, desc, cmt, sym = _getNameDesc(node)
+        yield classGPXPoint(node, 'WPT', name, desc, cmt, sym)
 
 
 if __name__ == "__main__":
