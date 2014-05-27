@@ -87,7 +87,7 @@ def gpxToPoints(gpxfile, outFC):
     for index, trkPoint in enumerate(GeneratePointFromXML(tree)):
         if trkPoint.asPoint() is not None:
             rowsDA.insertRow([trkPoint.name, trkPoint.desc, trkPoint.gpxtype, trkPoint.cmt, trkPoint.sym, 
-                              trkPoint.t, trkPoint.z, trkPoint.x, trkPoint.y, trkPoint.z])
+                              trkPoint.t, trkPoint.z, trkPoint.x, trkPoint.y, trkPoint.x, trkPoint.y, trkPoint.z])
         else:
             badPt +=1
 
