@@ -1,6 +1,6 @@
 '''
 Tool Name:  GPX to Features
-Source Name: GPXtoFeatures.py
+Source Name: GPXtoFeaturesXY.py
 Version: ArcGIS 10.1-env.2
 Author: ESRI
 
@@ -13,8 +13,10 @@ Description:
          which particpate as either a waypoint (WPT) or inside a track as a track point (TRKPT). The output feature class
          will create fields for the shape, time, and elevation and description.
 
-Modified by Matt.Wilkie@gov.yk.ca for Environment Yukon, 2013-May-16
-  * add X and Y as attribute fields in addition to same as geometry fields.
+Modified by Matt.Wilkie@gov.yk.ca for Environment Yukon:
+
+  + 2013-May-16: add X and Y as attribute fields in addition to geometry fields
+  * 2014-May-22: sync with upstream 10.2.2 changes (more track info)
 '''
 
 # Imports
