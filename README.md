@@ -13,11 +13,23 @@ See [Listing all feature classes in File Geodatabase, including within feature d
 
 ## Scripts
 
+#### GPXtoFeaturesXY.py
+
+A small enchancement to Esri's GPXtoFeatures.py: store the original geographic coordinates as attributes.
+
 ####  metadata_batch_upgrade.py
 
 Recursively walk through a GDB or workspace and upgrades the metadata record of any feature class found.
 
 Regular upgrade tool can only do one FC at a time, and using the batch control is painful as you drill down into each dataset individually to drag and drop. 
+
+#### TableToCSV.py
+
+ArcGIS doesn't have an out of the box tool for exporting a table to text. Let's fix that
+[not working yet]
+
+Inspiration: [Export table to X,Y,Z ASCII file via arcpy](http://gis.stackexchange.com/questions/17933/export-table-to-x-y-z-ascii-file-via-arcpy)
+
 
 
 SysAdmin
