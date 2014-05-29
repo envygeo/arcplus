@@ -1,17 +1,14 @@
 '''
-Tool Name:  GPX to Features
-Source Name: GPXtoFeaturesXY.py
-Version: ArcGIS 10.1-env.2
-Author: ESRI
+Tool:   GPX to Features
+Source: GPXtoFeaturesXY.py
+Author: Esri
+
+This tool takes a .GPX file (a common output from handheld GPS receivers). The tool will parse all points which particpate as either a waypoint (WPT) or inside a track as a track point (TRKPT). The output feature class will create fields for the shape, time, and elevation and description.
 
 Required Arguments:
-         Input GPX File: path to GPX file
-         Output Feature Class: path to featureclass which will be created
+    Input GPX File:       path to GPX file
+    Output Feature Class: path to featureclass which will be created
 
-Description:
-         This tool takes a .GPX file (a common output from handheld GPS receivers). The tool will parse all points
-         which particpate as either a waypoint (WPT) or inside a track as a track point (TRKPT). The output feature class
-         will create fields for the shape, time, and elevation and description.
 
 Modified by Matt.Wilkie@gov.yk.ca for Environment Yukon:
 

@@ -1,15 +1,40 @@
-#@+leo-ver=5-thin
-#@+node:maphew.20140522093157.1506: * @file arcplus.py
-''' arcplus.py: functions missing from regular ol' arcpy module '''
+''' 
+Module:  arcplus
+Source:  arcplus.py
+Author:  Matt.Wilkie@gov.yk.ca
+License: X/MIT, (c) 2014 Environment Yukon
+
+Functions missing from regular ol' arcpy module
+
+
+Place with your other code or PYTHONPATH and then:
+
+    import arcplus
+    fcs = arcplus.cool_extra_function(...)
+    for fc in fcs:
+        print "magic happens with: ", fc
+
+(there is only one extra function at the moment... ;-) 
+'''
 
 import os
 import arcpy
-    
 
-#@+others
-#@+node:maphew.20140522093157.1509: ** listAllFeatureClasses
 def listAllFeatureClasses (gdb,**kwargs):
-    ''' list all Feature Classes in a geodatabase or coverage recursively (normal listFeatureClasses does not recurse)'''
+    ''' 
+    list all Feature Classes in a geodatabase or coverage recursively
+    (normal listFeatureClasses does not recurse)
+
+        import arcplus
+        fcs = arcplus.listAllFeatureClasses('d:\default.gdb')
+        for fc in fcs:
+            print "magic happens with: ", fc
+
+    Arcplus also adds wildcard filtering; to process only feature classes 
+    that start with "HD_" within feature datasets containing "Hydro"
+
+        fcs = arcplus.listAllFeatureClasses(gdb, fd_filter='*Hydro*', fc_filter='HD_*')
+    '''
 
     arcpy.env.workspace = gdb
 
@@ -28,17 +53,3 @@ def listAllFeatureClasses (gdb,**kwargs):
             fcs.append(os.path.join(fds,fc))
 
     return fcs
-#@+node:maphew.20110314104726.3195: *3* extended docstring
-'''
-Optional keyword arguments, for example:
-
-    fc_filter = 'HD_*', fd_filter = '*Hydro*
-
-will process only feature classes that start with 'HD_' within feature datasets containing '*Hydro*'
-
-Thank you Gotchula:
-@url http://gis.stackexchange.com/questions/5893/list-all-feature-classes-in-gdb-including-within-feature-datasets
-and http://stackoverflow.com/questions/3394835/args-and-kwargs
-'''
-#@-others
-#@-leo
