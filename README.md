@@ -21,7 +21,14 @@ A small enchancement to Esri's GPXtoFeatures.py: store the original geographic c
 
 Recursively walk through a GDB or workspace and upgrades the metadata record of any feature class found.
 
-Regular upgrade tool can only do one FC at a time, and using the batch control is painful as you drill down into each dataset individually to drag and drop. 
+Regular upgrade tool can only do one FC at a time, and using the batch control is painful as you drill down into each dataset individually to drag and drop.
+
+#### set_legend_descriptions.py
+ 
+Set description property of Unique Value legend items from a lookup table. Enables having a legend with lengthy descriptions as well as the record values.
+
+Adapted from [Setting symbol descriptions of ArcMap layout legends from table?](http://gis.stackexchange.com/questions/102956/setting-symbol-descriptions-of-arcmap-layout-legends-from-table/)
+
 
 #### TableToCSV.py
 
