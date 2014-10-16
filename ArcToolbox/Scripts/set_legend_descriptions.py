@@ -31,15 +31,17 @@ output_map = r"..\map\test_map_descrip.mxd"
 
 ## --- shouldn't need to change anything below here ---
 
+mxd = arcpy.mapping.MapDocument(map_name)
+lyr = arcpy.mapping.ListLayers(mxd, layer_name)[0]
+
 # build the descriptions dictionary
 descriptions = {}
 rows = arcpy.SearchCursor(lookup_table)
 for item in rows:
     #print item.getValue(code), item.getValue(description)
-    descriptions[item.getValue(code)] = item.getValue(description)
+    descriptions[item.getValue(code)] = item.getValue('MajorCommunity') + item.getValue(description)
 
-mxd = arcpy.mapping.MapDocument(map_name)
-lyr = arcpy.mapping.ListLayers(mxd, layer_name)[0]
+print descriptions
 
 # lyr.symbology requires the classValues and classDescriptions to have
 # same number of rows and be in same order. So extract only matching 
