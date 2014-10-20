@@ -2,7 +2,7 @@
 
 Uninstall ArcGIS products using the Windows Installer `msiexec`, feeding it a text file with Product IDs.
 
-Will not work for programs like ArcPad which don't use msi to install in the first place.  
+Does not work for programs like ArcPad which don't use msi to install in the first place.  
 
 ## Install
 1. Download [uninstall-ALL-ArcGIS-products.bat](https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.bat) and save somewhere handy. 
@@ -10,8 +10,16 @@ Will not work for programs like ArcPad which don't use msi to install in the fir
 
 
 ## Usage  
-    uninstall-ALL-ArcGIS-products product-codes.txt
-    uninstall-ALL-ArcGIS-products product-codes.txt /silent
+    uninstall-ALL-ArcGIS-products    
+    uninstall-ALL-ArcGIS-products x:\path\to\my-product-codes.txt
+    
+If `product-codes.txt` exists in same folder as the .bat file, uninstall will use that (overriding any parameter on command line). If it doesn't, the codes file must be passed on the command line.
+
+    uninstall-ALL-ArcGIS-products # /silent
+    uninstall-ALL-ArcGIS-products x:\path\to\my-product-codes.txt /silent
+
+In the default mode it's normal for a the progress window to flicker constantly while it tests for programs to remove. An unfortunate side effect of this is constant stealing of keyboard focus. It's better to leave the system alone or risk inadvertently cancelling an uninstall. Use the `/silent` parameter to avoid this.
+
 
 ---------
 Product codes were taken from [Esri KB 28709 - Silently uninstall ArcGIS products](http://support.esri.com/en/knowledgebase/techarticles/detail/28709) *(Last Modified: 11/2/2012)*

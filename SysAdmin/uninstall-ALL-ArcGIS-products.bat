@@ -4,10 +4,14 @@
 :: Author:  Matt.Wilkie@gov.yk.ca
 ::
 set _product_codes=%1
+:: Comment out this next line to enable passing product codes on command line
+:: Note: lack of quotes after "set ..." is deliberate
+if exist "%~dp0\product-codes.txt" set _product_codes=%~dp0\product-codes.txt
+
 echo. ---------------------------------------------------------------------------
 echo.           Uninstall all ArcGIS products
 echo. ---------------------------------------------------------------------------
-if not exist "%1" goto :no_codes_file
+if not exist "%_product_codes%" goto :no_codes_file
 
 :: msiexec optional parameters here
 :: remove '/passive' to hide the pop-up progress window and run silently
@@ -45,7 +49,7 @@ goto :eof
 
 :no_codes_file
   echo.
-  echo. Product code file "%1" not found
+  echo. Product code file "%_product_codes%" not found
   echo.
   call :Usage
   echo.&& pause
