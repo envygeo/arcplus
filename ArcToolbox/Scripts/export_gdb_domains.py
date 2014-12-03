@@ -1,16 +1,29 @@
-''' Export all coded value domains in a geodatabase to tables in that gdb
+# -*- coding: utf-8 -*-
+"""
+Tool name: Export GDB Domains to Tables
+Source: export_gdb_domains.py
+Author: Matt Wilkie (Environment Yukon)
+License: X/MIT open source
+
+Export all coded value domains in a geodatabase to tables in that gdb
 	http://gis.stackexchange.com/questions/26215
-'''
+"""
 import os, sys
 import arcpy
 
-gdb = sys.argv[0]
+gdb = arcpy.GetParameterAsText(0)
 
-desc = arcpy.Describe(gdb)
-domains = desc.domains
+def get_domains(gdb):
+    desc = arcpy.Describe(gdb)
+    return desc.domains
 
-for domain in domains:
-    print 'Exporting %s CV to table in %s' % (domain, gdb)
-    table = os.path.join(gdb, domain)
-    arcpy.DomainToTable_management(gdb, domain, table,
-        'field','description', '#')
+def export_domains(domains):
+    for domain in domains:
+        arcpy.AddMessage('Exporting %s CV to table in %s' % (domain, gdb))
+        table = os.path.join(gdb, domain)
+        arcpy.DomainToTable_management(gdb, domain, table,
+            'field','description', '#')
+
+if __name__ == "__main__":
+    domains = get_domains(gdb)
+    export_domains(domains)
