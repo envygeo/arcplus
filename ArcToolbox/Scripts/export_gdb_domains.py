@@ -13,17 +13,13 @@ import arcpy
 
 gdb = arcpy.GetParameterAsText(0)
 
-def get_domains(gdb):
-    desc = arcpy.Describe(gdb)
-    return desc.domains
-
 def export_domains(domains):
     for domain in domains:
-        arcpy.AddMessage('Exporting %s CV to table in %s' % (domain, gdb))
-        table = os.path.join(gdb, domain)
-        arcpy.DomainToTable_management(gdb, domain, table,
+        arcpy.AddMessage('Exporting %s CV to table in %s' % (domain.name, gdb))
+        table = os.path.join(gdb, domain.name)
+        arcpy.DomainToTable_management(gdb, domain.name, table,
             'field','description', '#')
 
 if __name__ == "__main__":
-    domains = get_domains(gdb)
+    domains = arcpy.da.ListDomains(gdb)
     export_domains(domains)
