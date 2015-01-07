@@ -33,7 +33,7 @@ def GetLibPath():
     """Return location of ArcGIS type libraries as string"""
     # This will still work on 64-bit machines because Python runs in 32 bit mode
     import _winreg
-    keyESRI = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\ESRI\\Desktop10.2")
+    keyESRI = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\ESRI\\Desktop10.3")
     return _winreg.QueryValueEx(keyESRI, "InstallDir")[0] + "com\\"
 
 def GetModule(sModuleName):
