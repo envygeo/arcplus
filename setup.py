@@ -17,6 +17,8 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7',
         ],
-    keywords='arcpy, arcgis',
+    keywords='arcpy, arcgis, arcobjects',
+    packages=find_packages(),
     install_requires=['comtypes'],
+    zip_safe=False,
     )
