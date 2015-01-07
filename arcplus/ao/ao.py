@@ -1,4 +1,17 @@
-# Snippets.py
+'''Accessing ArcObjects via python and comtypes.
+
+...most definitely a work in progess...
+
+
+Requirements:
+    comtypes module, https://pypi.python.org/pypi/comtypes
+
+Adapted from Mark Cederholm's "Using ArcObjects in Python":
+    http://www.pierssen.com/arcgis/misc.htm
+
+Also see:
+    http://gis.stackexchange.com/questions/80/how-do-i-access-arcobjects-from-python/
+'''
 
 #**** Initialization ****
 
@@ -121,8 +134,8 @@ def Standalone_OpenFileGDB():
     print "Workspace name: " + pDS.BrowseName
     print "Workspace category: " + pDS.Category
 
-def Standalone_OpenSDE():    
-    
+def Standalone_OpenSDE():
+
     GetStandaloneModules()
     InitStandalone()
     import comtypes.gen.esriSystem as esriSystem
@@ -137,7 +150,7 @@ def Standalone_OpenSDE():
     pPropSet.SetProperty("VERSION", "SDE.DEFAULT")
     pWSF = NewObj(esriDataSourcesGDB.SdeWorkspaceFactory, \
                   esriGeoDatabase.IWorkspaceFactory)
-    pWS = pWSF.Open(pPropSet, 0)    
+    pWS = pWSF.Open(pPropSet, 0)
     pDS = CType(pWS, esriGeoDatabase.IDataset)
     print "Workspace name: " + pDS.BrowseName
     print "Workspace category: " + pDS.Category
@@ -185,7 +198,7 @@ def Standalone_QueryDBValues():
     sTabName = "Parcels"
     sWhereClause = "parcel_id = 6358"
     sFieldName = "zoning_s"
-    
+
     pWSF = NewObj(esriDataSourcesGDB.FileGDBWorkspaceFactory, esriGeoDatabase.IWorkspaceFactory)
     pWS = pWSF.OpenFromFile(sPath, 0)
     pFWS = CType(pWS, esriGeoDatabase.IFeatureWorkspace)
@@ -200,7 +213,7 @@ def Standalone_QueryDBValues():
     Val = pRow.Value(pTab.FindField(sFieldName))
     if Val is None:
         print "Null value"
-    
+
 def Standalone_CreateTable():
 
     GetStandaloneModules()
@@ -215,7 +228,7 @@ def Standalone_CreateTable():
                   esriGeoDatabase.IWorkspaceFactory)
     pWS = pWSF.OpenFromFile(sWSPath, 0)
     pFWS = CType(pWS, esriGeoDatabase.IFeatureWorkspace)
-    
+
     pOutFields = NewObj(esriGeoDatabase.Fields, esriGeoDatabase.IFields)
     pFieldsEdit = CType(pOutFields, esriGeoDatabase.IFieldsEdit)
     pFieldsEdit._FieldCount = 2
@@ -232,13 +245,13 @@ def Standalone_CreateTable():
     pFieldsEdit._Field[1] = pNewField
     pOutTable = pFWS.CreateTable(sTableName, pOutFields, \
                                  None, None, "")
-    
+
     iField = pOutTable.FindField("LUMBERJACK")
     print "'LUMBERJACK' field index = ", iField
     pRow = pOutTable.CreateRow()
     pRow.Value[iField] = "I sleep all night and I work all day"
     pRow.Store()
-    
+
 #**** ArcMap ****
 
 def ArcMap_GetSelectedGeometry():
@@ -333,7 +346,7 @@ def ArcMap_AddTextElement():
     pTextElement.Text = "Wink, wink, nudge, nudge,\nSay no more!"
     pElement = CType(pTextElement, esriCarto.IElement)
     pElement.Geometry = pPt
-    
+
     pGC = CType(pMap, esriCarto.IGraphicsContainer)
     pGC.AddElement(pElement, 0)
     pGCSel = CType(pMap, esriCarto.IGraphicsContainerSelect)
