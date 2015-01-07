@@ -5,8 +5,12 @@ Suggested solution is to use arcobjects directly. Let's see if we can make that 
 
 
 
- 
 
+
+
+## Sources
+
+ * [Connecting to geodatabases and databases (ArcObjects .NET 10 SDK)](http://resources.arcgis.com/en/help/arcobjects-net/conceptualhelp/index.html#//0001000003s8000000)
 
 
 
