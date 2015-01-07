@@ -94,7 +94,7 @@ def InitStandalone():
     import comtypes.gen.ArcGISVersionLib as esriVersion
     import comtypes.gen.esriSystem as esriSystem
     pVM = NewObj(esriVersion.VersionManager, esriVersion.IArcGISVersion)
-    if not pVM.LoadVersion(esriVersion.esriArcGISDesktop, "10.2"):
+    if not pVM.LoadVersion(esriVersion.esriArcGISDesktop, "10.3"):
         return False
     # Get license
     pInit = NewObj(esriSystem.AoInitialize, esriSystem.IAoInitialize)

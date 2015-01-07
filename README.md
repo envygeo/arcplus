@@ -3,13 +3,80 @@ arcplus
 *a few little things I think Esri's arcpy and related should have*
 
 
-## arcplus.py
-A python module for easy re-use; has only one function at the moment. 
+## Quick Start
 
-#### listAllFeatureClasses
+ 1. Open a [pip](https://pip.pypa.io/en/latest/installing.html) and an ArcGIS python enabled command shell, then run
+    `pip install https://github.com/maphew/arcplus/archive/master.zip`
+ 2. Run python and:
+
+    ``` 
+    d:\>python
+    Python 2.7.5 (default, May 15 2013, 22:43:36) [MSC v.1500 32 bit (Intel)] on win32
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import arcplus   
+    
+    >>> for fc in arcplus.listAllFeatureClasses(r"D:\scratch.gdb"):
+    ...     print fc
+    ...
+    Looking in D:\scratch.gdb for "*"
+    Administration_Boundaries\LI_1210009_2
+    Administration_Boundaries\Yukon_Ditch_ENV080
+    base_toponomy\Highway_shields
+    base_toponomy\Physiographic_text
+    base_toponomy\Places_text
+    annotation_attrib_test
+    fraser_peak_GPXtoFeatures
+    ...
+    ```     
+
+
+
+#### arcplus.listAllFeatureClasses
 Recursively list all Feature Classes in a geodatabase or coverage (normal listFeatureClasses method does not recurse)
 
 See [Listing all feature classes in File Geodatabase, including within feature datasets?](http://gis.stackexchange.com/questions/5893/listing-all-feature-classes-in-file-geodatabase-including-within-feature-datase)
+
+#### arcplus.ao
+See [Use Arcobjects from Python](http://gis.stackexchange.com/questions/80/how-do-i-access-arcobjects-from-python/)
+
+*...not working reliably yet!*
+
+    >>> from arcplus import ao
+    
+    >>> ao.GetLibPath()
+    u'C:\\ArcGIS\\Desktop10.3\\com\\'
+
+    >>> dir(ao)
+    ['ArcCatalog_GetSelectedTable',
+     'ArcMap_AddTextElement',
+     'ArcMap_GetEditWorkspace',
+     'ArcMap_GetSelectedGeometry',
+     'ArcMap_GetSelectedTable',
+     'CLSID',
+     'CType',
+     'GetApp',
+     'GetCurrentApp',
+     'GetDesktopModules',
+     'GetLibPath',
+     'GetModule',
+     'GetStandaloneModules',
+     'InitStandalone',
+     'Msg',
+     'NewObj',
+     'Standalone_CreateTable',
+     'Standalone_OpenFileGDB',
+     'Standalone_OpenSDE',
+     'Standalone_QueryDBValues',
+     '__builtins__',
+     '__doc__',
+     '__file__',
+     '__name__',
+     '__package__',
+     '__path__',
+     'ao']
+
+
+
 
 ## Scripts
 
