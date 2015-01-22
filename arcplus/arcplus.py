@@ -1,4 +1,4 @@
-''' 
+'''
 Module:  arcplus
 Source:  arcplus.py
 Author:  Matt.Wilkie@gov.yk.ca
@@ -14,14 +14,14 @@ Place with your other code or PYTHONPATH and then:
     for fc in fcs:
         print "magic happens with: ", fc
 
-(there is only one extra function at the moment... ;-) 
+(there is only one extra function at the moment... ;-)
 '''
 
 import os
-import arcpy
 
 def listAllFeatureClasses (gdb,**kwargs):
-    ''' 
+    import arcpy
+    '''
     list all Feature Classes in a geodatabase or coverage recursively
     (normal listFeatureClasses does not recurse)
 
@@ -30,7 +30,7 @@ def listAllFeatureClasses (gdb,**kwargs):
         for fc in fcs:
             print "magic happens with: ", fc
 
-    Arcplus also adds wildcard filtering; to process only feature classes 
+    Arcplus also adds wildcard filtering; to process only feature classes
     that start with "HD_" within feature datasets containing "Hydro"
 
         fcs = arcplus.listAllFeatureClasses(gdb, fd_filter='*Hydro*', fc_filter='HD_*')
