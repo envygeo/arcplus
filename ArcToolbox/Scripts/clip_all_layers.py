@@ -1,7 +1,6 @@
 '''Clip all layers in the map to the specified polygon.
 Adapted from Alex Tereshenkov, http://gis.stackexchange.com/a/111712/108
 '''
-import os
 import arcpy
 arcpy.env.overwriteOutput = True
 
