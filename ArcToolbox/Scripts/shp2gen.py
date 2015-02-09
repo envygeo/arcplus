@@ -5,7 +5,7 @@
 #
 # Author: Matthew Perry
 #
-import ogr, sys
+from osgeo import ogr, sys
 
 if __name__ == "__main__":
     try:
@@ -36,12 +36,12 @@ if __name__ == "__main__":
                 coords = coords + str(geom.GetX(i)) + " " + \
                          str(geom.GetY(i)) + "\n";
             coords = coords + "END"
-        
+
         feature.Destroy()
         feature = layer.GetNextFeature()
         fn = fn+1
         if coords != '':
             print coords
-    
-    print 'END' 
+
+    print 'END'
     ds.Destroy()
