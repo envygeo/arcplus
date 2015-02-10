@@ -22,7 +22,7 @@ def get_sepchar(arg):
     arg3poss = ['default python output', 'locale decimal point', 'comma', 'period', '$sep$']
     arg = arg.lower()
     if arg not in arg3poss:
-        raise Exception, msgUseValidDecimalPointSep + arg3poss
+        raise Exception, msgUseValidDecimalPointSep + str(arg3poss)
 
     if arg == arg3poss[1]:
         locale.setlocale(locale.LC_ALL, '')
@@ -32,7 +32,6 @@ def get_sepchar(arg):
     elif arg == arg3poss[4]: sepchar = '$SEP$'
     elif arg == arg3poss[0]: sepchar = ""
     gp.AddMessage('Using "%s" for decimal point separator' % sepchar)
-    barf
     return sepchar
 
 try:
