@@ -64,7 +64,6 @@ def connect(database, server="<default server>", username="<default user>", pass
         # Check for the .sde file and delete it if present
         arcpy.env.overwriteOutput=True
 
-
         # Variables defined within the script; other variable options commented out at the end of the line
         saveUserInfo = "SAVE_USERNAME" #DO_NOT_SAVE_USERNAME
         saveVersionInfo = "SAVE_VERSION" #DO_NOT_SAVE_VERSION
@@ -100,3 +99,31 @@ def connect(database, server="<default server>", username="<default user>", pass
     except SystemExit as e:
         print e.code
         return
+
+def listFcsInGDB():
+    ''' set your arcpy.env.workspace to a gdb before calling '''
+    for fds in arcpy.ListDatasets('','feature') + ['']:
+        for fc in arcpy.ListFeatureClasses('','',fds):
+            yield os.path.join(arcpy.env.workspace, fds, fc)
+
+if __name__ == '__main__':
+    print "started main"
+    database = arcpy.GetParameterAsText(0)
+    server = arcpy.GetParameterAsText(1)
+    username = arcpy.GetParameterAsText(2)
+    password = arcpy.GetParameterAsText(3)
+    version = "SDE.DEFAULT"
+
+    print "make connection file"
+    sde = connect(database, 'CSWPROD', 'mhwilkie', 'yukon', version)
+
+    print sde
+    arcpy.env.workspace = sde
+    print arcpy.env.workspace
+
+    for fc in listFcsInGDB():
+        print fc
+
+    print arcpy.GetMessages()
+
+
