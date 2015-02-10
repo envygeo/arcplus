@@ -3,7 +3,7 @@
  Source Name:   WriteFeaturesFromTextFile.py
  Version:       ArcGIS 9.1
  Author:        Environmental Systems Research Institute Inc.
- Required Argumuments:  An input feature class 
+ Required Argumuments:  An input feature class
                         An output text file
                         An input decimal separator character that indicates what character
                         should be used to separate the whole number from its decimal.
@@ -17,23 +17,33 @@ gp.overwriteoutput = 1
 msgNotEnoughParams = "Incorrect number of input parameters."
 msgUseValidDecimalPointSep = "Please use one of the valid decimal point separators."
 
+def get_sepchar(arg):
+    '''Return decimal point separator to use'''
+    arg3poss = ['default python output', 'locale decimal point', 'comma', 'period', '$sep$']
+    arg = arg.lower()
+    if arg not in arg3poss:
+        raise Exception, msgUseValidDecimalPointSep + arg3poss
+
+    if arg == arg3poss[1]:
+        locale.setlocale(locale.LC_ALL, '')
+        sepchar = locale.localeconv()['decimal_point']
+    elif arg == arg3poss[2]: sepchar = ','
+    elif arg == arg3poss[3]: sepchar = '.'
+    elif arg == arg3poss[4]: sepchar = '$SEP$'
+    elif arg == arg3poss[0]: sepchar = ""
+    gp.AddMessage('Using "%s" for decimal point separator' % sepchar)
+    barf
+    return sepchar
+
 try:
 
     if len(sys.argv) < 4: raise Exception, msgNotEnoughParams
     inputFC = sys.argv[1]
     outFile = open(sys.argv[2], "w")
-    
-    arg3poss = ['default python output', 'locale decimal point', 'comma', 'period', '$sep$']
-    if sys.argv[3].lower() not in arg3poss: raise Exception, msgUseValidDecimalPointSep
 
-    if sys.argv[3].lower() == arg3poss[1]:
-        locale.setlocale(locale.LC_ALL, '')
-        sepchar = locale.localeconv()['decimal_point']
-    elif sys.argv[3].lower() == arg3poss[2]: sepchar = ','
-    elif sys.argv[3].lower() == arg3poss[3]: sepchar = '.'
-    elif sys.argv[3].lower() == arg3poss[4]: sepchar = '$SEP$'
-    elif sys.argv[3].lower() == arg3poss[0]: sepchar = ""
-    
+    #optional parameters
+    sepchar = get_sepchar(sys.argv[3])
+
     inDesc = gp.describe(inputFC)
 
     inRows = gp.searchcursor(inputFC)
@@ -47,7 +57,7 @@ try:
             outLine = str(inRow.GetValue(inDesc.OIDFieldName)) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
             if sepchar == "": outFile.write(outLine)
             else: outFile.write(outLine.replace(".", sepchar))
-            
+
         elif inDesc.ShapeType.lower() == "multipoint":
             partnum = 0
             partcount = feat.partcount
@@ -84,7 +94,7 @@ try:
     outFile.write("END")
     outFile.flush()
     outFile.close()
-    
+
 except Exception, ErrorDesc:
     gp.AddError(ErrorDesc[0])
     if outFile: outFile.close()
