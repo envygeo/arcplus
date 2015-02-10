@@ -4,9 +4,10 @@ Adapted from Alex Tereshenkov, http://gis.stackexchange.com/a/111712/108
 import arcpy
 arcpy.env.overwriteOutput = True
 
-clip_layer = arcpy.GetParameterAsText(0)
-out_gdb = arcpy.GetParameterAsText(1)
-mxd = arcpy.GetParameterAsText(2)
+mxd = arcpy.GetParameterAsText(0)
+clip_layer = arcpy.GetParameterAsText(1)
+out_gdb = arcpy.GetParameterAsText(2)
+
 
 if not mxd:
     mxd = arcpy.mapping.MapDocument("CURRENT")
