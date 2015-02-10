@@ -19,29 +19,33 @@ msgUseValidDecimalPointSep = "Please use one of the valid decimal point separato
 
 def get_sepchar(arg):
     '''Return decimal point separator to use'''
-    arg3poss = ['default python output', 'locale decimal point', 'comma', 'period', '$sep$']
-    arg = arg.lower()
-    if arg not in arg3poss:
-        raise Exception, msgUseValidDecimalPointSep + str(arg3poss)
+    default_seps = ['default python output', 'locale decimal point', '#']
+    valid_seps = {'comma':',', 'period':'.', '$sep$':'$SEP$'}
+    for i in default_seps:
+        valid_seps[i] = 'locale default'
 
-    if arg == arg3poss[1]:
+    arg = arg.lower()
+    if arg not in valid_seps:
+        raise Exception, msgUseValidDecimalPointSep + str(valid_seps.keys())
+
+    if arg in default_seps:
         locale.setlocale(locale.LC_ALL, '')
         sepchar = locale.localeconv()['decimal_point']
-    elif arg == arg3poss[2]: sepchar = ','
-    elif arg == arg3poss[3]: sepchar = '.'
-    elif arg == arg3poss[4]: sepchar = '$SEP$'
-    elif arg == arg3poss[0]: sepchar = ""
+    elif arg in valid_seps:
+        sepchar = valid_seps[arg]
+    ##elif arg == arg3poss[0]: sepchar = "" # is this ever valid? disabling for now.
     gp.AddMessage('Using "%s" for decimal point separator' % sepchar)
     return sepchar
 
 try:
-
     if len(sys.argv) < 4: raise Exception, msgNotEnoughParams
     inputFC = sys.argv[1]
     outFile = open(sys.argv[2], "w")
 
     #optional parameters
     sepchar = get_sepchar(sys.argv[3])
+    z_field = sys.argv[4]
+    m_field = sys.argv[5]
 
     inDesc = gp.describe(inputFC)
 
