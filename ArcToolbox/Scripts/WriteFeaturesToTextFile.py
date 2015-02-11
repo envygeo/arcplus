@@ -55,6 +55,33 @@ def get_zfield(fieldname):
     gp.AddMessage('Using "%s" for Z/M values' % fname)
     return fname
 
+def use_id(fieldname, desc):
+    '''Validate 'fieldname' to use for UNGENERATE Feature ID label.
+
+    '#' means use defined ObjectID or first field.
+
+    field = string
+    desc = feature class describe object
+
+    Returns 'field' as string or False
+    '''
+    fields = [f.name for f in desc.fields]
+    field = None
+    if fieldname == '#':
+        # use objectID if exsits else first field
+        if desc.hasOID:
+            field = desc.OIDFieldName
+        else:
+            field = fields[0]
+    else:
+        if fieldname in fields:
+           field = fieldname
+    if not field:
+        arcpy.AddError('ID field not found. Specify name or "#" for default')
+    else:
+        arcpy.AddMessage('Using "%s" for FeatureID' % field)
+    return field
+
 ##try:
 if len(sys.argv) < 4: raise Exception, msgNotEnoughParams
 inputFC = sys.argv[1]
@@ -62,11 +89,12 @@ outFile = open(sys.argv[2], "w")
 
 #optional parameters
 sepchar = get_sepchar(decimalchar)
-z_field = get_zfield(z_field)
-m_field = get_zfield(m_field)
+##z_field = get_zfield(z_field)
+##m_field = get_zfield(m_field)
 
-inDesc = gp.describe(inputFC)
-print inDesc
+inDesc = arcpy.Describe(inputFC)
+id_field = use_id('ELEVATION', inDesc)
+sys.exit()
 
 inRows = gp.searchcursor(inputFC)
 inRow = inRows.next()
@@ -101,8 +129,7 @@ while inRow:
             pnt = part.next()
             pnt_count = 0
             while pnt:
-                #outLine = str(pnt_count) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
-                outLine = str(pnt_count) + " " + str(pnt.x) + " " + str(pnt.y) + " " + inRow.GetValue(inDesc.table(z_field)) + " " + str(pnt.m) + "\n"
+                outLine = str(pnt_count) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
                 if sepchar == "": outFile.write(outLine)
                 else: outFile.write(outLine.replace(".", sepchar))
                 pnt = part.next()
