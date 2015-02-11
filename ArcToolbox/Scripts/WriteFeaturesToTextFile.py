@@ -17,12 +17,11 @@ gp.overwriteoutput = 1
 inputFC = arcpy.GetParameterAsText(0)
 outFile = arcpy.GetParameterAsText(1)
 decimalchar = arcpy.GetParameterAsText(2)
-z_field = arcpy.GetParameterAsText(3)
-m_field = arcpy.GetParameterAsText(4)
-
+id_fieldname = arcpy.GetParameterAsText(3)
 
 msgNotEnoughParams = "Incorrect number of input parameters."
 msgUseValidDecimalPointSep = "Please use one of the valid decimal point separators."
+msgFieldNotFound = 'ID field not found. Specify "#" for default or one of:'
 
 def get_sepchar(arg):
     '''Return decimal point separator to use'''
@@ -44,17 +43,6 @@ def get_sepchar(arg):
     gp.AddMessage('Using "%s" for decimal point separator' % sepchar)
     return sepchar
 
-def get_zfield(fieldname):
-    ''' Field name to use for Z or M value, use 'Z' or 'M' for geometry Z or M.
-        Returns string of 'Field_name', 'pnt.z', or 'pnt.m'
-    '''
-    if fieldname.lower() in ['z','m']:
-        fname = 'pnt.%s' % fieldname.lower()
-    else:
-        fname = '%s' % fieldname
-    gp.AddMessage('Using "%s" for Z/M values' % fname)
-    return fname
-
 def use_id(fieldname, desc):
     '''Validate 'fieldname' to use for UNGENERATE Feature ID label.
 
@@ -65,19 +53,19 @@ def use_id(fieldname, desc):
 
     Returns 'field' as string or False
     '''
-    fields = [f.name for f in desc.fields]
+    fields = [f.name.upper() for f in desc.fields]
     field = None
     if fieldname == '#':
-        # use objectID if exsits else first field
+        # use objectID if exists else first field
         if desc.hasOID:
             field = desc.OIDFieldName
         else:
             field = fields[0]
     else:
-        if fieldname in fields:
+        if fieldname.upper() in fields:
            field = fieldname
     if not field:
-        arcpy.AddError('ID field not found. Specify name or "#" for default')
+        arcpy.AddError(msgFieldNotFound + '\n\t%s' % (', '.join(fields)))
     else:
         arcpy.AddMessage('Using "%s" for FeatureID' % field)
     return field
@@ -93,7 +81,7 @@ sepchar = get_sepchar(decimalchar)
 ##m_field = get_zfield(m_field)
 
 inDesc = arcpy.Describe(inputFC)
-id_field = use_id('ELEVATION', inDesc)
+id_field = use_id(id_fieldname, inDesc)
 sys.exit()
 
 inRows = gp.searchcursor(inputFC)
