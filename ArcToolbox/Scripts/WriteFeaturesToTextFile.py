@@ -115,11 +115,7 @@ while inRow:
             pnt_count = 0
             while pnt:
 ##                outLine = str(pnt_count) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
-                # convert to strings
-                L = ', '.join([str(x) for x in [pnt_count, pnt.x, pnt.y, pnt.z, pnt.m]])
-                print L
-                print pnt_count, pnt.x, pnt.y, pnt.z, pnt.m
-                outLine = "{0}\n".format(L)
+                outLine = "{0} {1} {2} {3} {4} \n".format(pnt_count, pnt.x, pnt.y, pnt.z, pnt.m)
                 if sepchar == "": outFile.write(outLine)
                 else: outFile.write(outLine.replace(".", sepchar))
                 pnt = part.next()
