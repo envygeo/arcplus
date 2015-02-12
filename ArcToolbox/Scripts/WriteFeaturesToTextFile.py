@@ -89,7 +89,7 @@ while inRow:
     feat = inRow.GetValue(inDesc.ShapeFieldName)
     if inDesc.ShapeType.lower() == "point":
         pnt = feat.getpart()
-        outLine = str(inRow.GetValue(id_field)) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
+        outLine = "{0} {1} {2} {3} {4}\n".format(inRow.GetValue(id_field), pnt.x, pnt.y, pnt.z, pnt.m)
         if sepchar == "": outFile.write(outLine)
         else: outFile.write(outLine.replace(".", sepchar))
 
@@ -99,8 +99,7 @@ while inRow:
         outFile.write(str(inRow.GetValue(id_field)) + " " + str(partnum) + "\n") # begin new feature
         while partnum < partcount:
             pnt = feat.getpart(partnum)
-            outLine = str(partnum) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
-            print outLine
+            outLine = "{0} {1} {2} {3} {4}\n".format(partnum, pnt.x, pnt.y, pnt.z, pnt.m)
             if sepchar == "": outFile.write(outLine)
             else: outFile.write(outLine.replace(".", sepchar))
             partnum += 1
@@ -114,8 +113,7 @@ while inRow:
             pnt = part.next()
             pnt_count = 0
             while pnt:
-##                outLine = str(pnt_count) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
-                outLine = "{0} {1} {2} {3} {4} \n".format(pnt_count, pnt.x, pnt.y, pnt.z, pnt.m)
+                outLine = "{0} {1} {2} {3} {4}\n".format(pnt_count, pnt.x, pnt.y, pnt.z, pnt.m)
                 if sepchar == "": outFile.write(outLine)
                 else: outFile.write(outLine.replace(".", sepchar))
                 pnt = part.next()
