@@ -96,14 +96,14 @@ while inRow:
     elif inDesc.ShapeType.lower() == "multipoint":
         partnum = 0
         partcount = feat.partcount
-        outFile.write(str(inRow.GetValue(id_field)) + " " + str(partnum) + "\n")
+        outFile.write(str(inRow.GetValue(id_field)) + " " + str(partnum) + "\n") # begin new feature
         while partnum < partcount:
             pnt = feat.getpart(partnum)
             outLine = str(partnum) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
+            print outLine
             if sepchar == "": outFile.write(outLine)
             else: outFile.write(outLine.replace(".", sepchar))
             partnum += 1
-
     else:
         partnum = 0
         partcount = feat.partcount
@@ -114,7 +114,12 @@ while inRow:
             pnt = part.next()
             pnt_count = 0
             while pnt:
-                outLine = str(pnt_count) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
+##                outLine = str(pnt_count) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
+                # convert to strings
+                L = ', '.join([str(x) for x in [pnt_count, pnt.x, pnt.y, pnt.z, pnt.m]])
+                print L
+                print pnt_count, pnt.x, pnt.y, pnt.z, pnt.m
+                outLine = "{0}\n".format(L)
                 if sepchar == "": outFile.write(outLine)
                 else: outFile.write(outLine.replace(".", sepchar))
                 pnt = part.next()
@@ -123,7 +128,7 @@ while inRow:
                     pnt = part.next()
                     if pnt:
                         outFile.write("InteriorRing\n")
-
+            outFile.write("END\n") # end feature
             partnum += 1
     inRow = inRows.next()
 outFile.write("END")
