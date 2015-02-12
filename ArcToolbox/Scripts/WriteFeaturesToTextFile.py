@@ -54,21 +54,22 @@ def use_id(fieldname, desc):
     Returns 'field' as string or False
     '''
     fields = [f.name.upper() for f in desc.fields]
-    field = None
-    if fieldname == '#':
-        # use objectID if exists else first field
-        if desc.hasOID:
-            field = desc.OIDFieldName
-        else:
-            field = fields[0]
+    f = None
+
+    if fieldname.upper() in fields:
+       f = fieldname
     else:
-        if fieldname.upper() in fields:
-           field = fieldname
-    if not field:
+        # use objectID or first field for feature ID
+        if fieldname == '#':
+            try:
+                f = desc.OIDFieldName
+            except:
+                f = fields[0]
+    if not f:
         arcpy.AddError(msgFieldNotFound + '\n\t%s' % (', '.join(fields)))
     else:
-        arcpy.AddMessage('Using "%s" for FeatureID' % field)
-    return field
+        arcpy.AddMessage('Using "%s" for FeatureID' % f)
+    return f
 
 ##try:
 if len(sys.argv) < 4: raise Exception, msgNotEnoughParams
