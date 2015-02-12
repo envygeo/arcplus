@@ -96,7 +96,7 @@ while inRow:
     elif inDesc.ShapeType.lower() == "multipoint":
         partnum = 0
         partcount = feat.partcount
-        outFile.write(str(inRow.GetValue(id_field)) + " " + str(partnum) + "\n") # begin new feature
+        outFile.write("{0} {1}\n".format(inRow.GetValue(id_field), str(partnum))) # begin new feature
         while partnum < partcount:
             pnt = feat.getpart(partnum)
             outLine = "{0} {1} {2} {3} {4}\n".format(partnum, pnt.x, pnt.y, pnt.z, pnt.m)
@@ -107,7 +107,7 @@ while inRow:
         partnum = 0
         partcount = feat.partcount
         while partnum < partcount:
-            outFile.write(str(inRow.GetValue(id_field)) + " " + str(partnum) + "\n")
+            outFile.write("{0} {1}\n".format(inRow.GetValue(id_field), str(partnum))) # begin new feature
             part = feat.getpart(partnum)
             part.reset()
             pnt = part.next()
