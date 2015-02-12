@@ -9,8 +9,9 @@
                         should be used to separate the whole number from its decimal.
  Description:   Writes the features of a feature class out to a text file.
 ----------------------------------------------------------------------------------'''
+import string, os, sys, locale
 import arcpy
-import string, os, sys, locale, arcgisscripting
+import arcgisscripting
 gp = arcgisscripting.create()
 gp.overwriteoutput = 1
 
@@ -43,7 +44,7 @@ def get_sepchar(arg):
     gp.AddMessage('Using "%s" for decimal point separator' % sepchar)
     return sepchar
 
-def use_id(fieldname, desc):
+def validate_id(fieldname, desc):
     '''Validate 'fieldname' to use for UNGENERATE Feature ID label.
 
     '#' means use defined ObjectID or first field.
@@ -55,11 +56,9 @@ def use_id(fieldname, desc):
     '''
     fields = [f.name.upper() for f in desc.fields]
     f = None
-
     if fieldname.upper() in fields:
        f = fieldname
     else:
-        # use objectID or first field for feature ID
         if fieldname == '#':
             try:
                 f = desc.OIDFieldName
@@ -78,12 +77,9 @@ outFile = open(sys.argv[2], "w")
 
 #optional parameters
 sepchar = get_sepchar(decimalchar)
-##z_field = get_zfield(z_field)
-##m_field = get_zfield(m_field)
 
 inDesc = arcpy.Describe(inputFC)
-id_field = use_id(id_fieldname, inDesc)
-sys.exit()
+id_field = validate_id(id_fieldname, inDesc)
 
 inRows = gp.searchcursor(inputFC)
 inRow = inRows.next()
@@ -93,14 +89,14 @@ while inRow:
     feat = inRow.GetValue(inDesc.ShapeFieldName)
     if inDesc.ShapeType.lower() == "point":
         pnt = feat.getpart()
-        outLine = str(inRow.GetValue(inDesc.OIDFieldName)) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
+        outLine = str(inRow.GetValue(id_field)) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
         if sepchar == "": outFile.write(outLine)
         else: outFile.write(outLine.replace(".", sepchar))
 
     elif inDesc.ShapeType.lower() == "multipoint":
         partnum = 0
         partcount = feat.partcount
-        outFile.write(str(inRow.GetValue(inDesc.OIDFieldName)) + " " + str(partnum) + "\n")
+        outFile.write(str(inRow.GetValue(id_field)) + " " + str(partnum) + "\n")
         while partnum < partcount:
             pnt = feat.getpart(partnum)
             outLine = str(partnum) + " " + str(pnt.x) + " " + str(pnt.y) + " " + str(pnt.z) + " " + str(pnt.m) + "\n"
@@ -112,7 +108,7 @@ while inRow:
         partnum = 0
         partcount = feat.partcount
         while partnum < partcount:
-            outFile.write(str(inRow.GetValue(inDesc.OIDFieldName)) + " " + str(partnum) + "\n")
+            outFile.write(str(inRow.GetValue(id_field)) + " " + str(partnum) + "\n")
             part = feat.getpart(partnum)
             part.reset()
             pnt = part.next()
