@@ -83,23 +83,23 @@ id_field = validate_id(id_fieldname, inDesc)
 
 inRows = gp.searchcursor(inputFC)
 inRow = inRows.next()
-outFile.write(inDesc.ShapeType + "\n")
+outFile.write("//{0}\n".format(inDesc.ShapeType))
 
 while inRow:
     feat = inRow.GetValue(inDesc.ShapeFieldName)
     if inDesc.ShapeType.lower() == "point":
         pnt = feat.getpart()
-        outLine = "{0} {1} {2} {3} {4}\n".format(inRow.GetValue(id_field), pnt.x, pnt.y, pnt.z, pnt.m)
+        outLine = "{0}, {1}, {2}, {3}, {4}\n".format(inRow.GetValue(id_field), pnt.x, pnt.y, pnt.z, pnt.m)
         if sepchar == "": outFile.write(outLine)
         else: outFile.write(outLine.replace(".", sepchar))
 
     elif inDesc.ShapeType.lower() == "multipoint":
         partnum = 0
         partcount = feat.partcount
-        outFile.write("{0} {1}\n".format(inRow.GetValue(id_field), str(partnum))) # begin new feature
+        outFile.write("{0}, {1}\n".format(inRow.GetValue(id_field), str(partnum))) # begin new feature
         while partnum < partcount:
             pnt = feat.getpart(partnum)
-            outLine = "{0} {1} {2} {3} {4}\n".format(partnum, pnt.x, pnt.y, pnt.z, pnt.m)
+            outLine = "{0}, {1}, {2}, {3}, {4}\n".format(partnum, pnt.x, pnt.y, pnt.z, pnt.m)
             if sepchar == "": outFile.write(outLine)
             else: outFile.write(outLine.replace(".", sepchar))
             partnum += 1
@@ -107,13 +107,13 @@ while inRow:
         partnum = 0
         partcount = feat.partcount
         while partnum < partcount:
-            outFile.write("{0} {1}\n".format(inRow.GetValue(id_field), str(partnum))) # begin new feature
+            outFile.write("{0}, {1}\n".format(inRow.GetValue(id_field), str(partnum))) # begin new feature
             part = feat.getpart(partnum)
             part.reset()
             pnt = part.next()
             pnt_count = 0
             while pnt:
-                outLine = "{0} {1} {2} {3} {4}\n".format(pnt_count, pnt.x, pnt.y, pnt.z, pnt.m)
+                outLine = "{0}, {1}, {2}, {3}\n".format(pnt.x, pnt.y, pnt.z, pnt.m)
                 if sepchar == "": outFile.write(outLine)
                 else: outFile.write(outLine.replace(".", sepchar))
                 pnt = part.next()
