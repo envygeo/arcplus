@@ -8,15 +8,14 @@ Arguments:
 
 Matt.Wilkie@gov.yk.ca, 2015-Feb-13
 
+Tested with ArcGIS 10.3.
+
 Adapted from "WriteFeaturesFromTextFile.py" in the Samples Toolbox distributed
 by Environmental Systems Research Institute Inc. (Esri) in ArcGIS 9.x.
 http://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=An_overview_of_the_Samples_toolbox
 '''
 import string, os, sys, locale
 import arcpy
-import arcgisscripting
-gp = arcgisscripting.create()
-gp.overwriteoutput = 1
 
 inputFC = arcpy.GetParameterAsText(0)
 outFile = arcpy.GetParameterAsText(1)
@@ -44,7 +43,7 @@ def get_sepchar(arg):
     elif arg in valid_seps:
         sepchar = valid_seps[arg]
     ##elif arg == arg3poss[0]: sepchar = "" # is this ever valid? disabling for now.
-    gp.AddMessage('Using "%s" for decimal point separator' % sepchar)
+    arcpy.AddMessage('Using "{0}" for decimal point separator'.format(sepchar))
     return sepchar
 
 def validate_id(fieldname, desc):
@@ -68,12 +67,11 @@ def validate_id(fieldname, desc):
             except:
                 f = fields[0]
     if not f:
-        arcpy.AddError(msgFieldNotFound + '\n\t%s' % (', '.join(fields)))
+        arcpy.AddError(msgFieldNotFound + '\n\t{0}'.format(', '.join(fields)))
     else:
-        arcpy.AddMessage('Using "%s" for FeatureID' % f)
+        arcpy.AddMessage('Using "{0}" for FeatureID'.format(f))
     return f
 
-##try:
 if len(sys.argv) < 4: raise Exception, msgNotEnoughParams
 inputFC = sys.argv[1]
 outFile = open(sys.argv[2], "w")
@@ -81,44 +79,44 @@ outFile = open(sys.argv[2], "w")
 #optional parameters
 sepchar = get_sepchar(decimalchar)
 
-arcpy.AddMessage('--- "{0}"'.format(inputFC))
+arcpy.AddMessage('\n--- {0}'.format(inputFC))
 inDesc = arcpy.Describe(inputFC)
 id_field = validate_id(id_fieldname, inDesc)
 
-inRows = gp.searchcursor(inputFC)
+inRows = arcpy.SearchCursor(inputFC)
 inRow = inRows.next()
 
 outFile.write("//{0}\n".format(inDesc.ShapeType))
 
 while inRow:
-    feat = inRow.GetValue(inDesc.ShapeFieldName)
+    feat = inRow.getValue(inDesc.ShapeFieldName)
     if inDesc.ShapeType.lower() == "point":
-        pnt = feat.getpart()
-        outLine = "{0}, {1}, {2}, {3}, {4}\n".format(inRow.GetValue(id_field), pnt.x, pnt.y, pnt.z, pnt.m)
+        pnt = feat.getPart()
+        outLine = "{0}, {1}, {2}, {3}, {4}\n".format(inRow.getValue(id_field), pnt.X, pnt.Y, pnt.Z, pnt.M)
         if sepchar == "": outFile.write(outLine)
         else: outFile.write(outLine.replace(".", sepchar))
 
     elif inDesc.ShapeType.lower() == "multipoint":
         partnum = 0
-        partcount = feat.partcount
-        outFile.write("{0}, {1}\n".format(inRow.GetValue(id_field), str(partnum))) # begin new feature
+        partcount = feat.partCount
+        outFile.write("{0}, {1}\n".format(inRow.getValue(id_field), str(partnum))) # begin new feature
         while partnum < partcount:
-            pnt = feat.getpart(partnum)
-            outLine = "{0}, {1}, {2}, {3}, {4}\n".format(partnum, pnt.x, pnt.y, pnt.z, pnt.m)
+            pnt = feat.getPart(partnum)
+            outLine = "{0}, {1}, {2}, {3}, {4}\n".format(partnum, pnt.X, pnt.Y, pnt.Z, pnt.M)
             if sepchar == "": outFile.write(outLine)
             else: outFile.write(outLine.replace(".", sepchar))
             partnum += 1
     else:
         partnum = 0
-        partcount = feat.partcount
+        partcount = feat.partCount
         while partnum < partcount:
-            outFile.write("{0}, {1}\n".format(inRow.GetValue(id_field), str(partnum))) # begin new feature
-            part = feat.getpart(partnum)
+            outFile.write("{0}, {1}\n".format(inRow.getValue(id_field), str(partnum))) # begin new feature
+            part = feat.getPart(partnum)
             part.reset()
             pnt = part.next()
             pnt_count = 0
             while pnt:
-                outLine = "{0}, {1}, {2}, {3}\n".format(pnt.x, pnt.y, pnt.z, pnt.m)
+                outLine = "{0}, {1}, {2}, {3}\n".format(pnt.X, pnt.Y, pnt.Z, pnt.M)
                 if sepchar == "": outFile.write(outLine)
                 else: outFile.write(outLine.replace(".", sepchar))
                 pnt = part.next()
@@ -133,10 +131,5 @@ while inRow:
 outFile.write("END")
 outFile.flush()
 outFile.close()
-print gp.GetMessages()
-
-##except Exception, ErrorDesc:
-##    gp.AddError(ErrorDesc[0])
-##    if outFile: outFile.close()
-##    gp.AddError(gp.getmessages(2))
-##    print gp.GetMessages()
+arcpy.AddMessage('Wrote {0}'.format(outFile.name))
+print arcpy.GetMessages()
