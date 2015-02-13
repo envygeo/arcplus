@@ -78,11 +78,13 @@ outFile = open(sys.argv[2], "w")
 #optional parameters
 sepchar = get_sepchar(decimalchar)
 
+arcpy.AddMessage('--- "{0}"'.format(inputFC))
 inDesc = arcpy.Describe(inputFC)
 id_field = validate_id(id_fieldname, inDesc)
 
 inRows = gp.searchcursor(inputFC)
 inRow = inRows.next()
+
 outFile.write("//{0}\n".format(inDesc.ShapeType))
 
 while inRow:
