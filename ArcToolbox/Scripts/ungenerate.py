@@ -15,6 +15,19 @@ by Environmental Systems Research Institute Inc. (Esri) in ArcGIS 9.x.
 http://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=An_overview_of_the_Samples_toolbox
 '''
 import string, os, sys, locale
+
+Usage = '''
+Usage: ungenerate (in feature class) (out filename) (decimal separator, #) (ID field, #)
+
+       '#' means use default
+
+    ungenerate D:\data\park_bound.shp x:\scratch\parks.gen # #
+    ungenerate D:\data\park_bound.shp x:\scratch\parks.gen comma ParkName
+'''
+if len(sys.argv) < 5:
+    print Usage
+    sys.exit(1)
+
 import arcpy
 
 inputFC = arcpy.GetParameterAsText(0)
