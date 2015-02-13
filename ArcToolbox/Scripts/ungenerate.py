@@ -1,14 +1,17 @@
-'''----------------------------------------------------------------------------------
- Tool Name:     WriteFeaturesFromTextFile
- Source Name:   WriteFeaturesFromTextFile.py
- Version:       ArcGIS 9.1
- Author:        Environmental Systems Research Institute Inc.
- Required Argumuments:  An input feature class
-                        An output text file
-                        An input decimal separator character that indicates what character
-                        should be used to separate the whole number from its decimal.
- Description:   Writes the features of a feature class out to a text file.
-----------------------------------------------------------------------------------'''
+''' ungenerate.py - write features to ArcInfo GENERATE text file format.
+
+Arguments:
+    - input feature class
+    - output file name
+    - decimal separator character (comma, period, system locale)
+    - field to use for ID of each feature (optional)
+
+Matt.Wilkie@gov.yk.ca, 2015-Feb-13
+
+Adapted from "WriteFeaturesFromTextFile.py" in the Samples Toolbox distributed
+by Environmental Systems Research Institute Inc. (Esri) in ArcGIS 9.x.
+http://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=An_overview_of_the_Samples_toolbox
+'''
 import string, os, sys, locale
 import arcpy
 import arcgisscripting
