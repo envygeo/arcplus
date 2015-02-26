@@ -13,18 +13,23 @@ if not mxd:
     mxd = arcpy.mapping.MapDocument("CURRENT")
 else:
     mxd = arcpy.mapping.MapDocument(mxd)
-        # must be mapdoc object and not string for ListLayers
-        # http://gis.stackexchange.com/questions/94890/error-with-data-frame-in-python-script
 
 for lyr in arcpy.mapping.ListLayers(mxd):
-    if not lyr.isGroupLayer:
-        arcpy.AddMessage(lyr)
+    if lyr.isBroken:
+        arcpy.AddMessage('"%s"\t skipping broken layer' % lyr)
+        continue
+    elif not lyr.isGroupLayer:
+        arcpy.AddMessage('"%s"\t Clipping...' % lyr)
         out_layer = os.path.join(out_gdb, lyr.name)
         if lyr.isFeatureLayer:
             arcpy.Clip_analysis(lyr, clip_layer, out_layer)
         elif lyr.isRasterLayer:
             arcpy.Clip_management(lyr, '#', out_layer, clip_layer, '#', 'ClippingGeometry')
         else:
-            arcpy.AddMessage('Skipping non-Feature/RasterLayer "%s"' % lyr)
-
+            arcpy.AddMessage('"%s" skipping, not a Feature or Raster layer')
+    else:
+        if not lyr.isGroupLayer:
+            arcpy.AddMessage('"%s"\t unknown layer type, dont know what to do with it.' % lyr)
+            
+            
 print arcpy.GetMessages()
