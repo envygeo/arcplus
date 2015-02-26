@@ -17,8 +17,14 @@ else:
         # http://gis.stackexchange.com/questions/94890/error-with-data-frame-in-python-script
 
 for lyr in arcpy.mapping.ListLayers(mxd):
-    arcpy.AddMessage(lyr)
-    out_layer = os.path.join(out_gdb,lyr.name)
-    arcpy.Clip_analysis(lyr,clip_layer,out_layer)
+    if not lyr.isGroupLayer:
+        arcpy.AddMessage(lyr)
+        out_layer = os.path.join(out_gdb, lyr.name)
+        if lyr.isFeatureLayer:
+            arcpy.Clip_analysis(lyr, clip_layer, out_layer)
+        elif lyr.isRasterLayer:
+            arcpy.Clip_management(lyr, '#', out_layer, clip_layer, '#', 'ClippingGeometry')
+        else:
+            arcpy.AddMessage('Skipping non-Feature/RasterLayer "%s"' % lyr)
 
 print arcpy.GetMessages()
