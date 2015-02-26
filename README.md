@@ -80,6 +80,18 @@ See [Use Arcobjects from Python](http://gis.stackexchange.com/questions/80/how-d
 
 ## Scripts
 
+#### clip_all_layers.py
+
+Clip all layers in map to the specified polygon layer. Command line usage:
+
+    clip_all_layers "path\to\Some map.mxd" path\to\data.gdb\clip_poly path\to\destination.gdb
+
+Relative paths are interpreted relative to the mxd, not the current shell folder ([ref](http://gis.stackexchange.com/a/136826/108)).
+There's an example toolbox usage in the Tests folder.
+
+Built to support [building a map package with clippping](http://gis.stackexchange.com/questions/132352/arcgis-desktop-map-package-with-clipping).
+
+
 #### GPXtoFeaturesXY.py
 
 A small enchancement to Esri's GPXtoFeatures.py: store the original geographic coordinates as attributes.
