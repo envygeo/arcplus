@@ -99,7 +99,8 @@ id_field = validate_id(id_fieldname, inDesc)
 inRows = arcpy.SearchCursor(inputFC)
 inRow = inRows.next()
 
-outFile.write("//{0}\n".format(inDesc.ShapeType))
+## This confuses ANUDEM, leave out for now.
+##outFile.write("//{0}\n".format(inDesc.ShapeType))
 
 while inRow:
     feat = inRow.getValue(inDesc.ShapeFieldName)
@@ -138,6 +139,7 @@ while inRow:
                     pnt = part.next()
                     if pnt:
                         outFile.write("InteriorRing\n")
+                        outFile.write("{0}, {1}\n".format(inRow.getValue(id_field), str(partnum))) # begin new feature
             outFile.write("END\n") # end feature
             partnum += 1
     inRow = inRows.next()
