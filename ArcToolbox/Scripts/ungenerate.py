@@ -17,12 +17,14 @@ http://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=An_overview_of_the
 import string, os, sys, locale
 
 Usage = '''
-Usage: ungenerate (in feature class) (out filename) (decimal separator, #) (ID field, #)
+Usage: ungenerate (in feature class) (out filename, #) (decimal separator, #) (ID field, #) {SQL where clause}
 
-       '#' means use default
+       '#' = use default
+       { } = optional
 
     ungenerate D:\data\park_bound.shp x:\scratch\parks.gen # #
     ungenerate D:\data\park_bound.shp x:\scratch\parks.gen comma ParkName
+    ungenerate D:\data\park_bound.shp x:\scratch\parks.gen comma ParkName """Type""" LIKE '%Territorial%'"
 '''
 if len(sys.argv) < 5:
     print Usage
@@ -30,10 +32,21 @@ if len(sys.argv) < 5:
 
 import arcpy
 
+
 inputFC = arcpy.GetParameterAsText(0)
 outFile = arcpy.GetParameterAsText(1)
 decimalchar = arcpy.GetParameterAsText(2)
 id_fieldname = arcpy.GetParameterAsText(3)
+
+argcount = arcpy.GetArgumentCount()
+if argcount > 4:
+    where_clause = ' '.join([arcpy.GetParameterAsText(x) for x in range(4, argcount)])
+    print '\nSELECT * WHERE:\t', where_clause
+else:
+    where_clause = None
+
+if outFile[-1] == '#':
+    outFile = os.path.join(os.path.basename(inputFC), '.gen')
 
 msgNotEnoughParams = "Incorrect number of input parameters."
 msgUseValidDecimalPointSep = "Please use one of the valid decimal point separators."
@@ -96,7 +109,7 @@ arcpy.AddMessage('\n--- {0}'.format(inputFC))
 inDesc = arcpy.Describe(inputFC)
 id_field = validate_id(id_fieldname, inDesc)
 
-inRows = arcpy.SearchCursor(inputFC)
+inRows = arcpy.SearchCursor(inputFC, where_clause)
 inRow = inRows.next()
 
 ## This confuses ANUDEM, leave out for now.
@@ -138,8 +151,7 @@ while inRow:
                 if not pnt:
                     pnt = part.next()
                     if pnt:
-                        outFile.write("InteriorRing\n")
-                        outFile.write("{0}, {1}\n".format(inRow.getValue(id_field), str(partnum))) # begin new feature
+                        outFile.write("InteriorRing\n%s\n" % partnum)
             outFile.write("END\n") # end feature
             partnum += 1
     inRow = inRows.next()
