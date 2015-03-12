@@ -119,17 +119,19 @@ while inRow:
     feat = inRow.getValue(inDesc.ShapeFieldName)
     if inDesc.ShapeType.lower() == "point":
         pnt = feat.getPart()
-        outLine = "{0}, {1}, {2}, {3}, {4}\n".format(inRow.getValue(id_field), pnt.X, pnt.Y, pnt.Z, pnt.M)
+##        outLine = "{0},{1},{2},{3},{4}\n".format(inRow.getValue(id_field), pnt.X, pnt.Y, pnt.Z, pnt.M)
+        outLine = "{0},{1},{2}\n".format(inRow.getValue(id_field), pnt.X, pnt.Y)
         if sepchar == "": outFile.write(outLine)
         else: outFile.write(outLine.replace(".", sepchar))
 
     elif inDesc.ShapeType.lower() == "multipoint":
         partnum = 0
         partcount = feat.partCount
-        outFile.write("{0}, {1}\n".format(inRow.getValue(id_field), str(partnum))) # begin new feature
+        outFile.write("{0},{1}\n".format(inRow.getValue(id_field), str(partnum))) # begin new feature
         while partnum < partcount:
             pnt = feat.getPart(partnum)
-            outLine = "{0}, {1}, {2}, {3}, {4}\n".format(partnum, pnt.X, pnt.Y, pnt.Z, pnt.M)
+##            outLine = "{0},{1},{2},{3},{4}\n".format(partnum, pnt.X, pnt.Y, pnt.Z, pnt.M)
+            outLine = "{0},{1},{2}\n".format(partnum, pnt.X, pnt.Y)
             if sepchar == "": outFile.write(outLine)
             else: outFile.write(outLine.replace(".", sepchar))
             partnum += 1
@@ -137,13 +139,15 @@ while inRow:
         partnum = 0
         partcount = feat.partCount
         while partnum < partcount:
-            outFile.write("{0}, {1}\n".format(inRow.getValue(id_field), str(partnum))) # begin new feature
+##            outFile.write("{0},{1}\n".format(inRow.getValue(id_field), str(partnum))) # begin new feature
+            outFile.write("{0}\n".format(inRow.getValue(id_field))) # begin new feature
             part = feat.getPart(partnum)
             part.reset()
             pnt = part.next()
             pnt_count = 0
             while pnt:
-                outLine = "{0}, {1}, {2}, {3}\n".format(pnt.X, pnt.Y, pnt.Z, pnt.M)
+##                outLine = "{0},{1},{2},{3}\n".format(pnt.X, pnt.Y, pnt.Z, pnt.M)
+                outLine = "{0},{1}\n".format(pnt.X, pnt.Y)
                 if sepchar == "": outFile.write(outLine)
                 else: outFile.write(outLine.replace(".", sepchar))
                 pnt = part.next()
@@ -151,11 +155,13 @@ while inRow:
                 if not pnt:
                     pnt = part.next()
                     if pnt:
-                        outFile.write("InteriorRing\n%s\n" % partnum)
+##                        outFile.write("InteriorRing\n%s\n" % partnum)
+                        outFile.write("END\n") # end feature part
+                        outFile.write("{0},{1}\n".format(inRow.getValue(id_field), str(pnt_count))) # begin new feature part
             outFile.write("END\n") # end feature
             partnum += 1
     inRow = inRows.next()
-outFile.write("END")
+outFile.write("END\n")
 outFile.flush()
 outFile.close()
 arcpy.AddMessage('Wrote {0}'.format(outFile.name))
