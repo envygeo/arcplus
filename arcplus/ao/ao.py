@@ -149,7 +149,7 @@ def Msg(message="Hello world", title="PythonDemo"):
 
 #**** Standalone ****
 
-def Standalone_OpenFileGDB():
+def Standalone_OpenFileGDB(gdb):
 
     GetStandaloneModules()
     if not InitStandalone():
@@ -158,7 +158,8 @@ def Standalone_OpenFileGDB():
     import comtypes.gen.esriGeoDatabase as esriGeoDatabase
     import comtypes.gen.esriDataSourcesGDB as esriDataSourcesGDB
 
-    sPath = "c:/apps/Demo/Montgomery_full.gdb"
+    #sPath = "c:/apps/Demo/Montgomery_full.gdb"
+    sPath = gdb
     pWSF = NewObj(esriDataSourcesGDB.FileGDBWorkspaceFactory, \
                   esriGeoDatabase.IWorkspaceFactory)
     pWS = pWSF.OpenFromFile(sPath, 0)
@@ -254,6 +255,39 @@ def Standalone_CreateTable():
     pRow = pOutTable.CreateRow()
     pRow.Value[iField] = "I sleep all night and I work all day"
     pRow.Store()
+
+def GetModifiedDate(gdb, tableName):
+    """Return last modified date stamp (in seconds) for the Geodatabase table
+
+    Courtesy of Micah Babinski
+    https://geonet.esri.com/message/453427#453427
+    """
+    # Setup
+    GetStandaloneModules()
+    InitStandalone()
+    import comtypes.gen.esriSystem as esriSystem
+    import comtypes.gen.esriGeoDatabase as esriGeoDatabase
+    import comtypes.gen.esriDataSourcesGDB as esriDataSourcesGDB
+
+    # Open the FGDB
+    pWS = Standalone_OpenFileGDB(gdb)
+
+    # Create empty Properties Set
+    pPropSet = NewObj(esriSystem.PropertySet, esriSystem.IPropertySet)
+    pPropSet.SetProperty("database", gdb)
+
+    # Cast the FGDB as IFeatureWorkspace
+    pFW = CType(pWS, esriGeoDatabase.IFeatureWorkspace)
+
+    # Open the table
+    pTab = pFW.OpenTable(tableName)
+
+    # Cast the table as a IDatasetFileStat
+    pDFS = CType(pTab, esriGeoDatabase.IDatasetFileStat)
+
+    # Get the date modified
+    return pDFS.StatTime(2)
+
 
 # ***************************************************************
 # NOTE: The following examples, by default, expect to be run
