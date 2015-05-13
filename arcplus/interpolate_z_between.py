@@ -4,16 +4,24 @@ Interpolate missing Z values along a 3D line.
 Adapted from @Tomek's work at
 http://gis.stackexchange.com/a/18655/108
 '''
+from arcplus import ao
 
-# import arcobjects liberaries
-esriSystem = GetModule("C:/Program Files (x86)/ArcGIS/Desktop10.0/com/esriSystem.olb")
-esriGeometry = GetModule("C:/Program Files (x86)/ArcGIS/Desktop10.0/com/esriGeometry.olb")
-esriDataSourcesGDB = GetModule("C:/Program Files (x86)/ArcGIS/Desktop10.0/com/esriDataSourcesGDB.olb")
-esriGeoDatabase = GetModule("C:/Program Files (x86)/ArcGIS/Desktop10.0/com/esriGeoDatabase.olb")
+sPath = r'd:\s\test.gdb'
+fcName = 'centerline'
+
+# import arcobjects libraries
+ao.GetStandaloneModules()
+ao.InitStandalone()
+import comtypes.gen.esriSystem as esriSystem
+import comtypes.gen.esriGeoDatabase as esriGeoDatabase
+import comtypes.gen.esriDataSourcesGDB as esriDataSourcesGDB
+
+### Open the FGDB
+##pWS = ao.Standalone_OpenFileGDB(gdb)
 
 # open geodatabase and featureclass
-pWSF = CreateObject(esriDataSourcesGDB.FileGDBWorkspaceFactory, interface=esriGeoDatabase.IWorkspaceFactory)
-pWS = pWSF.OpenFromFile(str(DbPath), 0)
+pWSF = ao.NewObj(esriDataSourcesGDB.FileGDBWorkspaceFactory, esriGeoDatabase.IWorkspaceFactory)
+pWS = pWSF.OpenFromFile(sPath, 0)
 pFWS = pWS.QueryInterface(esriGeoDatabase.IFeatureWorkspace)
 pFClass = pFWS.OpenFeatureClass(str(fcName))
 
@@ -26,7 +34,7 @@ while pFeat:
     pShape = pFeat.ShapeCopy # clone shape of current feature
     pIZ = pShape.QueryInterface(esriGeometry.IZ2) #set IZ interface on the data - allow for interpolation of the Z value
     IPointCollection = pShape.QueryInterface(esriGeometry.IPointCollection) # set IPointCollection interface on the data - allow for points manipulation within the point collection
-    IPoint = CreateObject(esriGeometry.Point, interface=esriGeometry.IPoint) # create Point object with IPoint interface
+    IPoint = ao.NewObj(esriGeometry.Point, esriGeometry.IPoint) # create Point object with IPoint interface
     pStart = 0 # set pStart parameter to index[0]
 
 # loop trough IPointCollection within the polyline, find pStart and pEnd point within the polyline for IZ.InterpolateZsBetween
@@ -43,9 +51,3 @@ while pFeat:
             pFCursor.UpdateFeature(pFeat)
             pStart = pEnd
     pFeat = pFCursor.NextFeature()
-
-def main():
-    pass
-
-if __name__ == '__main__':
-    main()
