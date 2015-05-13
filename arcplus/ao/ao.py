@@ -140,7 +140,8 @@ def GetCurrentApp():
     import comtypes.gen.esriFramework as esriFramework
     return NewObj(esriFramework.AppRef, esriFramework.IApplication)
 
-def Msg(message="Hello world", title="PythonDemo"):
+def Msg(message="Hello world", title="Python ArcObjects"):
+    """Open message dialog box with ok button"""
     from ctypes import c_int, WINFUNCTYPE, windll
     from ctypes.wintypes import HWND, LPCSTR, UINT
     prototype = WINFUNCTYPE(c_int, HWND, LPCSTR, LPCSTR, UINT)
@@ -150,7 +151,7 @@ def Msg(message="Hello world", title="PythonDemo"):
 #**** Standalone ****
 
 def Standalone_OpenFileGDB(gdb):
-
+    """Open file geodatabase and return as esri workspace object"""
     GetStandaloneModules()
     if not InitStandalone():
         print "We've got lumps of it 'round the back..."
@@ -169,7 +170,7 @@ def Standalone_OpenFileGDB(gdb):
     return pWS
 
 def Standalone_OpenSDE():
-
+    """demo func, values are hardcoded"""
     GetStandaloneModules()
     InitStandalone()
     import comtypes.gen.esriSystem as esriSystem
@@ -191,7 +192,7 @@ def Standalone_OpenSDE():
     return pWS
 
 def Standalone_QueryDBValues():
-
+    """demo func, values are hardcoded"""
     GetStandaloneModules()
     InitStandalone()
     import comtypes.gen.esriServer as esriSystem
@@ -219,7 +220,7 @@ def Standalone_QueryDBValues():
         print "Null value"
 
 def Standalone_CreateTable():
-
+    """demo func, values are hardcoded"""
     GetStandaloneModules()
     InitStandalone()
     import comtypes.gen.esriServer as esriSystem
