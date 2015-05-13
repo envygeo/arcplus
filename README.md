@@ -5,8 +5,11 @@ arcplus
 
 ## Quick Start
 
- 1. Open a [pip](https://pip.pypa.io/en/latest/installing.html) and an ArcGIS python enabled command shell, then run
-    `pip install https://github.com/maphew/arcplus/archive/master.zip`
+ 1. Open a [pip](https://pip.pypa.io/en/latest/installing.html) and an ArcGIS python enabled command shell, then install *[patched comtypes](https://github.com/enthought/comtypes/pull/75)* and *arcplus*:
+	
+	    pip install https://github.com/maphew/comtypes/archive/patch-1.zip
+	    pip install https://github.com/maphew/arcplus/archive/master.zip
+
  2. Run python and:
 
     ``` 
