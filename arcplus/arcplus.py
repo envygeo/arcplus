@@ -53,3 +53,24 @@ def listAllFeatureClasses (gdb,**kwargs):
             fcs.append(os.path.join(fds,fc))
 
     return fcs
+
+def layer_from_selected(layer):
+	''' Create in-memory layer using only selected features of the input layer.
+
+		Basically this is to replicate the functionality of "{Layer} >> r-click >> Selection >> Create Layer from Selected Features" in a manner that can used in a python script.
+
+		Arguments:	Layer with selected features
+
+	Adapted from @Pete
+	http://gis.stackexchange.com/questions/63717/use-a-selection-of-features-in-arcmap-in-python-script/63743#63743
+	'''
+	import arcpy
+	arcpy.env.workspace = "in_memory"
+	results_layer = layer + "_selection"
+	#this will create a new feature class from the selected features but will do it In Memory
+	arcpy.CopyFeatures_management(layer, results_layer)
+	#Now do all the other stuff you want like convert it to a layer and work with it
+	arcpy.MakeFeatureLayer_management(results_layer)
+	return
+
+
