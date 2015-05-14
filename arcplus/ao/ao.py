@@ -2,9 +2,8 @@
 
 ...most definitely a work in progess...
 
-
 Requirements:
-    comtypes module, https://pypi.python.org/pypi/comtypes
+    Pathed comtypes module, https://github.com/enthought/comtypes/pull/75
 
 Adapted from Mark Cederholm's "Using ArcObjects in Python":
     http://www.pierssen.com/arcgis/misc.htm
@@ -12,29 +11,26 @@ Adapted from Mark Cederholm's "Using ArcObjects in Python":
 Also see:
     http://gis.stackexchange.com/questions/80/how-do-i-access-arcobjects-from-python/
 '''
-
-# Snippets.py
-# ************************************************
-# Updated for ArcGIS 10.2
-# ************************************************
-# Requires installation of the comtypes package
-# Available at: http://sourceforge.net/projects/comtypes/
-# Once comtypes is installed, the following modifications
-# need to be made for compatibility with ArcGIS 10.2:
-# 1) Delete automation.pyc, automation.pyo, safearray.pyc, safearray.pyo
-# 2) Edit automation.py
-# 3) Add the following entry to the _ctype_to_vartype dictionary (line 794):
-#    POINTER(BSTR): VT_BYREF|VT_BSTR,
-# ************************************************
-
 #**** Initialization ****
 
 def GetLibPath():
     """Return location of ArcGIS type libraries as string"""
     # This will still work on 64-bit machines because Python runs in 32 bit mode
     import _winreg
-    keyESRI = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\ESRI\\Desktop10.3")
-    return _winreg.QueryValueEx(keyESRI, "InstallDir")[0] + "com\\"
+    HKLM = _winreg.HKEY_LOCAL_MACHINE
+    keyESRI = _winreg.OpenKey(HKLM, "SOFTWARE\\ESRI")
+
+    # retrieve key name of highest Desktop version
+    L = []
+    for i in xrange(_winreg.QueryInfoKey(keyESRI)[0]):
+        key = _winreg.EnumKey(keyESRI, i)
+        if 'Desktop' in key:
+            L.append(float(key.replace('Desktop','')))
+    latest = 'Desktop{}'.format(sorted(L)[-1])
+
+    keyDesktop = _winreg.OpenKey(HKLM, "SOFTWARE\\ESRI\\{}".format(latest))
+
+    return _winreg.QueryValueEx(keyDesktop, "InstallDir")[0] + "com\\"
 
 def GetModule(sModuleName):
     """Import ArcGIS module"""
