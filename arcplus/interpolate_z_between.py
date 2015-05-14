@@ -1,6 +1,8 @@
 '''
 Interpolate missing Z values along a 3D line.
 
+*** BROKEN ***
+
 Adapted from @Tomek's work at
 http://gis.stackexchange.com/a/18655/108
 '''
@@ -31,6 +33,7 @@ pFeat = pFCursor.NextFeature()
 
 # loop trough features in featureclass
 while pFeat:
+    print "--- Feature:", pFeat.OID
     pShape = pFeat.ShapeCopy # clone shape of current feature
     pIZ = pShape.QueryInterface(esriGeometry.IZ2) #set IZ interface on the data - allow for interpolation of the Z value
     IPointCollection = pShape.QueryInterface(esriGeometry.IPointCollection) # set IPointCollection interface on the data - allow for points manipulation within the point collection
@@ -43,7 +46,9 @@ while pFeat:
 
 # selection of the pStart and pEnd properties based on points Z value and interpolation of the vertexes within the polyline
         if i==0: # skip value at index[0]
-            pass
+##            pass
+            print '\tSkipping point:', i
+            continue
         elif IPoint.Z != 0: # assign pEnd and pStart if Z value of the point (vertex) is larger than 0.01 (0.01 not 0 as 0 in arcgis is returned in python as 4.54747350886e-013)
             pEnd = i
             pIZ.InterpolateZsBetween(0,pStart,0,pEnd) # program assumes that is dealing with single part polylines
