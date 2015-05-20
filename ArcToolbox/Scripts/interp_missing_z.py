@@ -11,15 +11,24 @@ Tool assumes:
     c) selected features maintain direction, i.e. upstream line END point equal downstream line START point
     d) missing z value for vertex is 0
 '''
-import arcpy, traceback, os, sys
+import arcpy, traceback, os, sys, time
 from arcpy import env
 env.outputZFlag = "Enabled"
 env.outputMFlag = "Enabled"
 
+##sPath = r'd:\s\test.gdb'
+##fcName = 'Flow3D'
+mxdPath = r'D:\p\ytdemv3\work_105mn\Rivers.mxd'
+
+def showPyMessage():
+    arcpy.AddMessage(str(time.ctime()) + " - " + message)
+
 try:
-    def showPyMessage():
-        arcpy.AddMessage(str(time.ctime()) + " - " + message)
-    mxd = arcpy.mapping.MapDocument("CURRENT")
+    if not os.path.exists(mxdPath):
+        mxd = arcpy.mapping.MapDocument("CURRENT")
+    else:
+        mxd = arcpy.mapping.MapDocument(mxdPath)
+
     destLR = arcpy.mapping.ListLayers(mxd)[0]
     dDest=arcpy.Describe(destLR)
     destProj=dDest.spatialReference
@@ -90,6 +99,8 @@ except:
     message = "\n*** PYTHON ERRORS *** "; showPyMessage()
     message = "Python Traceback Info: " + traceback.format_tb(sys.exc_info()[2])[0]; showPyMessage()
     message = "Python Error Info: " +  str(sys.exc_type)+ ": " + str(sys.exc_value) + "\n"; showPyMessage()
+
+print arcpy.GetMessages()
 
 def main():
     pass
