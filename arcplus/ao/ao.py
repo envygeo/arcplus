@@ -285,6 +285,69 @@ def GetModifiedDate(gdb, tableName):
     # Get the date modified
     return pDFS.StatTime(2)
 
+def GetFileSize(gdb, tableName, featureDataset):
+    """Return gdb feature class size in human readable units (KB,MB,GB,TB)
+
+    Courtesy of Micah Babinski
+    https://geonet.esri.com/message/520828#520828
+    """
+    # Define a function which will convert bytes to a meaningful unit
+    def convert_bytes(bytes):
+        bytes = float(bytes)
+        if bytes >= 1099511627776:
+            terabytes = bytes / 1099511627776
+            size = '%.2f TB' % terabytes
+        elif bytes >= 1073741824:
+            gigabytes = bytes / 1073741824
+            size = '%.2f GB' % gigabytes
+        elif bytes >= 1048576:
+            megabytes = bytes / 1048576
+            size = '%.2f MB' % megabytes
+        elif bytes >= 1024:
+            kilobytes = bytes / 1024
+            size = '%.2f KB' % kilobytes
+        else:
+            size = '%.2 fb' % bytes
+        return size
+
+    # Setup
+    GetStandaloneModules()
+    InitStandalone()
+    import comtypes.gen.esriSystem as esriSystem
+    import comtypes.gen.esriGeoDatabase as esriGeoDatabase
+    import comtypes.gen.esriDataSourcesGDB as esriDataSourcesGDB
+
+    # Open the FGDB
+    pWS = Standalone_OpenFileGDB(gdb)
+
+    # Create empty Properties Set
+    pPropSet = NewObj(esriSystem.PropertySet, esriSystem.IPropertySet)
+    pPropSet.SetProperty("database", gdb)
+
+    # Cast the FGDB as IFeatureWorkspace
+    pFW = CType(pWS, esriGeoDatabase.IFeatureWorkspace)
+
+    # Get the info for a stand-alone table
+    if featureDataset == "standalone":
+
+        # Open the table
+        pTab = pFW.OpenTable(tableName)
+
+        # Cast the table to an IDatasetFileStat object
+        pDFS = CType(pTab, esriGeoDatabase.IDatasetFileStat)
+
+        # Return the size
+        return convert_bytes(pDFS.StatSize)
+
+    else:
+        # Open the feature class
+        pTab = pFW.OpenFeatureClass(tableName)
+
+        # Cast the table as a IDatasetFileStat
+        pDFS = CType(pTab, esriGeoDatabase.IDatasetFileStat)
+
+        # Return the size
+        return convert_bytes(pDFS.StatSize)
 
 # ***************************************************************
 # NOTE: The following examples, by default, expect to be run
