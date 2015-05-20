@@ -68,6 +68,18 @@ def NewObj(MyClass, MyInterface):
     except:
         return None
 
+def human_readable(num, suffix='B'):
+    """Return human readable size from bytes
+
+    http://stackoverflow.com/a/1094933/14420
+    (orginal by Fred Cirera)
+    """
+    for unit in ['','K','M','G','T','P','E','Z']:
+        if abs(num) < 1024.0:
+            return "%3.1f %s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f %s%s" % (num, 'Y', suffix)
+
 def CType(obj, interface):
     """Casts obj to interface and returns comtypes POINTER or None"""
     try:
@@ -291,25 +303,6 @@ def GetFileSize(gdb, tableName, featureDataset):
     Courtesy of Micah Babinski
     https://geonet.esri.com/message/520828#520828
     """
-    # Define a function which will convert bytes to a meaningful unit
-    def convert_bytes(bytes):
-        bytes = float(bytes)
-        if bytes >= 1099511627776:
-            terabytes = bytes / 1099511627776
-            size = '%.2f TB' % terabytes
-        elif bytes >= 1073741824:
-            gigabytes = bytes / 1073741824
-            size = '%.2f GB' % gigabytes
-        elif bytes >= 1048576:
-            megabytes = bytes / 1048576
-            size = '%.2f MB' % megabytes
-        elif bytes >= 1024:
-            kilobytes = bytes / 1024
-            size = '%.2f KB' % kilobytes
-        else:
-            size = '%.2 fb' % bytes
-        return size
-
     # Setup
     GetStandaloneModules()
     InitStandalone()
@@ -347,7 +340,7 @@ def GetFileSize(gdb, tableName, featureDataset):
         pDFS = CType(pTab, esriGeoDatabase.IDatasetFileStat)
 
         # Return the size
-        return convert_bytes(pDFS.StatSize)
+        return human_readable(pDFS.StatSize)
 
 # ***************************************************************
 # NOTE: The following examples, by default, expect to be run
