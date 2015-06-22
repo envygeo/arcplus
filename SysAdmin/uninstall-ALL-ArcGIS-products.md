@@ -6,7 +6,7 @@ Does not work for programs like ArcPad which don't use msi to install in the fir
 
 ## Install
 1. Download [uninstall-ALL-ArcGIS-products.bat](https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.bat) and save somewhere handy. 
-2. Ditto for save the [product list](https://github.com/maphew/arcplus/blob/master/SysAdmin/product-codes.txt) *(last updated 2014-Oct-16)*, or make your own.
+2. Ditto for save the [product list](https://github.com/maphew/arcplus/blob/master/SysAdmin/product-codes.txt) *(last updated 2015-Jun-22)*, or make your own.
 
 
 ## Usage  
@@ -22,9 +22,11 @@ In the default mode it's normal for a the progress window to flicker constantly 
 
 
 ---------
-Product codes were taken from [Esri KB 28709 - Silently uninstall ArcGIS products](http://support.esri.com/en/knowledgebase/techarticles/detail/28709) *(Last Modified: 11/2/2012)*
+Product codes were taken from [Esri KB 28709 - Silently uninstall ArcGIS products](http://support.esri.com/en/knowledgebase/techarticles/detail/28709) *(Last Modified: 5/14/2014)*
 
-The list in that page is not complete. Product Codes for most Esri setups can be found in the setup.ini file delivered with the other installation files. (Please feel free to issue a pull request if you find product codes we're missing here. Also please feel free to contribute an .ini scraper!)
+The list was then manually supplemented by looking at the `setup.ini` for the various products I have installation media for.   
+
+Please feel free to issue a pull request if you find product codes we're missing here. Also please feel free to contribute an .ini scraper!
 
 ### Syntax of *product-codes.txt*
 
