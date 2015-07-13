@@ -20,12 +20,13 @@ except:
     from xml.etree import ElementTree as ET
 
 import arcpy
+import time
 
 gpx = ET.Element("gpx", xmlns="http://www.topografix.com/GPX/1/1",
               xalan="http://xml.apache.org/xalan",
               xsi="http://www.w3.org/2001/XMLSchema-instance",
               creator="Esri",
-              version="1.0")
+              version="1.1")
 
 
 def prettify(elem):
@@ -84,8 +85,8 @@ def generatePointsFromFeatures(inputFC, descInput):
         try:
             valuesDict["DateTime"] = row[fieldNameDict["DateTime"]].strftime("%Y-%m-%dT%H:%M:%SZ") #if "DateTime" in fields else " "
         except:
-            valuesDict["DateTime"] = " "
-
+            print "*** Error getting timestamp, setting to zero"
+            valuesDict["DateTime"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(0))
         return
     #-------------end helper function-----------------
 
@@ -172,6 +173,7 @@ def generatePointsFromFeatures(inputFC, descInput):
             trkPtTime = ET.SubElement(trkPt, "time")
             trkPtTime.text = valuesDict["DateTime"]
 
+    print "Finished generatePointsFromFeatures()"
 
 
 if __name__ == "__main__":
@@ -180,4 +182,4 @@ if __name__ == "__main__":
     inputFC = arcpy.GetParameterAsText(0)
     outGPX = arcpy.GetParameterAsText(1)
     pretty = arcpy.GetParameterAsText(2)
-    featuresToGPX(inputFC, outGPX, pretty=pretty)
+    featuresToGPX(inputFC, outGPX, pretty=False)
