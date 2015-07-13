@@ -21,6 +21,7 @@ except:
 
 import arcpy
 import time
+from datetime import datetime
 
 gpx = ET.Element("gpx", xmlns="http://www.topografix.com/GPX/1/1",
               xalan="http://xml.apache.org/xalan",
@@ -82,11 +83,19 @@ def generatePointsFromFeatures(inputFC, descInput):
         valuesDict["Name"] = row[fieldNameDict["Name"]] if "Name" in fields else " "
         valuesDict["Descript"] = row[fieldNameDict["Descript"]] if "Descript" in fields else " "
 
-        try:
-            valuesDict["DateTime"] = row[fieldNameDict["DateTime"]].strftime("%Y-%m-%dT%H:%M:%SZ") #if "DateTime" in fields else " "
-        except:
-            print "*** Error getting timestamp, setting to zero"
-            valuesDict["DateTime"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(0))
+        if "DateTime" in fields:
+            row_time = row[fieldNameDict["DateTime"]]
+            try:
+                formatted_time = datetime.strftime(row_time, "%Y-%m-%dT%H:%M:%SZ")
+            except Exception as e:
+                arcpy.AddWarning("Failed to parse DateTime field. GPX times set to epoch zero")
+                formatted_time = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(0))
+            valuesDict["DateTime"] = formatted_time
+        else:
+            arcpy.AddWarning("DateTime field not found, setting GPX times to epoch zero")
+            formatted_time = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(0))
+            valuesDict["DateTime"] = formatted_time
+
         return
     #-------------end helper function-----------------
 
