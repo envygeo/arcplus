@@ -51,11 +51,14 @@ def featuresToGPX(inputFC, outGPX, pretty=False):
 
     generatePointsFromFeatures(inputFC , descInput)
 
+    print 'Prettify?', pretty
+
     # Write the output GPX file
     try:
         gpxFile = open(outGPX, "w")
-        if pretty:
-            ET.ElementTree(gpx).write(prettify(gpxFile), encoding="UTF-8", xml_declaration=True)
+        if pretty=="True":
+            gpx_pretty = prettify(gpx)
+            ET.ElementTree(gpx_pretty).write(gpxFile, encoding="UTF-8", xml_declaration=True)
         else:
             ET.ElementTree(gpx).write(gpxFile, encoding="UTF-8", xml_declaration=True)
     except TypeError:
@@ -83,12 +86,16 @@ def generatePointsFromFeatures(inputFC, descInput):
         valuesDict["Name"] = row[fieldNameDict["Name"]] if "Name" in fields else " "
         valuesDict["Descript"] = row[fieldNameDict["Descript"]] if "Descript" in fields else " "
 
+        # GPX 'time' value must not be empty. Attempt to read from attribute list
+        # or set to Zero
         if "DateTime" in fields:
             row_time = row[fieldNameDict["DateTime"]]
             try:
                 formatted_time = datetime.strftime(row_time, "%Y-%m-%dT%H:%M:%SZ")
+                    # note reversed param order vs later time.strftime() is correct
             except Exception as e:
                 arcpy.AddWarning("Failed to parse DateTime field. GPX times set to epoch zero")
+                    # todo: emit only once instead of for each feature
                 formatted_time = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(0))
             valuesDict["DateTime"] = formatted_time
         else:
@@ -191,4 +198,4 @@ if __name__ == "__main__":
     inputFC = arcpy.GetParameterAsText(0)
     outGPX = arcpy.GetParameterAsText(1)
     pretty = arcpy.GetParameterAsText(2)
-    featuresToGPX(inputFC, outGPX, pretty=False)
+    featuresToGPX(inputFC, outGPX, pretty=pretty)
