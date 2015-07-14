@@ -3,15 +3,24 @@ Tool Name:  Features to GPX
 Source Name: FeaturesToGPX.py
 Version: ArcGIS 10.1
 Author: Esri
+Contributors: Matt Wilkie,
 
 Required Arguments:
          Input Features: path to layer or featureclass on disk
          Output Feature Class: path to GPX which will be created
 
+Optional Arguments:
+         Make Pretty: True/False. Create GPX files which are easier to read in a
+         text editor.
+
 Description:
-         This tool takes input features (layers or featureclass) with either point or line geometry and converts into
-         a .GPX file. Points and multipoint features are converted in to WPTs, lines are converted into TRKS. If the
-         features conform to a known schema, the output GPX file will honor those fields.
+         This tool takes input features (layers or featureclass) with either
+         point or line geometry and converts into a .GPX file. Points and
+         multipoint features are converted in to WPTs, lines are converted into
+         TRKS. If the features conform to a known schema, the output GPX file
+         will honor those fields. If DateTime field does not exist or cannot be
+         parsed the "time" GPX element is set to system's epoch zero (usually
+         1970-Jan-01).
 '''
 
 try:
@@ -32,13 +41,13 @@ gpx = ET.Element("gpx", xmlns="http://www.topografix.com/GPX/1/1",
 
 def prettify(elem):
     """Return a pretty-printed XML string for the Element.
-    This function not used, but can be used to create GPX files which are easier to read in a text editor.
+    This function not used, but can be used to create GPX files which are easier
+    to read in a text editor.
     """
     from xml.dom import minidom
     rough_string = ET.tostring(elem, 'utf-8')
     reparsed = minidom.parseString(rough_string)
     return reparsed.toprettyxml(indent="  ")
-
 
 
 def featuresToGPX(inputFC, outGPX, pretty=False):
@@ -65,7 +74,6 @@ def featuresToGPX(inputFC, outGPX, pretty=False):
         arcpy.AddError("Error serializing GPX into the file.")
     finally:
         gpxFile.close()
-
 
 
 def generatePointsFromFeatures(inputFC, descInput):
