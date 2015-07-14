@@ -60,14 +60,11 @@ def featuresToGPX(inputFC, outGPX, pretty=False):
 
     generatePointsFromFeatures(inputFC , descInput)
 
-    print 'Prettify?', pretty
-
     # Write the output GPX file
     try:
         gpxFile = open(outGPX, "w")
         if pretty=="True":
-            gpx_pretty = prettify(gpx)
-            ET.ElementTree(gpx_pretty).write(gpxFile, encoding="UTF-8", xml_declaration=True)
+            gpxFile.write(prettify(gpx))
         else:
             ET.ElementTree(gpx).write(gpxFile, encoding="UTF-8", xml_declaration=True)
     except TypeError:
@@ -196,8 +193,6 @@ def generatePointsFromFeatures(inputFC, descInput):
             trkPtEle.text = valuesDict["Elevation"]
             trkPtTime = ET.SubElement(trkPt, "time")
             trkPtTime.text = valuesDict["DateTime"]
-
-    print "Finished generatePointsFromFeatures()"
 
 
 if __name__ == "__main__":
