@@ -63,7 +63,7 @@ def featuresToGPX(inputFC, outGPX, pretty=False):
     # Write the output GPX file
     try:
         gpxFile = open(outGPX, "w")
-        if pretty=="True":
+        if pretty.lower() == "true":
             gpxFile.write(prettify(gpx))
         else:
             ET.ElementTree(gpx).write(gpxFile, encoding="UTF-8", xml_declaration=True)
@@ -201,4 +201,5 @@ if __name__ == "__main__":
     inputFC = arcpy.GetParameterAsText(0)
     outGPX = arcpy.GetParameterAsText(1)
     pretty = arcpy.GetParameterAsText(2)
+
     featuresToGPX(inputFC, outGPX, pretty=pretty)
