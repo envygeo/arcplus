@@ -24,7 +24,7 @@ def GetLibPath():
     L = []
     for i in xrange(_winreg.QueryInfoKey(keyESRI)[0]):
         key = _winreg.EnumKey(keyESRI, i)
-        if 'Desktop' in key:
+        if key[:7] == 'Desktop':
             L.append(float(key.replace('Desktop','')))
     latest = 'Desktop{}'.format(sorted(L)[-1])
 
