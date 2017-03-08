@@ -2,6 +2,8 @@
 
 I'm tired of looking up data type definitions in hard to use PDF. So here are better renditions of Esri's [Geoprocessing_data_types.pdf][0] by way of the most excellent tool for liberating data from PDF: [Tabula][1].
 
+View the result via **RawGit**: **[Geoprocessing_data_types.html][4]**
+
 ## Processing workflow
 
  1. pdf >> Tabula --> csv, json
@@ -36,3 +38,4 @@ I'm tired of looking up data type definitions in hard to use PDF. So here are be
  [1]:http://tabula.technology/
  [2]:https://shancarter.github.io/mr-data-converter/
  [3]:http://www.convertcsv.com/csv-to-html.htm
+ [4]: https://cdn.rawgit.com/maphew/arcplus/59e89dde/docs/Geoprocessing_data_types.html
