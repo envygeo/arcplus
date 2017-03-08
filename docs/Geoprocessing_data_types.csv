@@ -1,0 +1,99 @@
+Data Type,Description,String Syntax1,Scripting Object3,ArcObjects
+Address locator,"A dataset, used for geocoding, that stores the addressattributes, associated indexes, and rules that define theprocess for translating nonspatial descriptions of places tospatial data. [.loc]",catalogPath,. _ .,DEAddressLocator
+Address locator style,A template on which to base the new address locator. [.lot],catalogPath,. _ .,GPAddressLocatorStyle
+Analysis cell size,The cell size used by raster tools.,cellSize | catalogPath,. _ .,GPAnalysisCellSize
+Any value,A data type that accepts any value.,any value,. _ .,GPType [abstract datatype]
+ArcMap Document,"A file that contains one map, its layout, and its associatedlayers, tables, charts, and reports. [.mxd]",catalogPath,. _ .,DEMapDocument
+Area units,"An areal unit type and value such as square meter oracre.","arealUnit unitOfMeasureunitOfMeasure keywords: ACRES | ARES | HECTARES | SQUARECENTIMETERS |SQUAREDECIMETERS | SQUAREINCHES | SQUAREFEET | SQUAREKILOMETERS |SQUAREMETERS | SQUAREMILES | SQUAREMILLIMETERS | SQUAREYARDS | SQUAREMAPUNITS|UNKNOWN",. _ .,GPArealUnit
+Boolean,A boolean value.,TRUE | FALSE,. _ .,GPBoolean
+CAD Drawing Dataset,"A vector data source with a mix of feature types withsymbology. The dataset is not usable for feature class-based queries or analysis.",catalogPath,. _ .,DECadDrawingDataset
+Catalog Root,The top-level node in the catalog tree.,catalogPath,. _ .,DECatalogRoot
+Cell Size,The cell size used by Spatial Analyst.,MAXOF | MINOF | value,. _ .,GPSACellSize
+Composite Datatype,A collection of datatypes.,... dependent on datatypes in collection...,. _ .,"GPCompositeDataType  [abstractdatatype]"
+Composite Layer,"A reference to a several children layers, includingsymbology and rendering properties.",layerName | catalogPath,. _ .,"GPCompositeLayerDECompositeLayer"
+Compression,Specifies the type of compression used for a raster.,"LZ77 |JPEG |JPEG2000 |NONE",. _ .,GPRasterGDBEnvCompression
+Coordinate System,"A reference framework—such as the UTMsystem—consisting of a set of points, lines, and/orsurfaces, and a set of rules, used to define the positions ofpoints in two and three dimensional space.",catalogPath,. _ .,GPCooridnateSystem
+Coordinate Systems Folder,A folder on disk storing coordinate systems.,catalogPath,. _ .,DESpatialReferencesFolder
+Coverage,"A courage dataset, a proprietary data model for storinggeographic features as points, arcs, polygons withassociated feature attribute tables.",catalogPath,. _ .,DECoverage
+Coverage Feature Class,"A coverage feature classes such as point, arc, node,route, route system, section, polygon, and region.",catalogPath,. _ .,"DECoverageFeatureClassICoverageFeatureClassICoverageFeatureClass2"
+Database Connections,The database connection folder in ArcCatalog.,catalogPath,. _ .,DEDiskConnection
+Dataset,"A collection of related data, usually grouped or storedtogether.",catalogPath,. _ .,DEDatasetType [abstract datatype ]
+Date,A date value.,format depends on the regional settings of the computer;,. _ .,GPDate
+dBASE Table,Attribute data stored in dBASE format.,catalogPath,. _ .,"DEDbaseTableITable"
+Decimate,"Specifies a subset of nodes of a TIN to create ageneralized version of that TIN.","ZTOLERANCE Z_Tolerance maxNumberOfNodes |COUNT maxNumberOfNodes",. _ .,"DecimateNodesDecimateNodesByCount"
+Disk Connection,An access path to a data storage device.,catalogPath,. _ .,DEDiskConnection
+Double,"Any floating point number will be stored as a double-precision 64-bit value.",example: 5.6,. _ .,GPDouble
+Envelope,"The coordinate pairs that define the minimum boundingrectangle the data source fall within.",X_Minimum Y_Minimum X_Maximum Y_Maximum,. _ .,GPEnvelope
+Evaluation Scale,"The scale value range and increment value applied toinputs in a weighted overlay operation.","EvaluationScale Minimum Maximum IncrementEvaluationScale: '1 to 9 by 1' | '1 to 5 by 1' | '1 to 3 by 1' | '-1 to 1 by 1' |'-5 to 5 by 1' | '-10 to 10 by 2'",. _ .,GPEvaluationScale
+Extent,"Specifies the coordinate pairs that define the minimumbounding rectangle (xmin, ymin and xmax, ymax) of adata source. All coordinates for the data source fall withinthis boundary.",catalogPath | X_Minimum Y_Minimum X_Maximum Y_Maximum,. _ .,GPExtent
+Feature Class,"A collection of spatial data with the same shape type:point, multipoint, polyline, polygon.",catalogPath,. _ .,"DEFeatureClassIFeatureClassICoverageFeatureClass"
+Feature Dataset,"A collection of feature classes that share a commongeographic area and the same spatial reference system.",catalogPath,. _ .,"DEFeatureDatasetIFeatureDataset"
+Feature Layer,"A reference to a feature class, including symbology andrendering properties. [.lyr]",featurelLayerName | catalogPath,. _ .,"GPFeatureLayerIFeatureLayer"
+Field,"A column in a table that stores the values for a singleattribute",fieldName,Field,"FieldIField"
+Field Info,The details about a field in a FieldMap.,"""fldName newFldName visible;fldName1 newFldName1 visible1;...;fldNameNnewFldNameN visibleN""",FieldInfo,GPFieldInfo
+Field Mappings,A collection of fields in one or more input tables.,"use String Object; use of String Syntax not recommended;catalogPath | SR_ID","FieldMap;FieldMappings",GPFieldMapping
+File,A file on disk.,catalogPath,. _ .,"DEFileIFile"
+Folder,Specifies a location on a disk where data is stored.,catalogPath,. _ .,DEFolder
+Formulated Raster,"A raster surface whose cell values are represented by aformula or constant.",catalogPath,. _ .,GPRasterFormulated
+GeoDataServer,A coarse grain object that references a geodatabase.,catalogPath,. _ .,DEGeoDataServer
+Geodataset,"A collection of data with a common theme in ageodatabase.","""catalogPath;catalogPath1;...;catalogPathN""",. _ .,[abstract datatype ]
+Geometric Network,"A linear network represented by topologically connectededge and junction features. Feature connectivity is basedon their geometric coincidence.",catalogPath,. _ .,"DEGeometricNetworkTypeDEGeometricNetwork"
+Geostatistical Value Table,"A collection of data sources and fields that define ageostatistical layer.","""catalogPath field;catalogPath1 field1;...;catalogPathN fieldN""",. _ .,GPGAValueTable
+Group Layer,"A collection of layers that appear and act as a single layer.Group layers make it easier to organize a map, assignadvanced drawing order options, and share layers for usein other maps.","""groupLayerName;groupLayerName1;...;groupLayerNameN"" |""catalogPath;catalogPath1;...;catalogPathN""",. _ .,GPGroupLayer
+Horizontal Factor,"The relationship between the horizontal cost factor andthe horizontal relative moving angle.","rasterName BINARY ZeroFactor CutAngle |catalogPath BINARY ZeroFactor CutAngle |rasterName FORWARD ZeroFactor CutAngle SideValue |catalogPath FORWARD ZeroFactor CutAngle SideValue |rasterName LINEAR ZeroFactor CutAngle Slope |catalogPath LINEAR ZeroFactor CutAngle Slope |rasterName INVERSE LINEAR ZeroFactor CutAngle Slope |catalogPath INVERSE LINEAR ZeroFactor CutAngle Slope |rasterName TABLE tableName |catalogPath TABLE tableName |rasterName TABLE catalogPath|catalogPath TABLE catalogPath",. _ .,GPSAHorizontalFactor
+Index,"A data structure used to speed the search for records in ageographic datasets and database.",number,. _ .,Index
+INFO Expression,"A syntax for defining and manipulating data in an INFOtable.","SUBSET itemName operator value |SUBSET itemName operator value CONNECTOR itemName 1 operator1 value1 CONNECTOR... CONNECTOR itemNameN operatorN valueN |ADD itemName operator value |ADD itemName operator value CONNECTOR itemName 1 operator1 value1 CONNECTOR ...CONNECTOR itemNameN operatorN valueN |SWITCH itemName operator value |SWITCH itemName operator value CONNECTOR itemName 1 operator1 value1 CONNECTOR... CONNECTOR itemNameN operatorN valueN",. _ .,GPINFOExpression
+INFO Item,An item in an INFO table.,itemName,. _ .,GPArcInfoItem
+INFO Table,A table in an INFO Database.,catalogPath,. _ .,"DEArcInfoTableIArcInfoTable"
+Layer,"A reference to a data source, such as a shapefile,coverage, geodatabase feature class, or raster, includingsymbology and rendering properties. [.lyr]",layerName | catalogPath,. _ .,[abstract datatype]
+Layer File,"A file with a .lyr extension that stores the layer defintion,including symbology and rendering properties.",catalogPath,. _ .,"DELayerILayer"
+Line,"A shape, straight or curved, defined by a connected seriesof unique x,y coordinate pairs.",coordinateList,. _ .,GPLine
+Linear unit,A linear unit type and value such as meter or feet.,"linearUnit unitOfMeasureunitOfMeasure keywords: CENTIMETERS | DECIMALDEGREES | DECIMETERS | FEET | INCHES| KILOMETERS | METERS | MILES | MILLIMETERS | NAUTICALMILES | POINTS |UNKNOWN | YARDS",. _ .,GPLinearUnit
+Long,An integer number value.,number,. _ .,GPLong
+M Domain,"A range of lowest and highest possible value for mcoordinates.",M_Minimum M_Maximum,. _ .,GPMDomain
+MultiValue,"A collection of values stored in one column in a valuetable.","""string;string1;...;stringN""",. _ .,GPMultiValue
+Neighborhood,"The shape of the area around each cell used to calculatestatistics.","ANNULUS InnerRadius OuterRadius Units |CIRCLE Radius Units |RECTANGLE Height Width Units |WEDGE StartAngle EndAngle Radius Units |IRREGULAR KernelFileName | catalogPath |WEIGHT KernelFileName or catalogPathUnits keywords: CELL | MAP",. _ .,GPSANeighborhood
+"Network Analyst ClassFieldMap","A mapping between location properties in a networkanalyst layer (such as stops, facilities, and incidents) anda point feature class.",property field defaultValue,. _ .,NAClassFieldMap
+"Network Analyst HierarchySettings","A hierarchy attribute that divides hierarchy values of anetwork dataset into three groups using two integers. Thefirst integer, high_rank_ends, sets the ending value of thefirst group; the second number, low_rank_begin, sets thebeginning value of the third group.","NONE |HIERARCHY defaultRanges |HIERARCHY customRanges upTo andHigher",. _ .,GPNAHierarchySettings
+Network Analyst Layer,"A special group layer used to express and solve networkrouting problems. Each sublayer, held in-memory, in aNetwork Analyst layer represent some aspect of therouting problem and the routing solution.",layerName | catalogPath,. _ .,"GPNALayerINALayer"
+Network Dataset,"A collection of topologically connected network elements(edges, junctions, and turns), derived from networksources and associated with a collection of networkattributes.",catalogPath,. _ .,"DENetworkDatasetINetworkDataset"
+Network Dataset Layer,"A reference to a network dataset, including symbologyand rendering properties.",layerName | catalogPath,. _ .,GPNetworkDatasetLaye
+Point,"A pair of x,y coordinates.",coordinatePair,Point,GPPoint
+Polygon,"A connected sequence of x,y coordinate pairs, where thefirst and last coordinate pair are the same.",coordinateList,. _ .,GPPolygon
+Projection File,"A file storing coordinate system information for spatialdata. [.prj]",catalogPath,. _ .,"DEPrjFileIFile"
+Pyramid,Specifies if pyramids will be built.,"NONE |PYRAMIDS pyramidLevel sampleMethodsampleMethod keywords: NEAREST | BILINEAR | CUBIC",. _ .,GPRasterGDBEnvPyramid
+Radius,"Specifies which surrounding points will be used forinterpolation.",FIXED Distance Min#OfPts | VARIABLE NumOfPts MaxDistance,. _ .,GPSARadius
+Random Number Generator,"Specifies the seed and the generator to be used whencreating random values.","seed randomGenTyperandomGenType keywords: STANDARD_C | ACM599 | MERSENNE_TWISTER",. _ .,GPRandomNumberGenerator
+Raster Band,A layer in a raster dataset.,catalogPath,. _ .,"DERasterBandIRasterBand"
+Raster Catalog,"A collection of raster datasets defined in a table; eachtable records defines an individual raster datasets in thecatalog.",catalogPath,. _ .,"DERasterCatalogIRasterCatalog"
+Raster Catalog Layer,"A reference to a raster catalog, including symbology andrendering properties.",rasterCatalogLayer | catalogPath,. _ .,"GPRasterCatalogLayerIRasterCatalogLayer"
+Raster Layer,"A reference to a raster, including symbology andrendering properties.",catalogPath,. _ .,"GPRasterLayerIRasterLayer"
+Raster Statistics,Specifies if raster statistics will be built.,"NONE |STATISTICS X-SkipFactor Y-SkipFactor statsIgnoreValue",. _ .,GPRasterGDBEnvStatistics
+Relationship Class,"The details about the relationship between objects in thegeodatabase.",catalogPath,. _ .,"DERelationshipClassIRelationshipClass"
+Remap,"A table that defines how raster cell values will bereclassified.","OldValues NewValue ClassifyMethodOldValues: number | range | string | NoDataNewValue: number | range | string | NoDataClassifyMethod keywords: MANUAL | EQUALINTERVAL | DEFINEDINTERVAL | QUANTILE |NATURALBREAKS | STANDARDDEVIATION",. _ .,"GPSANumberRemapGPSAStringRemap"
+"Route Measure EventProperties","Specifies the fields on a table that describe events thatare measured by a linear reference route system.","inEventProperties POINT mField |inEventProperties LINE fromMField toMField",. _ .,GPRouteMeasureEventProperties
+SemiVariogram,"Specifies the distance and direction representing twolocations that is used to quantify autocorrelation.","ORDINARY  SPHERICAL Lag size Major range Partial sill Nugget |ORDINARY  CIRCULAR Lag size Major range Partial sill Nugget |ORDINARY  EXPONENTIAL Lag size Major range Partial sill Nugget |ORDINARY  GAUSSIAN Lag size Major range Partial sill Nugget |ORDINARY  LINEAR  Lag size Major range Partial sill Nugget |UNIVERSAL  LINEARDRIFT Lag size Major range Partial sill Nugget |UNIVERSAL  QUADRATICDRIFT  Lag size Major range Partial sill Nugget",. _ .,GPSASemiVariogram
+Shapefile,Spatial data in shapefile format. [.shp],catalogPath,. _ .,"DEShapefileIFeatureclass"
+Spatial Reference,"The coordinate system used to store a spatial dataset,including the spatial domain.","use String Object; use of String Syntax not recommended;catalogPath | SR_ID",Spatialreference,"GPSpatialReferenceISpatialReference"
+SQL Expression,"A syntax for defining and manipulating data from arelational database.",fieldName operator value,. _ .,GPSQLExpression
+String,A text value.,any combination of characters including spaces,. _ .,GPString
+Table,Tabular data.,catalogPath,. _ .,DETable
+Table View,"A representation of tabular data for viewing and editingpurposes, stored in memory or on disk.",tableViewName | catalogPath,. _ .,"GPTableViewIFeatureclassITableILayer"
+Terrain,A multiresolution TIN.,catalogPath,. _ .,DETerrain
+Terrain Layer,"A reference to a terrain, including symbology andrendering properties. It’s used to draw a terrain.",terrainLayerName | catalogPath,. _ .,GPTerrainLayer
+Text File,Data stored in ASCII format.,catalogPath,. _ .,DETextFile
+Tile Size,"Specifies the width and the height of a data stored inblock.",width height,. _ .,GPRasterGDBEnvTileSize
+Time configuration,"Specifies the time periods used for calculating solarradiation at specific locations.","SPECIAL DAYS |WITHIN A DAY numOfDays startTime endTime |MULTIPLE DAYS IN A YEAR  year startDay endDay |WHOLE YEAR WITH MONTHLY INTERVAL year",. _ .,GPSATimeConfiguration
+"TIN  [Triangulated IrregularNetwork]","A vector data structure that partitions geographic spaceinto contiguous, non-overlapping triangles. The vertices ofeach triangle are sample data points with x-, y-, and z-values.",catalogPath,. _ .,"DETinITin"
+Topo Features,Features that are  input to the interpolation.,"catalogPath featureLayer field TypeType keywords: POINTELEVATION | CONTOUR | STREAM | SINK | BOUNDARY | LAKE",. _ .,GPSATopoFeatures
+Topology,"A topology that defines and enforces data integrity rulesfor spatial data.",catalogPath,. _ .,"DETopologyITopology"
+Topology Layer,"A reference to a topology, including symbology andrendering properties.",topologyLayerName | catalogPath,. _ .,"GPTopologyLayerITopologyLayer"
+Variant,"A data value that can contain any basic type: boolean,date, double, long, and string.",any combination of characters including spaces,. _ .,GPVariant
+ValueTable,A collection of columns of values.,catalogPath,. _ .,GPValueTable
+Vertical Factor,"Specifies the relationship between the vertical cost factorand the vertical relative moving angle.","BINARY ZeroFactor LowCutAngle HighCutAngle |LINEAR ZeroFactor LowCutAngle HighCutAngle Slope |INVERSE LINEAR ZeroFactor LowCutAngle HighCutAngle Slope |SYMMETRIC LINEAR ZeroFactor LowCutAngle HighCutAngle Slope |SYMMETRIC INVERSE LINEAR  ZeroFactor LowCutAngle HighCutAngle Slope |COS LowCutAngle HighCutAngle Power |SEC  LowCutAngle HighCutAngle Power |COS_SEC LowCutAngle HighCutAngle COS_Power SEC_Power |SEC_COS  LowCutAngle HighCutAngle COS_Power SEC_Power |TABLE tableName |TABLE catalogPath",. _ .,GPSAVerticalFactor
+VPF Coverage,Spatial data stored in Vector Product Format.,catalogPath,. _ .,DEVPFCoverage
+VPF Table,Attribute data stored in Vector Product Format.,catalogPath,. _ .,DEVPFTable
+Weighted Overlay Table,"A table with data to combine multiple rasters by applying acommon measurement scale of values to each raster,weighting each according to its importance.","""rasterName %Influence Field Remap2"";""..."" |""catalogPath %Influence Field Remap2"";""..."";",. _ .,GPSAWeightedOverlayTable
+Weighted Sum,"Specifies data for overlaying several rasters multipliedeach by their given weight and then summed.","""rasterName Field Weight"";""rasterName1 Field1 Weight1"";"" ...""; |""catalogPath Field Weight"";""catalogPath1 Field1 Weight1"";"" ..."";",. _ .,GPWeightedSum
+Workspace,A container such as a geodatabase or folder.,catalogPath,. _ .,DEWorkspace
+XY Domain,"A range of lowest and highest possible values for x,ycoordinates.",X_Minimum  Y_Minimum  X_Maximum  Y_Maximum,. _ .,GPXYDomain

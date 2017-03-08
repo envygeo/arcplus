@@ -1,0 +1,893 @@
+<style type="text/css">
+    table{border-collapse:collapse}
+    tr { vertical-align: top; border-bottom:thin solid #ccc}
+    .data_type {font-weight: bold;}
+    .description {min-width: 18em;}
+    .code {font-family: monospace;}
+</style>
+<table><tr><th>Data Type</th><th>Description</th><th>String Syntax1</th><th>Scripting Object3</th><th>ArcObjects</th></tr>
+<tr>
+  <td class="data_type">Address locator</td>
+  <td class="description">A dataset, used for geocoding, that stores the address
+attributes, associated indexes, and rules that define the
+process for translating nonspatial descriptions of places to
+spatial data. [.loc]</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEAddressLocator</td>
+</tr>
+<tr>
+  <td class="data_type">Address locator style</td>
+  <td class="description">A template on which to base the new address locator. [.lot]</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>GPAddressLocatorStyle</td>
+</tr>
+<tr>
+  <td class="data_type">Analysis cell size</td>
+  <td class="description">The cell size used by raster tools.</td>
+  <td class="code">cellSize | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPAnalysisCellSize</td>
+</tr>
+<tr>
+  <td class="data_type">Any value</td>
+  <td class="description">A data type that accepts any value.</td>
+  <td class="code">any value</td>
+  <td>. _ .</td>
+  <td>GPType [abstract datatype]</td>
+</tr>
+<tr>
+  <td class="data_type">ArcMap Document</td>
+  <td class="description">A file that contains one map, its layout, and its associated
+layers, tables, charts, and reports. [.mxd]</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEMapDocument</td>
+</tr>
+<tr>
+  <td class="data_type">Area units</td>
+  <td class="description">An areal unit type and value such as square meter or
+acre.</td>
+  <td class="code">arealUnit unitOfMeasure
+unitOfMeasure keywords: ACRES | ARES | HECTARES | SQUARECENTIMETERS |
+SQUAREDECIMETERS | SQUAREINCHES | SQUAREFEET | SQUAREKILOMETERS |
+SQUAREMETERS | SQUAREMILES | SQUAREMILLIMETERS | SQUAREYARDS | SQUAREMAPUNITS
+|UNKNOWN</td>
+  <td>. _ .</td>
+  <td>GPArealUnit</td>
+</tr>
+<tr>
+  <td class="data_type">Boolean</td>
+  <td class="description">A boolean value.</td>
+  <td class="code">TRUE | FALSE</td>
+  <td>. _ .</td>
+  <td>GPBoolean</td>
+</tr>
+<tr>
+  <td class="data_type">CAD Drawing Dataset</td>
+  <td class="description">A vector data source with a mix of feature types with
+symbology. The dataset is not usable for feature class-
+based queries or analysis.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DECadDrawingDataset</td>
+</tr>
+<tr>
+  <td class="data_type">Catalog Root</td>
+  <td class="description">The top-level node in the catalog tree.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DECatalogRoot</td>
+</tr>
+<tr>
+  <td class="data_type">Cell Size</td>
+  <td class="description">The cell size used by Spatial Analyst.</td>
+  <td class="code">MAXOF | MINOF | value</td>
+  <td>. _ .</td>
+  <td>GPSACellSize</td>
+</tr>
+<tr>
+  <td class="data_type">Composite Datatype</td>
+  <td class="description">A collection of datatypes.</td>
+  <td class="code">... dependent on datatypes in collection...</td>
+  <td>. _ .</td>
+  <td>GPCompositeDataType  [abstract
+datatype]</td>
+</tr>
+<tr>
+  <td class="data_type">Composite Layer</td>
+  <td class="description">A reference to a several children layers, including
+symbology and rendering properties.</td>
+  <td class="code">layerName | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPCompositeLayer
+DECompositeLayer</td>
+</tr>
+<tr>
+  <td class="data_type">Compression</td>
+  <td class="description">Specifies the type of compression used for a raster.</td>
+  <td class="code">LZ77 |
+JPEG |
+JPEG2000 |
+NONE</td>
+  <td>. _ .</td>
+  <td>GPRasterGDBEnvCompression</td>
+</tr>
+<tr>
+  <td class="data_type">Coordinate System</td>
+  <td class="description">A reference framework—such as the UTM
+system—consisting of a set of points, lines, and/or
+surfaces, and a set of rules, used to define the positions of
+points in two and three dimensional space.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>GPCooridnateSystem</td>
+</tr>
+<tr>
+  <td class="data_type">Coordinate Systems Folder</td>
+  <td class="description">A folder on disk storing coordinate systems.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DESpatialReferencesFolder</td>
+</tr>
+<tr>
+  <td class="data_type">Coverage</td>
+  <td class="description">A courage dataset, a proprietary data model for storing
+geographic features as points, arcs, polygons with
+associated feature attribute tables.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DECoverage</td>
+</tr>
+<tr>
+  <td class="data_type">Coverage Feature Class</td>
+  <td class="description">A coverage feature classes such as point, arc, node,
+route, route system, section, polygon, and region.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DECoverageFeatureClass
+ICoverageFeatureClass
+ICoverageFeatureClass2</td>
+</tr>
+<tr>
+  <td class="data_type">Database Connections</td>
+  <td class="description">The database connection folder in ArcCatalog.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEDiskConnection</td>
+</tr>
+<tr>
+  <td class="data_type">Dataset</td>
+  <td class="description">A collection of related data, usually grouped or stored
+together.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEDatasetType [abstract datatype ]</td>
+</tr>
+<tr>
+  <td class="data_type">Date</td>
+  <td class="description">A date value.</td>
+  <td class="code">format depends on the regional settings of the computer;</td>
+  <td>. _ .</td>
+  <td>GPDate</td>
+</tr>
+<tr>
+  <td class="data_type">dBASE Table</td>
+  <td class="description">Attribute data stored in dBASE format.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEDbaseTable
+ITable</td>
+</tr>
+<tr>
+  <td class="data_type">Decimate</td>
+  <td class="description">Specifies a subset of nodes of a TIN to create a
+generalized version of that TIN.</td>
+  <td class="code">ZTOLERANCE Z_Tolerance maxNumberOfNodes |
+COUNT maxNumberOfNodes</td>
+  <td>. _ .</td>
+  <td>DecimateNodes
+DecimateNodesByCount</td>
+</tr>
+<tr>
+  <td class="data_type">Disk Connection</td>
+  <td class="description">An access path to a data storage device.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEDiskConnection</td>
+</tr>
+<tr>
+  <td class="data_type">Double</td>
+  <td class="description">Any floating point number will be stored as a double-
+precision 64-bit value.</td>
+  <td class="code">example: 5.6</td>
+  <td>. _ .</td>
+  <td>GPDouble</td>
+</tr>
+<tr>
+  <td class="data_type">Envelope</td>
+  <td class="description">The coordinate pairs that define the minimum bounding
+rectangle the data source fall within.</td>
+  <td class="code">X_Minimum Y_Minimum X_Maximum Y_Maximum</td>
+  <td>. _ .</td>
+  <td>GPEnvelope</td>
+</tr>
+<tr>
+  <td class="data_type">Evaluation Scale</td>
+  <td class="description">The scale value range and increment value applied to
+inputs in a weighted overlay operation.</td>
+  <td class="code">EvaluationScale Minimum Maximum Increment
+EvaluationScale: &#39;1 to 9 by 1&#39; | &#39;1 to 5 by 1&#39; | &#39;1 to 3 by 1&#39; | &#39;-1 to 1 by 1&#39; |
+&#39;-5 to 5 by 1&#39; | &#39;-10 to 10 by 2&#39;</td>
+  <td>. _ .</td>
+  <td>GPEvaluationScale</td>
+</tr>
+<tr>
+  <td class="data_type">Extent</td>
+  <td class="description">Specifies the coordinate pairs that define the minimum
+bounding rectangle (xmin, ymin and xmax, ymax) of a
+data source. All coordinates for the data source fall within
+this boundary.</td>
+  <td class="code">catalogPath | X_Minimum Y_Minimum X_Maximum Y_Maximum</td>
+  <td>. _ .</td>
+  <td>GPExtent</td>
+</tr>
+<tr>
+  <td class="data_type">Feature Class</td>
+  <td class="description">A collection of spatial data with the same shape type:
+point, multipoint, polyline, polygon.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEFeatureClass
+IFeatureClass
+ICoverageFeatureClass</td>
+</tr>
+<tr>
+  <td class="data_type">Feature Dataset</td>
+  <td class="description">A collection of feature classes that share a common
+geographic area and the same spatial reference system.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEFeatureDataset
+IFeatureDataset</td>
+</tr>
+<tr>
+  <td class="data_type">Feature Layer</td>
+  <td class="description">A reference to a feature class, including symbology and
+rendering properties. [.lyr]</td>
+  <td class="code">featurelLayerName | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPFeatureLayer
+IFeatureLayer</td>
+</tr>
+<tr>
+  <td class="data_type">Field</td>
+  <td class="description">A column in a table that stores the values for a single
+attribute</td>
+  <td class="code">fieldName</td>
+  <td>Field</td>
+  <td>Field
+IField</td>
+</tr>
+<tr>
+  <td class="data_type">Field Info</td>
+  <td class="description">The details about a field in a FieldMap.</td>
+  <td class="code">&quot;fldName newFldName visible;fldName1 newFldName1 visible1;...;fldNameN
+newFldNameN visibleN&quot;</td>
+  <td>FieldInfo</td>
+  <td>GPFieldInfo</td>
+</tr>
+<tr>
+  <td class="data_type">Field Mappings</td>
+  <td class="description">A collection of fields in one or more input tables.</td>
+  <td class="code">use String Object; use of String Syntax not recommended;
+catalogPath | SR_ID</td>
+  <td>FieldMap;
+FieldMappings</td>
+  <td>GPFieldMapping</td>
+</tr>
+<tr>
+  <td class="data_type">File</td>
+  <td class="description">A file on disk.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEFile
+IFile</td>
+</tr>
+<tr>
+  <td class="data_type">Folder</td>
+  <td class="description">Specifies a location on a disk where data is stored.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEFolder</td>
+</tr>
+<tr>
+  <td class="data_type">Formulated Raster</td>
+  <td class="description">A raster surface whose cell values are represented by a
+formula or constant.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>GPRasterFormulated</td>
+</tr>
+<tr>
+  <td class="data_type">GeoDataServer</td>
+  <td class="description">A coarse grain object that references a geodatabase.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEGeoDataServer</td>
+</tr>
+<tr>
+  <td class="data_type">Geodataset</td>
+  <td class="description">A collection of data with a common theme in a
+geodatabase.</td>
+  <td class="code">&quot;catalogPath;catalogPath1;...;catalogPathN&quot;</td>
+  <td>. _ .</td>
+  <td>[abstract datatype ]</td>
+</tr>
+<tr>
+  <td class="data_type">Geometric Network</td>
+  <td class="description">A linear network represented by topologically connected
+edge and junction features. Feature connectivity is based
+on their geometric coincidence.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEGeometricNetworkType
+DEGeometricNetwork</td>
+</tr>
+<tr>
+  <td class="data_type">Geostatistical Value Table</td>
+  <td class="description">A collection of data sources and fields that define a
+geostatistical layer.</td>
+  <td class="code">&quot;catalogPath field;catalogPath1 field1;...;catalogPathN fieldN&quot;</td>
+  <td>. _ .</td>
+  <td>GPGAValueTable</td>
+</tr>
+<tr>
+  <td class="data_type">Group Layer</td>
+  <td class="description">A collection of layers that appear and act as a single layer.
+Group layers make it easier to organize a map, assign
+advanced drawing order options, and share layers for use
+in other maps.</td>
+  <td class="code">&quot;groupLayerName;groupLayerName1;...;groupLayerNameN&quot; |
+&quot;catalogPath;catalogPath1;...;catalogPathN&quot;</td>
+  <td>. _ .</td>
+  <td>GPGroupLayer</td>
+</tr>
+<tr>
+  <td class="data_type">Horizontal Factor</td>
+  <td class="description">The relationship between the horizontal cost factor and
+the horizontal relative moving angle.</td>
+  <td class="code">rasterName BINARY ZeroFactor CutAngle |
+catalogPath BINARY ZeroFactor CutAngle |
+rasterName FORWARD ZeroFactor CutAngle SideValue |
+catalogPath FORWARD ZeroFactor CutAngle SideValue |
+rasterName LINEAR ZeroFactor CutAngle Slope |
+catalogPath LINEAR ZeroFactor CutAngle Slope |
+rasterName INVERSE LINEAR ZeroFactor CutAngle Slope |
+catalogPath INVERSE LINEAR ZeroFactor CutAngle Slope |
+rasterName TABLE tableName |
+catalogPath TABLE tableName |
+rasterName TABLE catalogPath|
+catalogPath TABLE catalogPath</td>
+  <td>. _ .</td>
+  <td>GPSAHorizontalFactor</td>
+</tr>
+<tr>
+  <td class="data_type">Index</td>
+  <td class="description">A data structure used to speed the search for records in a
+geographic datasets and database.</td>
+  <td class="code">number</td>
+  <td>. _ .</td>
+  <td>Index</td>
+</tr>
+<tr>
+  <td class="data_type">INFO Expression</td>
+  <td class="description">A syntax for defining and manipulating data in an INFO
+table.</td>
+  <td class="code">SUBSET itemName operator value |
+SUBSET itemName operator value CONNECTOR itemName 1 operator1 value1 CONNECTOR
+... CONNECTOR itemNameN operatorN valueN |
+ADD itemName operator value |
+ADD itemName operator value CONNECTOR itemName 1 operator1 value1 CONNECTOR ...
+CONNECTOR itemNameN operatorN valueN |
+SWITCH itemName operator value |
+SWITCH itemName operator value CONNECTOR itemName 1 operator1 value1 CONNECTOR
+... CONNECTOR itemNameN operatorN valueN</td>
+  <td>. _ .</td>
+  <td>GPINFOExpression</td>
+</tr>
+<tr>
+  <td class="data_type">INFO Item</td>
+  <td class="description">An item in an INFO table.</td>
+  <td class="code">itemName</td>
+  <td>. _ .</td>
+  <td>GPArcInfoItem</td>
+</tr>
+<tr>
+  <td class="data_type">INFO Table</td>
+  <td class="description">A table in an INFO Database.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEArcInfoTable
+IArcInfoTable</td>
+</tr>
+<tr>
+  <td class="data_type">Layer</td>
+  <td class="description">A reference to a data source, such as a shapefile,
+coverage, geodatabase feature class, or raster, including
+symbology and rendering properties. [.lyr]</td>
+  <td class="code">layerName | catalogPath</td>
+  <td>. _ .</td>
+  <td>[abstract datatype]</td>
+</tr>
+<tr>
+  <td class="data_type">Layer File</td>
+  <td class="description">A file with a .lyr extension that stores the layer defintion,
+including symbology and rendering properties.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DELayer
+ILayer</td>
+</tr>
+<tr>
+  <td class="data_type">Line</td>
+  <td class="description">A shape, straight or curved, defined by a connected series
+of unique x,y coordinate pairs.</td>
+  <td class="code">coordinateList</td>
+  <td>. _ .</td>
+  <td>GPLine</td>
+</tr>
+<tr>
+  <td class="data_type">Linear unit</td>
+  <td class="description">A linear unit type and value such as meter or feet.</td>
+  <td class="code">linearUnit unitOfMeasure
+unitOfMeasure keywords: CENTIMETERS | DECIMALDEGREES | DECIMETERS | FEET | INCHES
+| KILOMETERS | METERS | MILES | MILLIMETERS | NAUTICALMILES | POINTS |
+UNKNOWN | YARDS</td>
+  <td>. _ .</td>
+  <td>GPLinearUnit</td>
+</tr>
+<tr>
+  <td class="data_type">Long</td>
+  <td class="description">An integer number value.</td>
+  <td class="code">number</td>
+  <td>. _ .</td>
+  <td>GPLong</td>
+</tr>
+<tr>
+  <td class="data_type">M Domain</td>
+  <td class="description">A range of lowest and highest possible value for m
+coordinates.</td>
+  <td class="code">M_Minimum M_Maximum</td>
+  <td>. _ .</td>
+  <td>GPMDomain</td>
+</tr>
+<tr>
+  <td class="data_type">MultiValue</td>
+  <td class="description">A collection of values stored in one column in a value
+table.</td>
+  <td class="code">&quot;string;string1;...;stringN&quot;</td>
+  <td>. _ .</td>
+  <td>GPMultiValue</td>
+</tr>
+<tr>
+  <td class="data_type">Neighborhood</td>
+  <td class="description">The shape of the area around each cell used to calculate
+statistics.</td>
+  <td class="code">ANNULUS InnerRadius OuterRadius Units |
+CIRCLE Radius Units |
+RECTANGLE Height Width Units |
+WEDGE StartAngle EndAngle Radius Units |
+IRREGULAR KernelFileName | catalogPath |
+WEIGHT KernelFileName or catalogPath
+Units keywords: CELL | MAP</td>
+  <td>. _ .</td>
+  <td>GPSANeighborhood</td>
+</tr>
+<tr>
+  <td class="data_type">Network Analyst Class
+FieldMap</td>
+  <td class="description">A mapping between location properties in a network
+analyst layer (such as stops, facilities, and incidents) and
+a point feature class.</td>
+  <td class="code">property field defaultValue</td>
+  <td>. _ .</td>
+  <td>NAClassFieldMap</td>
+</tr>
+<tr>
+  <td class="data_type">Network Analyst Hierarchy
+Settings</td>
+  <td class="description">A hierarchy attribute that divides hierarchy values of a
+network dataset into three groups using two integers. The
+first integer, high_rank_ends, sets the ending value of the
+first group; the second number, low_rank_begin, sets the
+beginning value of the third group.</td>
+  <td class="code">NONE |
+HIERARCHY defaultRanges |
+HIERARCHY customRanges upTo andHigher</td>
+  <td>. _ .</td>
+  <td>GPNAHierarchySettings</td>
+</tr>
+<tr>
+  <td class="data_type">Network Analyst Layer</td>
+  <td class="description">A special group layer used to express and solve network
+routing problems. Each sublayer, held in-memory, in a
+Network Analyst layer represent some aspect of the
+routing problem and the routing solution.</td>
+  <td class="code">layerName | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPNALayer
+INALayer</td>
+</tr>
+<tr>
+  <td class="data_type">Network Dataset</td>
+  <td class="description">A collection of topologically connected network elements
+(edges, junctions, and turns), derived from network
+sources and associated with a collection of network
+attributes.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DENetworkDataset
+INetworkDataset</td>
+</tr>
+<tr>
+  <td class="data_type">Network Dataset Layer</td>
+  <td class="description">A reference to a network dataset, including symbology
+and rendering properties.</td>
+  <td class="code">layerName | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPNetworkDatasetLaye</td>
+</tr>
+<tr>
+  <td class="data_type">Point</td>
+  <td class="description">A pair of x,y coordinates.</td>
+  <td class="code">coordinatePair</td>
+  <td>Point</td>
+  <td>GPPoint</td>
+</tr>
+<tr>
+  <td class="data_type">Polygon</td>
+  <td class="description">A connected sequence of x,y coordinate pairs, where the
+first and last coordinate pair are the same.</td>
+  <td class="code">coordinateList</td>
+  <td>. _ .</td>
+  <td>GPPolygon</td>
+</tr>
+<tr>
+  <td class="data_type">Projection File</td>
+  <td class="description">A file storing coordinate system information for spatial
+data. [.prj]</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEPrjFile
+IFile</td>
+</tr>
+<tr>
+  <td class="data_type">Pyramid</td>
+  <td class="description">Specifies if pyramids will be built.</td>
+  <td class="code">NONE |
+PYRAMIDS pyramidLevel sampleMethod
+sampleMethod keywords: NEAREST | BILINEAR | CUBIC</td>
+  <td>. _ .</td>
+  <td>GPRasterGDBEnvPyramid</td>
+</tr>
+<tr>
+  <td class="data_type">Radius</td>
+  <td class="description">Specifies which surrounding points will be used for
+interpolation.</td>
+  <td class="code">FIXED Distance Min#OfPts | VARIABLE NumOfPts MaxDistance</td>
+  <td>. _ .</td>
+  <td>GPSARadius</td>
+</tr>
+<tr>
+  <td class="data_type">Random Number Generator</td>
+  <td class="description">Specifies the seed and the generator to be used when
+creating random values.</td>
+  <td class="code">seed randomGenType
+randomGenType keywords: STANDARD_C | ACM599 | MERSENNE_TWISTER</td>
+  <td>. _ .</td>
+  <td>GPRandomNumberGenerator</td>
+</tr>
+<tr>
+  <td class="data_type">Raster Band</td>
+  <td class="description">A layer in a raster dataset.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DERasterBand
+IRasterBand</td>
+</tr>
+<tr>
+  <td class="data_type">Raster Catalog</td>
+  <td class="description">A collection of raster datasets defined in a table; each
+table records defines an individual raster datasets in the
+catalog.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DERasterCatalog
+IRasterCatalog</td>
+</tr>
+<tr>
+  <td class="data_type">Raster Catalog Layer</td>
+  <td class="description">A reference to a raster catalog, including symbology and
+rendering properties.</td>
+  <td class="code">rasterCatalogLayer | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPRasterCatalogLayer
+IRasterCatalogLayer</td>
+</tr>
+<tr>
+  <td class="data_type">Raster Layer</td>
+  <td class="description">A reference to a raster, including symbology and
+rendering properties.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>GPRasterLayer
+IRasterLayer</td>
+</tr>
+<tr>
+  <td class="data_type">Raster Statistics</td>
+  <td class="description">Specifies if raster statistics will be built.</td>
+  <td class="code">NONE |
+STATISTICS X-SkipFactor Y-SkipFactor statsIgnoreValue</td>
+  <td>. _ .</td>
+  <td>GPRasterGDBEnvStatistics</td>
+</tr>
+<tr>
+  <td class="data_type">Relationship Class</td>
+  <td class="description">The details about the relationship between objects in the
+geodatabase.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DERelationshipClass
+IRelationshipClass</td>
+</tr>
+<tr>
+  <td class="data_type">Remap</td>
+  <td class="description">A table that defines how raster cell values will be
+reclassified.</td>
+  <td class="code">OldValues NewValue ClassifyMethod
+OldValues: number | range | string | NoData
+NewValue: number | range | string | NoData
+ClassifyMethod keywords: MANUAL | EQUALINTERVAL | DEFINEDINTERVAL | QUANTILE |
+NATURALBREAKS | STANDARDDEVIATION</td>
+  <td>. _ .</td>
+  <td>GPSANumberRemap
+GPSAStringRemap</td>
+</tr>
+<tr>
+  <td class="data_type">Route Measure Event
+Properties</td>
+  <td class="description">Specifies the fields on a table that describe events that
+are measured by a linear reference route system.</td>
+  <td class="code">inEventProperties POINT mField |
+inEventProperties LINE fromMField toMField</td>
+  <td>. _ .</td>
+  <td>GPRouteMeasureEventProperties</td>
+</tr>
+<tr>
+  <td class="data_type">SemiVariogram</td>
+  <td class="description">Specifies the distance and direction representing two
+locations that is used to quantify autocorrelation.</td>
+  <td class="code">ORDINARY  SPHERICAL Lag size Major range Partial sill Nugget |
+ORDINARY  CIRCULAR Lag size Major range Partial sill Nugget |
+ORDINARY  EXPONENTIAL Lag size Major range Partial sill Nugget |
+ORDINARY  GAUSSIAN Lag size Major range Partial sill Nugget |
+ORDINARY  LINEAR  Lag size Major range Partial sill Nugget |
+UNIVERSAL  LINEARDRIFT Lag size Major range Partial sill Nugget |
+UNIVERSAL  QUADRATICDRIFT  Lag size Major range Partial sill Nugget</td>
+  <td>. _ .</td>
+  <td>GPSASemiVariogram</td>
+</tr>
+<tr>
+  <td class="data_type">Shapefile</td>
+  <td class="description">Spatial data in shapefile format. [.shp]</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEShapefile
+IFeatureclass</td>
+</tr>
+<tr>
+  <td class="data_type">Spatial Reference</td>
+  <td class="description">The coordinate system used to store a spatial dataset,
+including the spatial domain.</td>
+  <td class="code">use String Object; use of String Syntax not recommended;
+catalogPath | SR_ID</td>
+  <td>Spatialreference</td>
+  <td>GPSpatialReference
+ISpatialReference</td>
+</tr>
+<tr>
+  <td class="data_type">SQL Expression</td>
+  <td class="description">A syntax for defining and manipulating data from a
+relational database.</td>
+  <td class="code">fieldName operator value</td>
+  <td>. _ .</td>
+  <td>GPSQLExpression</td>
+</tr>
+<tr>
+  <td class="data_type">String</td>
+  <td class="description">A text value.</td>
+  <td class="code">any combination of characters including spaces</td>
+  <td>. _ .</td>
+  <td>GPString</td>
+</tr>
+<tr>
+  <td class="data_type">Table</td>
+  <td class="description">Tabular data.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DETable</td>
+</tr>
+<tr>
+  <td class="data_type">Table View</td>
+  <td class="description">A representation of tabular data for viewing and editing
+purposes, stored in memory or on disk.</td>
+  <td class="code">tableViewName | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPTableView
+IFeatureclass
+ITable
+ILayer</td>
+</tr>
+<tr>
+  <td class="data_type">Terrain</td>
+  <td class="description">A multiresolution TIN.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DETerrain</td>
+</tr>
+<tr>
+  <td class="data_type">Terrain Layer</td>
+  <td class="description">A reference to a terrain, including symbology and
+rendering properties. It’s used to draw a terrain.</td>
+  <td class="code">terrainLayerName | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPTerrainLayer</td>
+</tr>
+<tr>
+  <td class="data_type">Text File</td>
+  <td class="description">Data stored in ASCII format.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DETextFile</td>
+</tr>
+<tr>
+  <td class="data_type">Tile Size</td>
+  <td class="description">Specifies the width and the height of a data stored in
+block.</td>
+  <td class="code">width height</td>
+  <td>. _ .</td>
+  <td>GPRasterGDBEnvTileSize</td>
+</tr>
+<tr>
+  <td class="data_type">Time configuration</td>
+  <td class="description">Specifies the time periods used for calculating solar
+radiation at specific locations.</td>
+  <td class="code">SPECIAL DAYS |
+WITHIN A DAY numOfDays startTime endTime |
+MULTIPLE DAYS IN A YEAR  year startDay endDay |
+WHOLE YEAR WITH MONTHLY INTERVAL year</td>
+  <td>. _ .</td>
+  <td>GPSATimeConfiguration</td>
+</tr>
+<tr>
+  <td class="data_type">TIN  [Triangulated Irregular
+Network]</td>
+  <td class="description">A vector data structure that partitions geographic space
+into contiguous, non-overlapping triangles. The vertices of
+each triangle are sample data points with x-, y-, and z-
+values.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DETin
+ITin</td>
+</tr>
+<tr>
+  <td class="data_type">Topo Features</td>
+  <td class="description">Features that are  input to the interpolation.</td>
+  <td class="code">catalogPath featureLayer field Type
+Type keywords: POINTELEVATION | CONTOUR | STREAM | SINK | BOUNDARY | LAKE</td>
+  <td>. _ .</td>
+  <td>GPSATopoFeatures</td>
+</tr>
+<tr>
+  <td class="data_type">Topology</td>
+  <td class="description">A topology that defines and enforces data integrity rules
+for spatial data.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DETopology
+ITopology</td>
+</tr>
+<tr>
+  <td class="data_type">Topology Layer</td>
+  <td class="description">A reference to a topology, including symbology and
+rendering properties.</td>
+  <td class="code">topologyLayerName | catalogPath</td>
+  <td>. _ .</td>
+  <td>GPTopologyLayer
+ITopologyLayer</td>
+</tr>
+<tr>
+  <td class="data_type">Variant</td>
+  <td class="description">A data value that can contain any basic type: boolean,
+date, double, long, and string.</td>
+  <td class="code">any combination of characters including spaces</td>
+  <td>. _ .</td>
+  <td>GPVariant</td>
+</tr>
+<tr>
+  <td class="data_type">ValueTable</td>
+  <td class="description">A collection of columns of values.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>GPValueTable</td>
+</tr>
+<tr>
+  <td class="data_type">Vertical Factor</td>
+  <td class="description">Specifies the relationship between the vertical cost factor
+and the vertical relative moving angle.</td>
+  <td class="code">BINARY ZeroFactor LowCutAngle HighCutAngle |
+LINEAR ZeroFactor LowCutAngle HighCutAngle Slope |
+INVERSE LINEAR ZeroFactor LowCutAngle HighCutAngle Slope |
+SYMMETRIC LINEAR ZeroFactor LowCutAngle HighCutAngle Slope |
+SYMMETRIC INVERSE LINEAR  ZeroFactor LowCutAngle HighCutAngle Slope |
+COS LowCutAngle HighCutAngle Power |
+SEC  LowCutAngle HighCutAngle Power |
+COS_SEC LowCutAngle HighCutAngle COS_Power SEC_Power |
+SEC_COS  LowCutAngle HighCutAngle COS_Power SEC_Power |
+TABLE tableName |
+TABLE catalogPath</td>
+  <td>. _ .</td>
+  <td>GPSAVerticalFactor</td>
+</tr>
+<tr>
+  <td class="data_type">VPF Coverage</td>
+  <td class="description">Spatial data stored in Vector Product Format.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEVPFCoverage</td>
+</tr>
+<tr>
+  <td class="data_type">VPF Table</td>
+  <td class="description">Attribute data stored in Vector Product Format.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEVPFTable</td>
+</tr>
+<tr>
+  <td class="data_type">Weighted Overlay Table</td>
+  <td class="description">A table with data to combine multiple rasters by applying a
+common measurement scale of values to each raster,
+weighting each according to its importance.</td>
+  <td class="code">&quot;rasterName %Influence Field Remap2&quot;;&quot;...&quot; |
+&quot;catalogPath %Influence Field Remap2&quot;;&quot;...&quot;;</td>
+  <td>. _ .</td>
+  <td>GPSAWeightedOverlayTable</td>
+</tr>
+<tr>
+  <td class="data_type">Weighted Sum</td>
+  <td class="description">Specifies data for overlaying several rasters multiplied
+each by their given weight and then summed.</td>
+  <td class="code">&quot;rasterName Field Weight&quot;;&quot;rasterName1 Field1 Weight1&quot;;&quot; ...&quot;; |
+&quot;catalogPath Field Weight&quot;;&quot;catalogPath1 Field1 Weight1&quot;;&quot; ...&quot;;</td>
+  <td>. _ .</td>
+  <td>GPWeightedSum</td>
+</tr>
+<tr>
+  <td class="data_type">Workspace</td>
+  <td class="description">A container such as a geodatabase or folder.</td>
+  <td class="code">catalogPath</td>
+  <td>. _ .</td>
+  <td>DEWorkspace</td>
+</tr>
+<tr>
+  <td class="data_type">XY Domain</td>
+  <td class="description">A range of lowest and highest possible values for x,y
+coordinates.</td>
+  <td class="code">X_Minimum  Y_Minimum  X_Maximum  Y_Maximum</td>
+  <td>. _ .</td>
+  <td>GPXYDomain</td>
+</tr>
+</table>
