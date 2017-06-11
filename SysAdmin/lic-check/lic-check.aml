@@ -1,0 +1,54 @@
+/* ------------------------------------------------------------------------
+/* (c) 2005 Environment Yukon Geomatics * matt.wilkie@gov.yk.ca
+/* This is free software distributed under the GPL v2 
+/* ------------------------------------------------------------------------
+&args args:REST
+
+/* make sure we don't have anything left hanging around from last time.
+&delvar .lic$*
+
+/* Logically one should be able to use [show product] here
+/* instead of this hardcoded list however it looks like
+/* [show] is not kept up to date... e.g. [show product survey] fails
+/*
+/* &set products = [show products]
+/*
+&set products = Arc/Info Grid Plotting Network Cogo Tin Arcscan Arcexpress Tifflzw Arcpress
+
+&if [null %args%] &then &call usage
+&if %args% = -all &then &set args = %products%
+
+   &do product &list [unquote %args%]
+      &call main
+   &end
+
+&call report
+&return
+/* ---------------------------------------------------------------------------
+
+&routine main
+   &if [locase %product%] = arc OR [locase %product%] = arcinfo &then
+      &set product = arc/info
+   &s prod = [show product %product%]
+   &s free = [extract 1 %prod%] - [extract 2 %prod%]
+	&s .lic$%product% = %free%
+   &return
+
+&routine report
+   &ty /& Free licenses:
+   &lg &format '                %2% : %1%' .lic$*
+   &return /&...%aml$fullfile% finished normally.
+
+&routine usage
+	/* reformat the product list so it conforms to the normal standard
+   &set optlist [unquote [subst [quote %products%] ' ' ' | ']]
+
+   &set exitStr = /&USAGE: %aml$file% {-all} <%optlist%>/&
+   &return %exitStr%
+
+/* ---------------------------------------------------------------------------
+/* [Example] quit Arc session if there are less than two licenses free:
+/*
+/* Arc: &r lic-check 
+/* Arc: ;&if %.lic$arc/info% < 2 &then quit;
+/* 
