@@ -1,0 +1,76 @@
+#!/bin/bash
+#Luke Pinner, April 2005 - initial ksh version
+#Matt Wilkie, April 2005 - modifed for bash (with Luke's help)
+# --------------------------------
+# Usage and Arguments
+# --------------------------------
+my_name=$(basename $0)
+Usage="Checks ESRI license usage\nUsage:${my_name} [-f feature] [-s port@server] [-q] [-h]\n"
+
+#Vars
+
+#ARCHOME can be commented out if set as a system var.
+# example for 'nix:
+#ARCHOME=/sw/esri/arcinfo/9.0/arcexe9x
+# example for cygwin:
+#ARCHOME=/cygdrive/c/ArcGIS/arcexe9x
+
+#Defaults
+FEATURE=ARC/INFO
+PORT_SERVER=port@server
+SHHH=0
+
+#Args
+while getopts hqf:s: c ; do
+  case $c in
+    h)	echo ${Usage} ; exit 0 ;;
+    q)	SHHH=1 ;;
+    f)	FEATURE=$OPTARG ;;
+    s)	PORT_SERVER=$OPTARG ;;
+    \?) echo ${Usage} ; exit 1 ;;
+  esac
+done
+shift `expr $OPTIND - 1`
+
+#Strip out the 3rd field returned by a grep of the license info from lmutil lmstat -i
+#
+#Format returned by lmutil lmstat -i is:
+#
+#Feature                 Version   #licenses    Expires         Vendor
+#--------                -------   ----------    ---------       ------
+#ARC/INFO                9.0           8         01-jan-00       ARCGIS
+#
+TOTAL=`$ARCHOME/sysgen/lmutil.exe lmstat -i "$FEATURE" -c "$PORT_SERVER" | grep -i "$FEATURE" | cut -f 3`
+
+#Get number of licenses in use
+#"start" is a good pattern to use for the grep - it only occurs in license usage lines 
+#and not the other lines returned by lmutil lmstat
+#eg.     username computername {}ueqn{#{QjH!cM2c (v9.0) (server/port 5157), start Thu 3/31 12:25
+USED=`$ARCHOME/sysgen/lmutil.exe lmstat -f "$FEATURE" -c "$PORT_SERVER" | grep -c start`
+
+#Get number of licenses available
+((AVAIL= $TOTAL - $USED))
+
+#What goes to STDOUT
+if test $SHHH -eq 0
+then
+  echo $TOTAL $FEATURE licences in total
+  echo $USED $FEATURE licences are in use
+  echo $AVAIL $FEATURE licences are available
+else
+  echo $AVAIL
+fi
+
+#Some license names:
+# ARC/INFO
+# Plotting
+# Network
+# TIN
+# Interop
+# Grid
+# ArcScan
+# Publisher
+# ArcPress
+# Viewer
+# GeoStats
+# Editor
