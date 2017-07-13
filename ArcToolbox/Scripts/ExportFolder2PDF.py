@@ -22,6 +22,21 @@ del mxd
 print "Done"
 writeLog.close()
 
+# Set all the parameters as variables here:
+data_frame = 'PAGE_LAYOUT'
+df_export_width = 1920
+df_export_height = 1200
+resolution = "300"
+image_quality = "BETTER"
+colorspace = "RGB"
+compress_vectors = "True"
+image_compression = "ADAPTIVE"
+picture_symbol = 'VECTORIZE_BITMAP'
+convert_markers = "False"
+embed_fonts = "True"
+layers_attributes = "LAYERS_ONLY"
+georef_info = "False"
+jpeg_compression_quality = 85
 
 exportPath =arcpy.GetParameterAsText(1)
 MXDread=open(path+"\FileListLog.txt","r")
@@ -36,7 +51,7 @@ for line in MXDread:
             mxd = arcpy.mapping.MapDocument(line)
             newPDF=exportPath+"\\"+newName+".pdf"
             print newPDF
-            arcpy.mapping.ExportToPDF(mxd,newPDF)
+            arcpy.mapping.ExportToPDF(mxd,newPDF, data_frame, df_export_width, df_export_height, resolution, image_quality, colorspace, compress_vectors, image_compression, picture_symbol, convert_markers, embed_fonts, layers_attributes, georef_info, jpeg_compression_quality)            
             print line + "Export Done"
 MXDread.close()
 item=path+"\FileListLog.txt"
