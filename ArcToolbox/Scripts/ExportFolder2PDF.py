@@ -17,9 +17,9 @@ for fileName in os.listdir(path):
         if extension == ".mxd":
             writeLog.write(fullPath+"\n")
             mxd = arcpy.mapping.MapDocument(fullPath)
-            print fileName + "\n"
+            arcpy.AddMessage('Found: ' + fileName)
 del mxd
-print "Done"
+arcpy.AddMessage("Done")
 writeLog.close()
 
 # Set all the parameters as variables here:
@@ -47,13 +47,14 @@ for line in MXDread:
         basename, extension = os.path.splitext(line)
         newName=basename.split('\\')[-1]
         if extension.lower() == ".mxd":
-            print "Basename:" +newName
+            # arcpy.AddMessage( "Basename:" +newName )
             mxd = arcpy.mapping.MapDocument(line)
             newPDF=exportPath+"\\"+newName+".pdf"
-            print newPDF
+            arcpy.AddMessage( 'Writing: ' + newPDF )
             arcpy.mapping.ExportToPDF(mxd,newPDF, data_frame, df_export_width, df_export_height, resolution, image_quality, colorspace, compress_vectors, image_compression, picture_symbol, convert_markers, embed_fonts, layers_attributes, georef_info, jpeg_compression_quality)            
-            print line + "Export Done"
+            arcpy.AddMessage( 'Finished: ' + line)
 MXDread.close()
 item=path+"\FileListLog.txt"
 os.remove(item)
 del mxd
+arcpy.GetMessages()
