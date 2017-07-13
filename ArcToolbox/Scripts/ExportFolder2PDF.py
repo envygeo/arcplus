@@ -16,9 +16,9 @@ for fileName in os.listdir(path):
         basename, extension = os.path.splitext(fullPath)
         if extension == ".mxd":
             writeLog.write(fullPath+"\n")
-            mxd = arcpy.mapping.MapDocument(fullPath)
+            # mxd = arcpy.mapping.MapDocument(fullPath)
             arcpy.AddMessage('Found: ' + fileName)
-del mxd
+# del mxd
 arcpy.AddMessage("Done")
 writeLog.close()
 
