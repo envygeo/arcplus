@@ -32,7 +32,7 @@ picture_symbol = 'VECTORIZE_BITMAP'
 convert_markers = 'False'
 embed_fonts = 'True'
 layers_attributes = 'LAYERS_ONLY'
-georef_info = 'False'
+georef_info = 'True'
 jpeg_compression_quality = 85
 
 maps = glob.glob(os.path.join(in_path, '*.mxd'))
