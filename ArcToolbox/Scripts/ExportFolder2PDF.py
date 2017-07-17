@@ -16,6 +16,8 @@ import arcpy
 in_path = arcpy.GetParameterAsText(0)
 # Where to save output documents
 exportPath = arcpy.GetParameterAsText(1)
+if exportPath == '':
+    exportPath = in_path
 
 # Set the PDF parameters as variables here:
 data_frame = 'PAGE_LAYOUT'
