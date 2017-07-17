@@ -3,24 +3,10 @@
 #by: Guest
 # https://gis.stackexchange.com/questions/7147/how-to-batch-export-mxd-to-pdf-files
 
-import arcpy, os
+import arcpy, os, glob
 
 #Read input parameter from user.
-path = arcpy.GetParameterAsText(0)
-
-#Write MXD names in folder to txt log file.
-writeLog=open(path+"\FileListLog.txt","w")
-for fileName in os.listdir(path):
-    fullPath = os.path.join(path, fileName)
-    if os.path.isfile(fullPath):
-        basename, extension = os.path.splitext(fullPath)
-        if extension == ".mxd":
-            writeLog.write(fullPath+"\n")
-            # mxd = arcpy.mapping.MapDocument(fullPath)
-            arcpy.AddMessage('Found: ' + fileName)
-# del mxd
-arcpy.AddMessage("Done")
-writeLog.close()
+in_path = arcpy.GetParameterAsText(0)
 
 # Set all the parameters as variables here:
 data_frame = 'PAGE_LAYOUT'
@@ -39,22 +25,20 @@ georef_info = "False"
 jpeg_compression_quality = 85
 
 exportPath =arcpy.GetParameterAsText(1)
-MXDread=open(path+"\FileListLog.txt","r")
-for line in MXDread:
-    #Strip newline from line.
-    line=line.rstrip('\n')
-    if os.path.isfile(line):
-        basename, extension = os.path.splitext(line)
-        newName=basename.split('\\')[-1]
-        if extension.lower() == ".mxd":
-            # arcpy.AddMessage( "Basename:" +newName )
-            mxd = arcpy.mapping.MapDocument(line)
-            newPDF=exportPath+"\\"+newName+".pdf"
-            arcpy.AddMessage( 'Writing: ' + newPDF )
-            arcpy.mapping.ExportToPDF(mxd,newPDF, data_frame, df_export_width, df_export_height, resolution, image_quality, colorspace, compress_vectors, image_compression, picture_symbol, convert_markers, embed_fonts, layers_attributes, georef_info, jpeg_compression_quality)            
-            arcpy.AddMessage( 'Finished: ' + line)
-MXDread.close()
-item=path+"\FileListLog.txt"
-os.remove(item)
-del mxd
+
+maps = glob.glob(os.path.join(in_path, '*.mxd'))
+
+for m in maps:
+    dir, fname = os.path.split(m)                        # 'X:\path\to', 'some_map.mxd'
+    basename = os.path.splitext(fname)[0]                # 'some_map'
+    newPDF = os.path.join(exportPath, basename + '.pdf') # 'Y:\output\some_map.pdf'
+
+    arcpy.AddMessage('Reading: ' + m)
+    mxd = arcpy.mapping.MapDocument(m)
+    arcpy.AddMessage('Writing: ' + newPDF)
+    arcpy.mapping.ExportToPDF(mxd, newPDF, data_frame, df_export_width, df_export_height, resolution, image_quality,
+                              colorspace, compress_vectors, image_compression, picture_symbol, convert_markers, embed_fonts,
+                              layers_attributes, georef_info, jpeg_compression_quality)
+    del mxd
+
 arcpy.GetMessages()
