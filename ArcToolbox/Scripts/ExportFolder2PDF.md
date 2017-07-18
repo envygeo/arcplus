@@ -29,7 +29,7 @@ For now all [PDF options][0] are hard coded (pull requests to turn then into par
     df_export_width = 1920  # ignored when using PAGE_LAYOUT
     df_export_height = 1200
     resolution = '300'
-    image_quality = 'BETTER'
+    image_quality = 'BEST'
     colorspace = 'RGB'
     compress_vectors = 'True'
     image_compression = 'ADAPTIVE'
