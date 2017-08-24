@@ -2,6 +2,7 @@
 # https://gis.stackexchange.com/questions/1466/using-arcpy-to-get-layer-symbology
 import zipfile
 from arcpy import mapping
+import arcpy
 import os
 from xml.dom.minidom import parse
 
@@ -65,11 +66,17 @@ class MxdExtras(dict):
         lyr = LayerExtras()  
 
         # Layer name
-        lyr.name = dom.getElementsByTagName(self.LYR_NAME_NODE)[0].childNodes[0].nodeValue
+        try:
+            lyr.name = dom.getElementsByTagName(self.LYR_NAME_NODE)[0].childNodes[0].nodeValue
+        except IndexError:
+            print 'oh oh, index error on "lyr.name"'
 
         # Symbology field name
-        symbologyElement = dom.getElementsByTagName(self.LYR_SYMBOL_NODE)[0]
-        lyr.symbologyFieldName = symbologyElement.getElementsByTagName(self.LYR_FIELD_NODE)[0].childNodes[0].nodeValue
+        try:
+            symbologyElement = dom.getElementsByTagName(self.LYR_SYMBOL_NODE)[0]
+            lyr.symbologyFieldName = symbologyElement.getElementsByTagName(self.LYR_FIELD_NODE)[0].childNodes[0].nodeValue
+        except IndexError:
+            print 'oh oh, index error on "symbologyElement"'
 
         return lyr.name, lyr
 
@@ -79,11 +86,12 @@ class MxdExtras(dict):
 
 if __name__ == "__main__":
 
-    mxdPath = r"c:\temp\AmphibianSpeciesRichnessAverageOf30mCells.mxd"
+    mxdPath = os.path.join(os.environ["TEMP"],"ExportLayerSymbolDefinitions\Untitled.mxd")
 
     mxde = MxdExtras(mxdPath)
 
     for lyr in mxde.itervalues():
         print "Layer Name: ", lyr.name 
         print "Layer Symbology Field Name: ", lyr.symbologyFieldName
-        print 
+
+    print arcpy.GetMessages()
