@@ -1,12 +1,11 @@
 @echo off
 :: Homepage:  https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.md
-:: Copyright 2013 Environment Yukon, License: MIT/X (open source)
+:: Copyright 2013-2017 Environment Yukon, License: MIT/X (open source)
 :: Author:  Matt.Wilkie@gov.yk.ca
 ::
+setlocal
 set _product_codes=%1
-:: Comment out this next line to enable passing product codes on command line
-:: Note: lack of quotes after "set ..." is deliberate
-if exist "%~dp0\product-codes.txt" set _product_codes=%~dp0\product-codes.txt
+if not defined _product_codes call :default_codes_choice
 
 echo. ---------------------------------------------------------------------------
 echo.           Uninstall all ArcGIS products
@@ -38,6 +37,9 @@ goto :eof
 :from_file
   :: Parse product name and id code from Product-Codes.txt
   :: http://ss64.com/nt/for_f.html
+  :: Ignores anything preceeding left-side curly brace: `{`
+  :: Anything following closing `}` will be passed to msiexec
+  :: and likely cause error.
   echo.
   echo.           using "%_product_codes%" for Product ID list
  
@@ -47,15 +49,31 @@ goto :eof
     )
   goto :eof
 
+:default_codes_choice
+  echo.
+  echo. No code file provided.
+  echo.
+  call :usage
+  echo.
+  choice /c YN /d N /t 15 /n /m "Use default 'product-codes\main.txt'? (Defaults to No in 15s) [y,N] "
+  echo.
+  echo %errorlevel%
+  if errorlevel 2 goto :eof
+  
+  :: Note: lack of quotes after "set ..." is deliberate
+  if exist "%~dp0\product-codes\main.txt" set _product_codes=%~dp0\product-codes\main.txt
+  
+  goto :eof
+  
 :no_codes_file
   echo.
   echo. Product code file "%_product_codes%" not found
   echo.
-  call :Usage
+  call :usage
   echo.&& pause
   goto :eof
 
-:Usage  
+:usage  
   echo. Usage:  
   echo.       %~n0 product-codes.txt
   echo.       %~n0 product-codes.txt /silent
