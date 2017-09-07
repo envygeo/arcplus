@@ -1,6 +1,8 @@
 arcplus
 =======
-*a few little things I think Esri's arcpy and related should have*
+*A few little things Esri's arcpy and related should have.*
+
+**2017-09-07**: transferred ownership of the repository from Matt's personal account to the newly minted @envygeo github organization and @mhw-at-yg work account. I don't know if this will have impact on repo watchers stars or not. Bookmarks work seamlessly tho'.  
 
 
 ## Quick Start
