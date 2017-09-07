@@ -3,8 +3,7 @@ import arcpy
 
 workspace = arcpy.GetParameterAsText(0)
 if not workspace:
-    # workspace = 'Z:\V5\ENV_250k.gdb'
-    workspace = r'C:\Users\mhwilkie\Documents\ArcGIS\Default.gdb'
+    workspace = r'Z:\V5\ENV_250k.gdb\admin_env'
 
 def count_vertices(fc, table):
     '''Count vertices in Feature Class, insert to dictionary named "table"'''
@@ -12,7 +11,6 @@ def count_vertices(fc, table):
     # https://gis.stackexchange.com/questions/84796/extracting-number-of-vertices-in-each-polygon
     features = [feature[0] for feature in arcpy.da.SearchCursor(fc,"SHAPE@")]
     count_vertices = sum([f.pointCount-f.partCount for f in features])
-    #arcpy.AddMessage("{:60}\t:\t{:>,}".format(fc, count_vertices))
     table[fc] = count_vertices
 
 def print_report(table):
