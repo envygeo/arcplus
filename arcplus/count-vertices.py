@@ -3,7 +3,8 @@ import arcpy
 
 workspace = arcpy.GetParameterAsText(0)
 if not workspace:
-    workspace = 'Z:\V5\ENV_250k.gdb'
+    # workspace = 'Z:\V5\ENV_250k.gdb'
+    workspace = r'C:\Users\mhwilkie\Documents\ArcGIS\Default.gdb'
 
 def count_vertices(fc, table):
     '''Count vertices in Feature Class, insert to dictionary named "table"'''
@@ -26,9 +27,10 @@ def print_report(table):
 
 def get_feature_classes(workspace):
     '''Return list of all feature classes under Workspace (recursive)'''
-    # # https://gis.stackexchange.com/questions/5893/listing-all-feature-classes-in-file-geodatabase-including-within-feature-datase
+    # https://gis.stackexchange.com/questions/5893/listing-all-feature-classes-in-file-geodatabase-including-within-feature-datase
     feature_classes = []
     walk = arcpy.da.Walk(workspace, datatype="FeatureClass")
+    print 'Finding feature classes in', workspace
     for dirpath, dirnames, filenames in walk:
         for filename in filenames:
             feature_classes.append(os.path.join(dirpath, filename))
@@ -36,7 +38,8 @@ def get_feature_classes(workspace):
 
 
 table = {}
-for fc in feature_classes:
+for fc in get_feature_classes(workspace):
+    print 'Counting', fc
     count_vertices(fc,table)
 
 print_report(table)
