@@ -1,0 +1,9 @@
+import arcpy
+
+mxdpath = r"C:\Users\mhwilkie\Documents\ArcGIS\Wolf Lake.mxd"
+
+mxd = arcpy.mapping.MapDocument(map)
+df = arcpy.mapping.ListDataFrames(mxd, "Layers")[0]
+lyr = arcpy.mapping.ListLayers(mxd, "*", df)[0]
+
+ao = lyr._arc_object
