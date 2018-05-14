@@ -1,3 +1,5 @@
+REM Upstream source: https://community.esri.com/docs/DOC-8930-arcgis-pro-silent-install-script
+REM Selectively applied (see details in git history)
 :: install_arcgispro.bat
 :: Silent install of ArcGIS Pro 
 :: 
@@ -45,7 +47,7 @@ setlocal
 :: %~d0%~p0 is folder where this script resides
 set SRC=%~d0%~p0
 set LOGDIR=%TEMP%
-set INSTALLDIR=C:\Program Files\ArcGIS\Pro
+set INSTALLDIR=C:\ArcGIS\Pro
 :: set to 1 to suppress Pro prompting software updates 
 :: (useful for managed deployments)
 set CHECKUPDATES=0
@@ -107,3 +109,9 @@ popd
 msiexec /i "%SRC%\Esri\ArcGISProHelp\ArcGISProHelp.msi" ^
   /l+ie "%LOG_PATH%_Help.txt" %SILENT%
   
+
+:: Optional: Set registry key to block ArcGIS Pro update prompts
+REM %WINDIR%\system32\reg.exe add HKLM\SOFTWARE\ESRI\ArcGISPro\Settings ^
+REM   /v CheckForUpdatesAtStartup /t REG_DWORD /d 0 /f
+:: TODO: use this as template for fixing bug with mismatch between 
+:: mapped drives and UNC paths in Control Panel uninstall source
