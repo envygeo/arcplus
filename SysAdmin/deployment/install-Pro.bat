@@ -9,10 +9,10 @@ pushd %~dp0
 
 :checkPrivileges
   :: courtesy of https://ss64.com/nt/syntax-elevate.html
-  @echo Testing for admin privileges...
+  @echo Testing: for admin privileges...
   fsutil dirty query %SYSTEMDRIVE% >nul
   If %errorLevel% NEQ 0 (
-     Echo Failure, please rerun this script from an elevated command prompt. Exiting...
+     Echo ** Please rerun this script from an elevated command prompt. Exiting...
      Ping 127.0.0.1 3>&1 > nul
      Exit /B 1
   ) 
@@ -20,18 +20,18 @@ pushd %~dp0
 
 :checkDotNet
   :: Check for .NET courtesy of @curtvprice
-  @echo Testing for correct Dot Net framework
-  set x64key=HKLM\SOFTWARE\Microsoft\.NETFramework_DOESNOTEXIST
+  @echo Testing: for correct Dot Net framework
+  set key=HKLM\SOFTWARE\Microsoft\.NETFramework
   :: 4.6.1 x64
-  %WINDIR%\system32\reg.exe query %x64key%  /f ".NETFramework,Version=v4.6.1" /k /s
+  %WINDIR%\system32\reg.exe query %key%  /f ".NETFramework,Version=v4.6.1" /k /s >NUL
   if %errorLevel% NEQ 0 (
-     echo ** Microsoft .NET Framework 4.6.1 ^(x64^) not installed!
+     echo ** Microsoft .NET Framework 4.6.1 ^(x64^) must be installed first
      ping 127.0.0.1 3>&1 > nul
      exit /B 1
   ) 
   @echo Success: Microsoft .NET Framework 4.6.1 ^(x64^) verified
 
-  call :install_pro
+  REM call :install_pro
 
 timeout /t 15
 popd
