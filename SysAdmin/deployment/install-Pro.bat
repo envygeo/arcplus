@@ -9,29 +9,32 @@ pushd %~dp0
 
 :checkPrivileges
   :: courtesy of https://ss64.com/nt/syntax-elevate.html
-  @echo Testing: for admin privileges...
+  echo. & echo Testing: for admin privileges...
   fsutil dirty query %SYSTEMDRIVE% >nul
-  If %errorLevel% NEQ 0 (
-     Echo ** Please rerun this script from an elevated command prompt. Exiting...
-     Ping 127.0.0.1 3>&1 > nul
-     Exit /B 1
+  if %errorLevel% NEQ 0 (
+     echo ** Please rerun this script from an elevated command prompt. Exiting...
+     ping 127.0.0.1 3>&1 > nul
+     exit /B 1
   ) 
-  @echo Success: this script is running elevated.
+  echo Success: this script is running elevated.
 
 :checkDotNet
   :: Check for .NET courtesy of @curtvprice
-  @echo Testing: for correct Dot Net framework
+  echo. & echo Testing: for correct Dot Net framework
+  REM set key=HKLM\SOFTWARE\Microsoft\.NETFrameworkDOESNOTEXIST
   set key=HKLM\SOFTWARE\Microsoft\.NETFramework
   :: 4.6.1 x64
   %WINDIR%\system32\reg.exe query %key%  /f ".NETFramework,Version=v4.6.1" /k /s >NUL
   if %errorLevel% NEQ 0 (
      echo ** Microsoft .NET Framework 4.6.1 ^(x64^) must be installed first
+     echo.  Run "%root%\4-Config\install-DotNet.vbs"
+     echo.  and then try again.
      ping 127.0.0.1 3>&1 > nul
      exit /B 1
   ) 
-  @echo Success: Microsoft .NET Framework 4.6.1 ^(x64^) verified
+  echo Success: Microsoft .NET Framework 4.6.1 ^(x64^) verified
 
-  REM call :install_pro
+  call :install_pro
 
 timeout /t 15
 popd
@@ -41,7 +44,7 @@ goto :eof
   
 :install_pro
 REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-administration.htm
-  echo. Installing ArcGIS Pro...
+  echo & . echo. Installing ArcGIS Pro...
   pushd %~dp0\1-Pro
   echo %cd%
   %SystemRoot%\System32\msiexec.exe /I ^
@@ -60,3 +63,7 @@ REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-admini
   echo. Logfile: "%TEMP%\%~nx0.log"
   goto :eof
 
+:: ----- NOTES -----
+:: check* routines must appear in top block and can't be called, else
+:: the `exit /b` command will only exit the block and not the parent
+:: script.
