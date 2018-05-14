@@ -13,7 +13,7 @@ pushd %~dp0
   fsutil dirty query %SYSTEMDRIVE% >nul
   if %errorLevel% NEQ 0 (
      echo ** Please rerun this script from an elevated command prompt. Exiting...
-     ping 127.0.0.1 3>&1 > nul
+     timeout /t 7
      exit /B 1
   ) 
   echo Success: this script is running elevated.
@@ -29,7 +29,7 @@ pushd %~dp0
      echo ** Microsoft .NET Framework 4.6.1 ^(x64^) must be installed first
      echo.  Run "%root%\4-Config\install-DotNet.vbs"
      echo.  and then try again.
-     ping 127.0.0.1 3>&1 > nul
+     timeout /t 7
      exit /B 1
   ) 
   echo Success: Microsoft .NET Framework 4.6.1 ^(x64^) verified
