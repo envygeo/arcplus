@@ -3,6 +3,7 @@ cls
 echo.
 echo.   Installing ArcGIS Pro without prompts, according to ENV Yukon standards
 echo.
+setlocal
 set root=%~dp0
 pushd %~dp0
 
@@ -17,6 +18,7 @@ pushd %~dp0
   ) 
   @echo Success: this script is running elevated.
 
+call :checkDotNet  
 call :install_pro
 
 timeout /t 15
@@ -44,4 +46,20 @@ REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-admini
       /qb 
   popd
   echo. Logfile: "%TEMP%\%~nx0.log"
+  goto :eof
+
+:checkDotNet  
+:: Check for .NET
+  set x64key=HKLM\SOFTWARE\Microsoft\.NETFramework
+  :: 4.6.1 x64
+  %WINDIR%\system32\reg.exe query %x64key%  /f ".NETFramework,Version=v4.6.1" /k /s >NUL ^
+    || ( echo. & echo ** Microsoft .NET Framework 4.6.1 ^(x64^) not installed! ** & goto dotnet_fail)  
+  echo Microsoft .NET Framework 4.6.1 ^(x64^) verified
+  goto dotnet_ok
+
+:dotnet_fail
+  echo ** .NET Check Failed -- Cannot Install ArcGIS Pro **
+  goto :eof
+:dotnet_ok
+  echo ** .NET Check Passed **
   goto :eof
