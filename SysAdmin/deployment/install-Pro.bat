@@ -34,7 +34,7 @@ pushd %~dp0
   ) 
   echo Success: Microsoft .NET Framework 4.6.1 ^(x64^) verified
 
-  call :install_pro
+call :install_pro
 
 timeout /t 15
 popd
@@ -44,9 +44,8 @@ goto :eof
   
 :install_pro
 REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-administration.htm
-  echo & . echo. Installing ArcGIS Pro...
+  echo. & echo. Installing ArcGIS Pro...
   pushd %~dp0\1-Pro
-  echo %cd%
   %SystemRoot%\System32\msiexec.exe /I ^
       %cd%\ArcGISPro.msi ^
       ESRI_LICENSE_HOST=LICSERVER ^
