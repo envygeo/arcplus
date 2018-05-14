@@ -18,8 +18,20 @@ pushd %~dp0
   ) 
   @echo Success: this script is running elevated.
 
-call :checkDotNet  
-call :install_pro
+:checkDotNet
+  :: Check for .NET courtesy of @curtvprice
+  @echo Testing for correct Dot Net framework
+  set x64key=HKLM\SOFTWARE\Microsoft\.NETFramework_DOESNOTEXIST
+  :: 4.6.1 x64
+  %WINDIR%\system32\reg.exe query %x64key%  /f ".NETFramework,Version=v4.6.1" /k /s
+  if %errorLevel% NEQ 0 (
+     echo ** Microsoft .NET Framework 4.6.1 ^(x64^) not installed!
+     ping 127.0.0.1 3>&1 > nul
+     exit /B 1
+  ) 
+  @echo Success: Microsoft .NET Framework 4.6.1 ^(x64^) verified
+
+  call :install_pro
 
 timeout /t 15
 popd
@@ -48,18 +60,3 @@ REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-admini
   echo. Logfile: "%TEMP%\%~nx0.log"
   goto :eof
 
-:checkDotNet  
-:: Check for .NET
-  set x64key=HKLM\SOFTWARE\Microsoft\.NETFramework
-  :: 4.6.1 x64
-  %WINDIR%\system32\reg.exe query %x64key%  /f ".NETFramework,Version=v4.6.1" /k /s >NUL ^
-    || ( echo. & echo ** Microsoft .NET Framework 4.6.1 ^(x64^) not installed! ** & goto dotnet_fail)  
-  echo Microsoft .NET Framework 4.6.1 ^(x64^) verified
-  goto dotnet_ok
-
-:dotnet_fail
-  echo ** .NET Check Failed -- Cannot Install ArcGIS Pro **
-  goto :eof
-:dotnet_ok
-  echo ** .NET Check Passed **
-  goto :eof
