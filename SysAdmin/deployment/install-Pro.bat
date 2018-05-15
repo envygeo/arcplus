@@ -12,7 +12,7 @@ pushd %~dp0
   echo. & echo Testing: for admin privileges...
   fsutil dirty query %SYSTEMDRIVE% >nul
   if %errorLevel% NEQ 0 (
-     echo ** Please rerun this script from an elevated command prompt. Exiting...
+     echo. ** Please rerun this script from an elevated command prompt. Exiting...
      timeout /t 7
      exit /B 1
   ) 
@@ -26,7 +26,7 @@ pushd %~dp0
   :: 4.6.1 x64
   %WINDIR%\system32\reg.exe query %key%  /f ".NETFramework,Version=v4.6.1" /k /s >NUL
   if %errorLevel% NEQ 0 (
-     echo ** Microsoft .NET Framework 4.6.1 ^(x64^) must be installed first
+     echo. ** Microsoft .NET Framework 4.6.1 ^(x64^) must be installed first
      echo.  Run "%root%\4-Config\install-DotNet.vbs"
      echo.  and then try again.
      timeout /t 7
@@ -34,7 +34,8 @@ pushd %~dp0
   ) 
   echo Success: Microsoft .NET Framework 4.6.1 ^(x64^) verified
 
-call :install_pro
+  call :install_pro
+  call :install_patches
 
 timeout /t 15
 popd
@@ -44,7 +45,7 @@ goto :eof
   
 :install_pro
 REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-administration.htm
-  echo. & echo. Installing ArcGIS Pro...
+  echo. & echo -- Installing ArcGIS Pro...
   pushd %~dp0\1-Pro
   %SystemRoot%\System32\msiexec.exe /I ^
       %cd%\ArcGISPro.msi ^
@@ -59,7 +60,22 @@ REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-admini
       /L* "%TEMP%\%~nx0.log" ^
       /qb 
   popd
-  echo. Logfile: "%TEMP%\%~nx0.log"
+  echo Logfile: "%TEMP%\%~nx0.log"
+  goto :eof
+
+:install_patches
+  :: patch updates (.msp files, if any) should be placed in folder with ArcGIS Pro msi
+  pushd "%root%\1-Pro"
+  for %%p in (*.msp) do (
+    echo -- Installing patch %%p...
+    %SystemRoot%\System32\msiexec.exe /p ^
+    %%p ^
+    REINSTALLMODE=omus ^
+    /L* "%TEMP%\%~nx0_patches.log" ^
+    /qb
+    echo Logfile: "%TEMP%\%~nx0_patches.log"
+    )
+  popd
   goto :eof
 
 :: ----- NOTES -----
