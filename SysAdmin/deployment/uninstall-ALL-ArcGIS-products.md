@@ -5,8 +5,8 @@ Uninstall ArcGIS products using the Windows Installer `msiexec`, feeding it a te
 Does not work for programs like ArcPad which don't use msi to install in the first place.  
 
 ## Install
-1. Download [uninstall-ALL-ArcGIS-products.bat](https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.bat) and save somewhere handy. 
-2. Ditto for save the [product list](https://github.com/maphew/arcplus/blob/master/SysAdmin/product-codes.txt) *(last updated 2015-Jun-22)*, or make your own.
+1. Download [uninstall-ALL-ArcGIS-products.bat](https://github.com/envygeo/arcplus/blob/master/SysAdmin/deployment/uninstall-ALL-ArcGIS-products.bat) and save somewhere handy. 
+2. Ditto for save the [product list](https://github.com/envygeo/arcplus/tree/master/SysAdmin/deployment/product-codes) or make your own.
 
 
 ## Usage  
@@ -18,11 +18,9 @@ If `product-codes.txt` exists in same folder as the .bat file, uninstall will us
     uninstall-ALL-ArcGIS-products # /silent
     uninstall-ALL-ArcGIS-products x:\path\to\my-product-codes.txt /silent
 
-In the default mode it's normal for a the progress window to flicker constantly while it tests for programs to remove. An unfortunate side effect of this is constant stealing of keyboard focus. It's better to leave the system alone or risk inadvertently cancelling an uninstall. Use the `/silent` parameter to avoid this.
-
 
 ---------
-Product codes were taken from [Esri KB 28709 - Silently uninstall ArcGIS products](http://support.esri.com/en/knowledgebase/techarticles/detail/28709) *(Last Modified: 5/14/2014)*
+Product codes were taken from [Esri KB 28709 - Silently uninstall ArcGIS products](http://support.esri.com/en/knowledgebase/techarticles/detail/28709) *(Last Modified: 8/19/2016)*
 
 The list was then manually supplemented by looking at the `setup.ini` for the various products I have installation media for.   
 
