@@ -31,7 +31,10 @@ goto :eof
 :: ---------------------------------------------------------------------------
 :uninstall
   :: %1 = product code
-  %SystemRoot%\System32\msiexec.exe /x %1 /qn /norestart /l*+ %temp%\%~n0-%COMPUTERNAME%.log %_opt%
+  if exist %SystemRoot%\Installer\%1 (^
+    echo Found: %SystemRoot%\Installer\%1
+    %SystemRoot%\System32\msiexec.exe /x %1 /qn /norestart /l*+ %temp%\%~n0-%COMPUTERNAME%.log %_opt%
+    )
   goto :eof
 
 :from_file
@@ -40,8 +43,11 @@ goto :eof
   :: Ignores anything preceeding left-side curly brace: `{`
   :: Anything following closing `}` will be passed to msiexec
   :: and likely cause error.
+  ::
+  ::      left of `{` becomes %%a
+  ::      right of `{` becomes %%b
   echo.
-  echo.           using "%_product_codes%" for Product ID list
+  echo.           using "%1" for Product ID list
  
   for /f "tokens=1,2 delims=^{" %%a in (%1) do (^
     if "%%b"=="" (echo ----- %%a -----) else (echo {%%b - %%a)
