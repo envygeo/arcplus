@@ -21,6 +21,9 @@ Description:
          will honor those fields. If DateTime field does not exist or cannot be
          parsed the "time" GPX element is set to system's epoch zero (usually
          1970-Jan-01).
+Code:
+         Upstream: https://github.com/arcpy/sample-gp-tools/tree/master/FeaturesToGPX
+         Local: https://github.com/envygeo/arcplus/tree/master/ArcToolbox/Scripts
 '''
 
 try:
