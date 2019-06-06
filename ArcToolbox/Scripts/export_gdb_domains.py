@@ -6,7 +6,7 @@ Author: Matt Wilkie (Environment Yukon)
 License: X/MIT open source
 
 Export all coded value domains in a geodatabase to tables in that gdb
-	http://gis.stackexchange.com/questions/26215
+    http://gis.stackexchange.com/questions/26215
 """
 import os, sys
 import arcpy
