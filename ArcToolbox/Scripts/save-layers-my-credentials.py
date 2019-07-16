@@ -2,9 +2,7 @@
 with a UNC path.
 
 Designed for use with a password protected geodatabase. Afterwards,
-using the personal layer files will skip authentication prompt, so long
-as the .sde file with your credentials stays in the same place with the
-same name.
+using the personal layer files will skip authentication prompt.
 
 Usage:
 
@@ -48,6 +46,9 @@ if not os.path.exists(inpath):
     print('\nUsage: {} "[in UNC path]" "[sde file]" "[out path]"\n'.format(sys.argv[0]))
     sys.exit()
 
+if not os.path.exists(sdefile):
+    print('\n*** SDE file not found: {}\n'.format(sdefile))
+    sys.exit()
 
 if not os.path.exists(docfolder):
     os.makedirs(docfolder)
@@ -66,7 +67,6 @@ arcpy.AddMessage('OUT: {}'.format(docfolder))
 
 # Skipped layers
 group_layers = []
-broken_layers = []
 problem_layers = []
 
 ## Main
@@ -76,9 +76,6 @@ for L in layers:
 
         if lyr.isGroupLayer:
             group_layers.append(L)
-            break
-        if lyr.isBroken:
-            broken_layers.append(L)
             break
 
         server = lyr.serviceProperties['Server']
@@ -99,10 +96,8 @@ for L in layers:
         if not os.path.exists(outfolder):
             os.makedirs(outfolder)
 
-        #print('in:{}\nout:{}\n'.format(L, outfolder))
-
         try:
-            lyr.findAndReplaceWorkspacePath('', sdefile, validate=True)
+            lyr.findAndReplaceWorkspacePath('', sdefile, validate=False)
 
             #full path to output .lyr file
             fname = os.path.join(
@@ -119,15 +114,14 @@ for L in layers:
 
 
 # Report skippped
-arcpy.AddMessage('\n--- Skipped group layers:\n')
-for s in group_layers:
-    arcpy.AddMessage(s)
-arcpy.AddMessage('\n--- Skipped broken layers:\n')
-for s in broken_layers:
-    arcpy.AddMessage(s)
-arcpy.AddMessage('\n--- Unknown problem layers:\n')
-for s in problem_layers:
-    arcpy.AddMessage(s)
+if group_layers:
+    arcpy.AddMessage('\n--- Skipped group layers:\n')
+    for s in group_layers:
+        arcpy.AddMessage(s)
+if problem_layers:
+    arcpy.AddMessage('\n--- Unknown problem layers:\n')
+    for s in problem_layers:
+        arcpy.AddMessage(s)
 
 
 ## --- Notes ---
@@ -138,4 +132,3 @@ for s in problem_layers:
 #
 # Would be nice to handle group layers too.
 # and of course add to a Toolbox for regular users.
-
