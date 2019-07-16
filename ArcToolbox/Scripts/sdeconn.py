@@ -22,11 +22,11 @@ Source:
 # Import system modules
 import arcpy, os, sys
 
-def connect(database, server="<default server>", username="<default user>", password="<default password>", version="SDE.DEFAULT"):
+def connect(platform, database, server="<default server>", username="<default user>", password="<default password>", version="SDE.DEFAULT", Connection_File_Name):
     # Check if value entered for option
     try:
-        #Usage parameters for spatial database connection to upgrade
-        service = "sde:sqlserver:" + server
+        #Usage parameters for spatial database connectdaion to upgrade
+        service = "sde:{}:{}".format(platform, server)
         account_authentication = 'DATABASE_AUTH'
         version = version.upper()
         database = database.lower()
@@ -57,9 +57,10 @@ def connect(database, server="<default server>", username="<default user>", pass
         else:
             temp = os.environ.get("TMP")
 
-        Connection_File_Name = temp + os.sep + Conn_File_NameT + ".sde"
-        if os.path.isfile(Connection_File_Name):
-            return Connection_File_Name
+        #Connection_File_Name = temp + os.sep + Conn_File_NameT + ".sde"
+        #if os.path.isfile(Connection_File_Name):
+        #    return Connection_File_Name
+
 
         # Check for the .sde file and delete it if present
         arcpy.env.overwriteOutput=True
@@ -83,7 +84,17 @@ def connect(database, server="<default server>", username="<default user>", pass
         print saveUserInfo
         print version
         print saveVersionInfo
-        arcpy.CreateArcSDEConnectionFile_management(temp, Conn_File_NameT, server, service, database, account_authentication, username, password, saveUserInfo, version, saveVersionInfo)
+        arcpy.CreateArcSDEConnectionFile_management(temp,
+            Conn_File_NameT,
+            server,
+            service,
+            database,
+            account_authentication,
+            username,
+            password,
+            saveUserInfo,
+            version,
+            saveVersionInfo)
         for i in range(arcpy.GetMessageCount()):
             if "000565" in arcpy.GetMessage(i):   #Check if database connection was successful
                 arcpy.AddReturnMessage(i)
@@ -100,6 +111,30 @@ def connect(database, server="<default server>", username="<default user>", pass
         print e.code
         return
 
+def get_profile_info():
+    '''
+    Kudos @Michael-Stimson https://gis.stackexchange.com/a/154572/108
+    '''
+    d = {}
+    d['appdata'] = os.environ.get("APPDATA") # not case sensitive
+    d['II']      = arcpy.GetInstallInfo()
+    d['version'] = II["Version"]             # Case sensitive
+    d['desktop_fld']  = "{0}\\ESRI\\Desktop{1}".format(AppData,Version)
+    d['connections'] = "{}\\ArcCatalog".format(d['desktop_fld'])
+    return d
+
+def connect_filename(profile, database, username):
+    '''Return full path for connection file
+     Example:
+        "C:\Users\mhwilkie\AppData\Roaming\ESRI\Desktop10.6\ArcCatalog\Connection to CSWPROD (mhwilkie).sde"
+    '''
+    fname = '{0}\\Connection to {1} ({2}).sde'.format(
+        profile['connections'],
+        database,
+        username)
+    return fname
+
+
 def listFcsInGDB():
     ''' set your arcpy.env.workspace to a gdb before calling '''
     for fds in arcpy.ListDatasets('','feature') + ['']:
@@ -108,14 +143,22 @@ def listFcsInGDB():
 
 if __name__ == '__main__':
     print "started main"
-    database = arcpy.GetParameterAsText(0)
-    server = arcpy.GetParameterAsText(1)
-    username = arcpy.GetParameterAsText(2)
-    password = arcpy.GetParameterAsText(3)
-    version = "SDE.DEFAULT"
+    platform = arcpy.GetParameterAsText(0)
+    database = arcpy.GetParameterAsText(1)
+    server = arcpy.GetParameterAsText(2)
+    username = arcpy.GetParameterAsText(3)
+    password = arcpy.GetParameterAsText(4)
+    version = arcpy.GetParameterAsText(5)
+
+    if not platform:
+        platform = 'Oracle'
+    if not version:
+        version = "SDE.DEFAULT"
+
+    profile = get_profile_info()
 
     print "make connection file"
-    sde = connect(database, 'CSWPROD', 'mhwilkie', 'yukon', version)
+    sde = connect(platform, database, server, username, password, version)
 
     print sde
     arcpy.env.workspace = sde
