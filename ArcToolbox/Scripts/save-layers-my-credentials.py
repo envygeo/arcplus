@@ -50,15 +50,17 @@ if not os.path.exists(inpath):
     print('\nUsage: {} "[in UNC path]" "[sde file]" "[out path]"\n'.format(sys.argv[0]))
     sys.exit()
 
+# output
+if not os.path.exists(docfolder):
+    os.chdir(os.environ['USERPROFILE']) # make sure we start someplace sane
+docfolder = os.path.abspath(docfolder)
+if not os.path.exists(docfolder):
+    os.makedirs(docfolder)
 
 def find_in_catalog(sdefile):
     """Search for sdefile in common Esri catalog connection folders.
     Return full file path or None """
     sdefilepath = None
-
-    if not sdefile.startswith("Database Connection"):
-        return sdefilepath
-
     dot_sde = os.path.basename(sdefile)
     appdata = os.environ['APPDATA']
 
@@ -68,7 +70,6 @@ def find_in_catalog(sdefile):
         if os.path.exists(fld):
             os.chdir(fld)
             break
-
     if os.path.exists(dot_sde):
         sdefilepath = os.path.join(fld, dot_sde)
 
@@ -84,10 +85,6 @@ if not os.path.exists(sdefile):
         msg = "*** SDE file not found"
         arcpy.AddMessage(msg)
         sys.exit()
-
-# output
-if not os.path.exists(docfolder):
-    os.makedirs(docfolder)
 
 
 def get_filenames(inpath, pattern='*.lyr'):
