@@ -40,9 +40,9 @@ docfolder = arcpy.GetParameterAsText(2)
 # hardcoded paths if literal `**DEV` is first parameter
 if inpath == '**DEV':
     inpath = r'\\cswprod\Layerfiles'
-    docfolder = os.path.join('os.environ['USERPROFILE'],
+    docfolder = os.path.join(os.environ['USERPROFILE'],
         r'Documents\ArcGIS\Layers')
-    sdefile = os.path.join('os.environ['APPDATA'],
+    sdefile = os.path.join(os.environ['APPDATA'],
         r"ESRI\Desktop10.7\ArcCatalog\Connection to cswprod.sde")
 
 # verify input path
