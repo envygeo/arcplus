@@ -26,6 +26,7 @@ Matt.Wilkie@gov.yk.ca, 2019-07-16
 License: X/MIT Open Source
 (c) 2019 Environment Yukon
 '''
+from __future__ import print_function
 import os
 import sys
 import glob
@@ -42,16 +43,52 @@ if inpath == '**DEV':
     docfolder = r'C:\Users\mhwilkie\Documents\ArcGIS\Layers'
     sdefile = r"C:\Users\mhwilkie\AppData\Roaming\ESRI\Desktop10.6\ArcCatalog\Connection to cswprod.sde"
 
+# verify input path
 if not os.path.exists(inpath):
+    msg = "*** Input path not found: '{}' ".format(inpath)
+    arcpy.AddMessage(msg)
     print('\nUsage: {} "[in UNC path]" "[sde file]" "[out path]"\n'.format(sys.argv[0]))
     sys.exit()
 
-if not os.path.exists(sdefile):
-    print('\n*** SDE file not found: {}\n'.format(sdefile))
-    sys.exit()
 
+def find_in_catalog(sdefile):
+    """Search for sdefile in common Esri catalog connection folders.
+    Return full file path or None """
+    sdefilepath = None
+
+    if not sdefile.startswith("Database Connection"):
+        return sdefilepath
+
+    dot_sde = os.path.basename(sdefile)
+    appdata = os.environ['APPDATA']
+
+    for v in ['10.7', '10.6', '10.5', '10.4', '10.3']:
+        fld = os.path.join(appdata, r'ESRI\Desktop'+ v, 'ArcCatalog')
+        # print(fld)
+        if os.path.exists(fld):
+            os.chdir(fld)
+            break
+
+    if os.path.exists(dot_sde):
+        sdefilepath = os.path.join(fld, dot_sde)
+
+    arcpy.AddMessage("Found: {}".format(sdefilepath))
+    return sdefilepath
+
+
+# verify we can find the .sde connection file
+if not os.path.exists(sdefile):
+    arcpy.AddMessage("Looking for '{}'".format(sdefile))
+    sdefile = find_in_catalog(sdefile)
+    if not sdefile:
+        msg = "*** SDE file not found"
+        arcpy.AddMessage(msg)
+        sys.exit()
+
+# output
 if not os.path.exists(docfolder):
     os.makedirs(docfolder)
+
 
 def get_filenames(inpath, pattern='*.lyr'):
     matches = []

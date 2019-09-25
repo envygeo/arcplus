@@ -2142,11 +2142,14 @@ if inpath == '**DEV':
     sdefile = r"C:\Users\mhwilkie\AppData\Roaming\ESRI\Desktop10.6\ArcCatalog\Connection to cswprod.sde"
 
 if not os.path.exists(inpath):
+    msg = "*** Input path not found: '{}' ".format(inpath)
+    arcpy.AddMessage(msg)
     print('\nUsage: {} "[in UNC path]" "[sde file]" "[out path]"\n'.format(sys.argv[0]))
     sys.exit()
 
 if not os.path.exists(sdefile):
-    print('\n*** SDE file not found: {}\n'.format(sdefile))
+    msg = "*** SDE file not found: '{}'".format(sdefile)
+    arcpy.AddMessage(msg)
     sys.exit()
 
 if not os.path.exists(docfolder):
