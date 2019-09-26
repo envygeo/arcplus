@@ -108,7 +108,13 @@ problem_layers = []
 ## Main
 for L in layers:
     while L:
-        lyr = arcpy.mapping.Layer(L)
+        try:
+            lyr = arcpy.mapping.Layer(L)
+        # handle broken layer files (e.g. ArcMap version mismatch).
+        except ValueError as e:
+            arcpy.AddMessage("*** {}: {}".format(L, e))
+            problem_layers.append([L, e])
+            break
 
         if lyr.isGroupLayer:
             group_layers.append(L)
@@ -167,4 +173,3 @@ if problem_layers:
 # better code.
 #
 # Would be nice to handle group layers too.
-# and of course add to a Toolbox for regular users.
