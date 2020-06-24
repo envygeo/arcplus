@@ -1,5 +1,5 @@
 @echo off
-:: Homepage:  https://github.com/maphew/arcplus/blob/master/SysAdmin/uninstall-ALL-ArcGIS-products.md
+:: Homepage: https://github.com/envygeo/arcplus/tree/master/SysAdmin/deployment
 :: Copyright 2013-2017 Environment Yukon, License: MIT/X (open source)
 :: Author:  Matt.Wilkie@gov.yk.ca
 ::
