@@ -42,7 +42,12 @@ dissolveType = "LIST"
 buffered_fcs = []
 for distance in distances:
     #buf_fc = arcpy.ValidateTableName('xxx_' + out_fc + distance)
-    buf_fc = "in_memory/buf_{}".format(distance)
+    distance = int(distance)
+    # inside or outside buffer
+    if distance < 0:
+      buf_fc = "in_memory/buf_i{}".format(abs(distance))
+    else:
+      buf_fc = "in_memory/buf_o{}".format(distance)
     msg = "...buffering {0} into {1} with width {2}".format(in_fc, buf_fc, distance)
     arcpy.AddMessage(msg)
     print(arcpy.GetMessages())
