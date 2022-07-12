@@ -7,6 +7,25 @@ setlocal
 set root=%~dp0
 pushd %~dp0
 
+:: One of: SINGLE_USE, CONCURRENT_USE, NAMED_USER
+set AUTHORIZATION_TYPE=NAMED_USER
+  :: if NAMED_USER set to licensing portal or arcgis.com url
+  set LICENSE_URL=https://maps.example.ca/portal
+
+:: License server(s) hostname or IP address, semicolon delimited.
+:: Ignored unless CONCURRENT_USE for auth type
+set LICSERVER=@LICSERVER;@BACKUPSERVER
+
+:: One of: VIEWER, EDITOR, PROFESSIONAL
+set SOFTWARE_CLASS=Viewer
+
+:: set PORTAL_LIST="<portalURL1>;<portalURL2>". Use semicolons to separate URLs.
+set PORTAL_LIST="https://maps.example.ca/portal;https://orgname.maps.argis.com"
+
+
+:: ----- End of most changed settings -----
+
+
 :checkPrivileges
   :: courtesy of https://ss64.com/nt/syntax-elevate.html
   echo. & echo Testing: for admin privileges...
@@ -49,14 +68,17 @@ REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-admini
   pushd %~dp0\1-Pro
   %SystemRoot%\System32\msiexec.exe /I ^
       %cd%\ArcGISPro.msi ^
-      ESRI_LICENSE_HOST=LICSERVER ^
-      SOFTWARE_CLASS=Viewer ^
-      AUTHORIZATION_TYPE=CONCURRENT_USE ^
-      LOCK_AUTH_SETTINGS=FALSE ^
-      INSTALLDIR=C:\ArcGIS ^
+      ACCEPTEULA=YES ^
       ALLUSERS=1 ^
+      AUTHORIZATION_TYPE=%AUTHORIZATION_TYPE% ^
       CHECKFORUPDATESATSTARTUP=0 ^
       ENABLEEUEI=0 ^
+      ESRI_LICENSE_HOST=%LICSERVER% ^
+      INSTALLDIR=C:\ArcGIS ^
+      LICENSE_URL=%LICENSE_URL% ^
+      LOCK_AUTH_SETTINGS=FALSE ^
+      PORTAL_LIST=%PORTAL_LIST% ^
+      SOFTWARE_CLASS=%SOFTWARE_CLASS% ^
       /L* "%TEMP%\%~nx0.log" ^
       /qb 
   popd
