@@ -1,6 +1,9 @@
 ArcGIS GeoEvent Server
     http://server.arcgis.com/en/geoevent/latest/install/windows/uninstalling-geoevent-silently.htm
 
+
+10.9.1  {F5C3D729-0B74-419D-9154-D05C63606A94}
+10.9    {B73748C3-DD75-4376-B4DA-D52C59121A10}
 10.8    {10F38ED5-B9A1-4F0C-B8E2-06AD1365814C}
 10.7.1  {3AE4EE62-B5ED-45CB-8917-F761B9335F33}
 10.7    {7430C9C3-7D96-429E-9F47-04938A1DC37E}
@@ -13,6 +16,30 @@ ArcGIS GeoEvent Server
 
 Server
     http://server.arcgis.com/en/server/latest/install/windows/uninstalling-arcgis-server.htm
+
+10.9.1 {E4A5FD24-5C61-4846-B084-C7AD4BB1CF19}
+ArcGIS Server Arabic language pack      {918714D6-7D2B-4AE3-8990-0BE5B48BE770}
+ArcGIS Server Chinese language pack     {8F0B5A02-80E5-49BD-A343-096882EA256B}
+ArcGIS Server French language pack      {2D7E796C-3618-4D69-8E5F-2B3D9CAD4F25}
+ArcGIS Server German language pack      {02B32C18-84CA-40F8-B5B6-B3C1A44B5029}
+ArcGIS Server Italian language pack     {32CB6189-CBF4-4A9A-9189-77906A979060}
+ArcGIS Server Japanese language pack    {4D878D2E-1734-48E0-8E7D-E9A8C119A5E3}
+ArcGIS Server Portuguese language pack  {5B2B10CF-0760-4FC7-AD50-74B758608F52}
+ArcGIS Server Russian language pack     {64DBAF21-CA11-4FC1-96A9-AD2E3932AB1C}
+ArcGIS Server Spanish language pack     {1DF1ED4E-46E9-48CD-A132-5D993AE54F53}
+ArcGIS Server Turkish language pack     {77C4DD97-EC7B-4044-AD87-A6416D6E280E}
+
+10.9 {32A62D8E-BE72-4B28-AA0E-FE546D827240}
+ArcGIS Server Arabic language pack      {8A3B71EB-E4D7-405D-A4C0-B29CA5A4AE43}
+ArcGIS Server Chinese language pack     {79A07850-E1BD-4EDB-B511-013CDF13E653}
+ArcGIS Server French language pack      {1B7AB41E-75C6-4E94-9B6E-158C851FE372}
+ArcGIS Server German language pack      {928E9938-FAFB-4A56-9A49-F27652628B58}
+ArcGIS Server Italian language pack     {25A54B2D-D033-4DD4-9FAA-5E46157D5869}
+ArcGIS Server Japanese language pack    {25A54B2D-D033-4DD4-9FAA-5E46157D5869}
+ArcGIS Server Portuguese language pack  {45C659AD-0BA5-4739-8F9F-0E47526B68C7}
+ArcGIS Server Russian language pack     {54E01648-5D66-4F25-A2D2-0084BCE592B1}
+ArcGIS Server Spanish language pack     {08378314-2614-42BE-9ECB-A310103009E3}
+ArcGIS Server Turkish language pack     {6B3FF25A-725C-4DC9-8323-F10FADB6E954}
 
 10.8.1  {E9B85E31-4C31-4528-996B-F06E213F8BB3}
 ArcGIS Server Arabic language pack      {7A03A8D0-1890-488D-92DE-06D9E6D2C51A}
