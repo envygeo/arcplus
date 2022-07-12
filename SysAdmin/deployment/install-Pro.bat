@@ -5,6 +5,7 @@ echo.   Installing ArcGIS Pro without prompts, according to ENV Yukon standards
 echo.
 setlocal
 set root=%~dp0
+set proMsiDir=ArcGISPro_v2.9
 pushd %~dp0
 
 :: One of: SINGLE_USE, CONCURRENT_USE, NAMED_USER
@@ -43,18 +44,26 @@ set PORTAL_LIST="https://maps.example.ca/portal;https://orgname.maps.argis.com"
   REM set key=HKLM\SOFTWARE\Microsoft\.NETFrameworkDOESNOTEXIST
   set key=HKLM\SOFTWARE\Microsoft\.NETFramework
   :: 4.6.1 x64
-  %WINDIR%\system32\reg.exe query %key%  /f ".NETFramework,Version=v4.6.1" /k /s >NUL
+  %WINDIR%\system32\reg.exe query %key%  /f ".NETFramework,Version=v4.8" /k /s >NUL
   if %errorLevel% NEQ 0 (
-     echo. ** Microsoft .NET Framework 4.6.1 ^(x64^) must be installed first
-     echo.  Run "%root%\4-Config\install-DotNet.vbs"
-     echo.  and then try again.
+     echo. ** Microsoft .NET Framework 4.8 ^(x64^) must be installed first
+     REM echo.  Run "%root%\2-Config\install-DotNet.vbs"
+     REM echo.  and then try again.
+     echo.  After it completes run this install script again.
+     echo. && pause
+     "%root%\2-Config\\DotNet\ndp48-x86-x64-allos-enu.exe"
      timeout /t 7
      exit /B 1
-  ) 
-  echo Success: Microsoft .NET Framework 4.6.1 ^(x64^) verified
+  )
+  echo Success: Microsoft .NET Framework 4.8 ^(x64^) verified
 
   call :install_pro
-  call :install_patches
+  REM call :install_patches
+  call "%~dp0\install-Pro-patches.bat"
+  REM call :install_access_runtime
+  call :install_db_esri_geometry
+  call "%cd%\2-Config\install-OracleClient.bat"
+
 
 timeout /t 15
 popd
@@ -87,7 +96,7 @@ REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-admini
 
 :install_patches
   :: patch updates (.msp files, if any) should be placed in folder with ArcGIS Pro msi
-  pushd "%root%\1-Pro"
+  pushd "%root%\1-Pro\%proMsiDir%"
   for %%p in (*.msp) do (
     echo -- Installing patch %%p...
     %SystemRoot%\System32\msiexec.exe /p ^
@@ -99,6 +108,17 @@ REM https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-admini
     )
   popd
   goto :eof
+
+:install_access_runtime
+  pushd "%root%\2-Config"
+  AccessRuntime_x86_en-us.exe /quiet /passive
+  goto :eof
+
+:install_db_esri_geometry
+  pushd "%root%\2-Config"
+  call install-database_esri_geometry.bat %proMsiDir%
+  goto :eof
+
 
 :: ----- NOTES -----
 :: check* routines must appear in top block and can't be called, else
