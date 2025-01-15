@@ -1,6 +1,8 @@
 r'''Create personal layer files for all .lyr files from a source folder
 with a UNC path.
 
+DRAFT: in process of migrating to python 3 and ArcPro.
+
 Designed for use with a password protected geodatabase. Afterwards,
 using the personal layer files will skip authentication prompt.
 
@@ -20,13 +22,13 @@ Known Limitations:
     - doesn't handle group layers
 
 
-Tested with ArcMap 10.6 and Python 2.7 on Win10 x64.
+Tested with ArcGIS Pro v3.2 and Python 3.9 on Win10 x64.
 
-Matt.Wilkie@gov.yk.ca, 2019-07-16
+Matt.Wilkie@gov.yk.ca, 2024-02-xx
 License: X/MIT Open Source
-(c) 2019 Environment Yukon
+(c) 2019-2024 Environment Yukon
 '''
-from __future__ import print_function
+# from __future__ import print_function
 import os
 import sys
 import glob
@@ -39,11 +41,11 @@ docfolder = arcpy.GetParameterAsText(2)
 
 # hardcoded paths if literal `**DEV` is first parameter
 if inpath == '**DEV':
-    inpath = r'\\cswprod\Layerfiles'
+    inpath = r'\\cswprod\ProLayerfiles'
     docfolder = os.path.join(os.environ['USERPROFILE'],
         r'Documents\ArcGIS\Layers')
     sdefile = os.path.join(os.environ['APPDATA'],
-        r"ESRI\Desktop10.8\ArcCatalog\Connection to cswprod.sde")
+        r"Esri\ArcGISPro\Favorites\Connection to cswprod.sde")
 
 # verify input path
 if not os.path.exists(inpath):
