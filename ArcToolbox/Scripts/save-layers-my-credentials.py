@@ -1,4 +1,4 @@
-'''Create personal layer files for all .lyr files from a source folder
+r'''Create personal layer files for all .lyr files from a source folder
 with a UNC path.
 
 Designed for use with a password protected geodatabase. Afterwards,
@@ -43,7 +43,7 @@ if inpath == '**DEV':
     docfolder = os.path.join(os.environ['USERPROFILE'],
         r'Documents\ArcGIS\Layers')
     sdefile = os.path.join(os.environ['APPDATA'],
-        r"ESRI\Desktop10.7\ArcCatalog\Connection to cswprod.sde")
+        r"ESRI\Desktop10.8\ArcCatalog\Connection to cswprod.sde")
 
 # verify input path
 if not os.path.exists(inpath):
@@ -66,7 +66,7 @@ def find_in_catalog(sdefile):
     dot_sde = os.path.basename(sdefile)
     appdata = os.environ['APPDATA']
 
-    for v in ['10.7', '10.6', '10.5', '10.4', '10.3']:
+    for v in ['10.8', '10.7', '10.6', '10.5', '10.4', '10.3']:
         fld = os.path.join(appdata, r'ESRI\Desktop'+ v, 'ArcCatalog')
         # print(fld)
         if os.path.exists(fld):
