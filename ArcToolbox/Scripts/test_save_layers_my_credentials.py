@@ -12,7 +12,7 @@
 import os
 from pathlib import Path
 import pytest
-from update_layer_credentials import is_same_directory, process_layer_file
+from save_layers_my_credentials import is_same_directory, process_layer_file
 
 def create_test_file(path, content='{"test": true}'):
     """Create a test file with given content"""
