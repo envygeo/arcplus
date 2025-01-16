@@ -212,19 +212,19 @@ class WindowsPath(click.Path):
 
 This script processes .lyrx files in a directory, updating their connection strings with the provided Database username and password. It will skip any layers that don't use DBMS authentication.
 
-Run and prompt for input:
+Run and prompt for input (ctrl-c to abort):
 
     uvx update_layer_credentials.py
 
-Command Line Usage:
+Flatten output structure, prompt for missing parameters (username and password):
+
+    uvx update_layer_credentials.py --flatten -i \\\\portal-prd\\ProLayerfiles -o "d:\\my-csw-layers" 
+
+Full command Line (no prompts):
 
     uvx update_layer_credentials.py -u "username" -p "password" -i "\\\\portal-prd\\ProLayerfiles" -o "%USERPROFILE%\\Documents\\ArcGIS\\Layers"
 
-Prompt for missing parameters (username and password), flatten output structure:
-
-    uvx update_layer_credentials.py  -i "input_path" -o "output_path" --flatten
-
-Note: You can use `python ...` instead of `uvx ...` if you have the dependencies installed in your current environment.
+Note: You can use `python ...` instead of `uvx ...` or `uv run ...` if you have the dependencies installed in your current environment.
 """)
 @click.option('--username', '-u', prompt='Database username',
               help='Database username for connection')
