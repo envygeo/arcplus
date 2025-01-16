@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "arcpy",
+# ]
+# ///
+
 r'''Create personal layer files for all .lyr files from a source folder
 with a UNC path.
 
@@ -14,13 +21,12 @@ Inputs:
     - UNC path with layer files
         (\\CSWPROD\Layerfiles)
     - SDE Credentials file
-        ("%APPDATA%\Esri\Desktop10.6\ArcCatalog\Connection to CSWPROD.sde")
+        ("%LOCALAPPDATA%\ESRI\ArcGISPro\Favorites\Connection to CSWPROD.sde")
     - Folder to store the result .lyr files
         (C:\users\jonahwhale\Documents\ArcGIS\Layers)
 
 Known Limitations:
     - doesn't handle group layers
-
 
 Tested with ArcGIS Pro v3.2 and Python 3.9 on Win10 x64.
 
@@ -44,8 +50,8 @@ if inpath == '**DEV':
     inpath = r'\\cswprod\ProLayerfiles'
     docfolder = os.path.join(os.environ['USERPROFILE'],
         r'Documents\ArcGIS\Layers')
-    sdefile = os.path.join(os.environ['APPDATA'],
-        r"Esri\ArcGISPro\Favorites\Connection to cswprod.sde")
+    sdefile = os.path.join(os.environ['LOCALAPPDATA'],
+        r"ESRI\ArcGISPro\Favorites\Connection to cswprod.sde")
 
 # verify input path
 if not os.path.exists(inpath):
@@ -66,16 +72,12 @@ def find_in_catalog(sdefile):
     Return full file path or None """
     sdefilepath = None
     dot_sde = os.path.basename(sdefile)
-    appdata = os.environ['APPDATA']
-
-    for v in ['10.8', '10.7', '10.6', '10.5', '10.4', '10.3']:
-        fld = os.path.join(appdata, r'ESRI\Desktop'+ v, 'ArcCatalog')
-        # print(fld)
-        if os.path.exists(fld):
-            os.chdir(fld)
-            break
+    # appdata = os.environ['APPDATA']
+    localappdata = os.environ['LOCALAPPDATA']
+    if os.path.exists(localappdata):
+        os.chdir(localappdata)
     if os.path.exists(dot_sde):
-        sdefilepath = os.path.join(fld, dot_sde)
+        sdefilepath = os.path.join(localappdata, dot_sde)
 
     arcpy.AddMessage("Found: {}".format(sdefilepath))
     return sdefilepath
@@ -90,18 +92,29 @@ if not os.path.exists(sdefile):
         arcpy.AddMessage(msg)
         sys.exit()
 
+# Establish database connection first
+try:
+    arcpy.AddMessage(f"Establishing database connection using: {sdefile}")
+    workspace = arcpy.Describe(sdefile)
+    connection_props = workspace.connectionProperties
+    arcpy.AddMessage("Database connection established")
+except Exception as e:
+    arcpy.AddMessage(f"Failed to establish database connection: {e}")
+    sys.exit(1)
 
-def get_filenames(inpath, pattern='*.lyr'):
+def get_filenames(inpath, pattern='*.lyr?'):
     matches = []
     for root, dirnames, filenames in os.walk(inpath):
         for filename in fnmatch.filter(filenames, pattern):
             matches.append(os.path.join(root, filename))
     return matches
 
-layers = get_filenames(inpath, pattern='*.lyr')
+layers = get_filenames(inpath, pattern='*.lyr?')
 
 arcpy.AddMessage('IN: {}'.format(inpath))
 arcpy.AddMessage('OUT: {}'.format(docfolder))
+
+arcpy.AddMessage(f"Found {len(layers)} layer files to process")
 
 # Skipped layers
 group_layers = []
@@ -111,51 +124,69 @@ problem_layers = []
 for L in layers:
     while L:
         try:
-            lyr = arcpy.mapping.Layer(L)
-        # handle broken layer files (e.g. ArcMap version mismatch).
-        except ValueError as e:
-            arcpy.AddMessage("*** {}: {}".format(L, e))
-            problem_layers.append([L, e])
+            arcpy.AddMessage(f"\nProcessing layer: {L}")
+            
+            # Parse layer path and get output location using modern path handling
+            # Convert Windows path to parts and remove empty elements
+            path_parts = [p for p in L.split('\\') if p]
+            
+            # Get category (parent folder) and filename
+            category = path_parts[-2]  # Parent folder name
+            lyrfile = path_parts[-1]   # Filename
+            
+            arcpy.AddMessage('Processing: {}\{}'.format(category, lyrfile))
+
+            # Create output folder structure
+            outfolder = os.path.join(docfolder, category)
+            if not os.path.exists(outfolder):
+                os.makedirs(outfolder)
+                
+            # Create output layer path
+            outfile = os.path.join(outfolder, os.path.basename(L))
+            
+            # Copy the connection file to temp
+            temp_connection = os.path.join(os.environ['TEMP'], "temp_connection.sde")
+            arcpy.Copy_management(sdefile, temp_connection)
+            
+            try:
+                # Set the workspace
+                arcpy.env.workspace = temp_connection
+                
+                # Create new layer file
+                desc = arcpy.Describe(L)
+                if hasattr(desc, 'dataElement'):
+                    data_source = desc.dataElement.catalogPath
+                    arcpy.AddMessage(f"Data source: {data_source}")
+                    
+                    # Create new layer with the connection
+                    arcpy.management.MakeFeatureLayer(
+                        in_features=data_source,
+                        out_layer="temp_layer"
+                    )
+                    
+                    # Save the layer file
+                    arcpy.management.SaveToLayerFile(
+                        in_layer="temp_layer",
+                        out_layer=outfile,
+                        is_relative_path="ABSOLUTE"
+                    )
+                    
+                    arcpy.AddMessage(f"Successfully saved: {outfile}")
+                else:
+                    arcpy.AddMessage(f"*** Could not get data source for layer: {L}")
+                    problem_layers.append([L, "No data source found"])
+                
+            finally:
+                # Cleanup
+                if os.path.exists(temp_connection):
+                    os.remove(temp_connection)
+                
             break
 
-        if lyr.isGroupLayer:
-            group_layers.append(L)
+        except Exception as e:
+            arcpy.AddMessage(f"*** Error processing {L}: {str(e)}")
+            problem_layers.append([L, str(e)])
             break
-
-        server = lyr.serviceProperties['Server']
-
-        # Parse in path and filename to remove \\server\share
-        # and identify Category and actual layerfile name
-        #
-        # in = '\\\\cswprod\\Layerfiles\\Administrative Boundaries\\Game Management Areas - 250k.lyr'
-        # category = 'Administrative Boundaries'
-        # lyrfile = 'Game Management Areas - 250k.lyr'
-        x = os.path.splitunc(L)[1]
-        x = x.lstrip('\\')
-        category, lyrfile = os.path.split(x)
-        arcpy.AddMessage('Processing: {}\{}'.format(category, lyrfile))
-
-        # ...\Docs\ArcGIS\Layers\{server}\{category}\{layer.lyr}
-        outfolder = os.path.join(docfolder, server, category)
-        if not os.path.exists(outfolder):
-            os.makedirs(outfolder)
-
-        try:
-            lyr.findAndReplaceWorkspacePath('', sdefile, validate=False)
-
-            #full path to output .lyr file
-            fname = os.path.join(
-                    outfolder,
-                    lyr.name)
-
-            lyr.saveACopy(fname)
-        except ValueError as e:
-            arcpy.AddMessage('*** {}\n\t{}'.format(lyr.name, e))
-            problem_layers.append([lyr.name, e])
-
-        del lyr # release from memory
-        break
-
 
 # Report skippped
 if group_layers:
