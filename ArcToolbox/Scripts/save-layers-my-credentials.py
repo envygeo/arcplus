@@ -13,15 +13,15 @@ use DBMS authentication.
 
 Interactive Usage (will prompt for input):
 
-    uvx update-layer-credentials.py
+    uv run save_layers_my_credentials.py
 
 Command Line Usage:
 
-    uvx update_layer_credentials.py --help
+    uv run save_layers_my_credentials.py --help
 
-    uvx update_layer_credentials.py --username "[username]" --password "[password]" --input-dir "[in path]" --output-dir "[out path]" 
+    uv run save_layers_my_credentials.py --username "[username]" --password "[password]" --input-dir "[in path]" --output-dir "[out path]" 
 
-    uvx update_layer_credentials.py -u "[username]" -p "[password]" -i "[in path]" -o "[out path]"  --flatten
+    uv run save_layers_my_credentials.py -u "[username]" -p "[password]" -i "[in path]" -o "[out path]"  --flatten
 
 Inputs:
     - Path with layer files. Can be local filesystem or shared folder
@@ -34,7 +34,7 @@ Inputs:
 Options:
     - --flatten: flatten output directory structure
 
-You can use `python ...` instead of `uvx ...` or `uv run ...` if you have the dependencies
+You can use `python ...` instead of `uv run ...` or `uv run ...` if you have the dependencies
 installed in current environment.
 
 MIT License, (c) 2025 Environment Yukon, Matt Wilkie
@@ -214,17 +214,17 @@ This script processes .lyrx files in a directory, updating their connection stri
 
 Run and prompt for input (ctrl-c to abort):
 
-    uvx update_layer_credentials.py
+    uv run save_layers_my_credentials.py
 
 Flatten output structure, prompt for missing parameters (username and password):
 
-    uvx update_layer_credentials.py --flatten -i \\\\portal-prd\\ProLayerfiles -o "d:\\my-csw-layers" 
+    uv run save_layers_my_credentials.py --flatten -i \\\\portal-prd\\ProLayerfiles -o "d:\\my-csw-layers" 
 
 Full command Line (no prompts):
 
-    uvx update_layer_credentials.py -u "username" -p "password" -i "\\\\portal-prd\\ProLayerfiles" -o "%USERPROFILE%\\Documents\\ArcGIS\\Layers"
+    uv run save_layers_my_credentials.py -u "username" -p "password" -i "\\\\portal-prd\\ProLayerfiles" -o "%USERPROFILE%\\Documents\\ArcGIS\\Layers"
 
-Note: You can use `python ...` instead of `uvx ...` or `uv run ...` if you have the dependencies installed in your current environment.
+Note: You can use `python ...` instead of `uv run ...` or `uv run ...` if you have the dependencies installed in your current environment.
 """)
 @click.option('--username', '-u', prompt='Database username',
               help='Database username for connection')
