@@ -50,3 +50,4 @@ pip-log.txt
 
 #pycharm
 .idea/*
+.vscode/settings.json
