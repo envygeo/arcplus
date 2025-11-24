@@ -15,6 +15,19 @@ import winreg
 import shutil
 import re
 
+# Get the actual path to the user's Documents folder
+def get_documents_path():
+    try:
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders") as key:
+            documents_path = winreg.QueryValueEx(key, "Personal")[0]
+        return documents_path
+    except WindowsError:
+        return os.path.expanduser("~/Documents")
+
+# Default folders
+DEFAULT_INPUT = r"\\portal-prd\ProLayerfiles"
+DEFAULT_OUTPUT = str(Path(get_documents_path()) / "ArcGIS" / "Layers")
+
 # ANSI color code regex
 ANSI_RE = re.compile(r'\x1b\[([\d;]+)m')
 
@@ -72,16 +85,6 @@ class ColorText(tk.Text):
         self.see('end')
         self.config(state='disabled')
 
-def get_documents_path():
-    """Get the actual path to the user's Documents folder"""
-    try:
-        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders") as key:
-            return winreg.QueryValueEx(key, "Personal")[0]
-    except (WindowsError, OSError) as e:
-        print(f"Warning: Could not read Documents folder from registry: {e}")
-        # Fallback to USERPROFILE/Documents if registry key not found
-        return str(Path(os.environ['USERPROFILE']) / "Documents")
-
 def browse_directory(entry):
     """Open file dialog starting from parent of current path"""
     try:
@@ -133,7 +136,12 @@ def run_script():
         return
         
     if not shutil.which('uv'):
-        append_output("\x1b[31mError: 'uv' command not found in PATH\x1b[0m\n")
+        append_output("\x1b[31mError: 'uv' command not found in PATH\x1b[0m\n\n")
+        append_output("To install UV:\n")
+        append_output("\x1b[1m1. Run in PowerShell:\x1b[0m\n")
+        append_output("  powershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\n\n")
+        append_output("\x1b[1m2. Make friendly with corporate firewall:\x1b[0m\n")
+        append_output("  setx UV_NATIVE_TLS true\n")
         return
 
     cmd = [
@@ -205,11 +213,20 @@ def update_text_height(*args):
 root = tk.Tk()
 root.title("Update Layer Credentials")
 
-# Calculate initial window width based on default input path
-default_input = r"\\portal-prd\ProLayerfiles\Administrative Boundaries\Yukon Border"
-test_label = ttk.Label(root, text=default_input)
+# Calculate initial window width based on wider of input or output paths
+test_label = ttk.Label(root)
 test_label.grid()
-width = test_label.winfo_reqwidth() + 200  # Add space for padding and browse button
+
+# Test width of input path
+test_label.config(text=DEFAULT_INPUT)
+input_width = test_label.winfo_reqwidth()
+
+# Test width of output path
+test_label.config(text=DEFAULT_OUTPUT)
+output_width = test_label.winfo_reqwidth()
+
+# Use the wider of the two paths
+width = max(input_width, output_width) + 250  # Add space for padding and browse button
 test_label.grid_remove()
 root.geometry(f"{width}x600")  # Increase initial window height
 
@@ -219,7 +236,7 @@ frame.grid(row=0, column=0, sticky="nsew")
 # Title and subtitle
 title = ttk.Label(frame, text=root.title(), font="TkDefaultFont 12 bold")
 title.grid(row=0, column=0, columnspan=3, pady=(0,2), sticky="w")
-subtitle = ttk.Label(frame, text="Change ArcGIS Pro layers to use specified DB login credentials and save in specified location. (Password not tested to see if valid.)", 
+subtitle = ttk.Label(frame, text="Change ArcGIS Pro layers to use specified DB login credentials and save in specified location.\n\nIt takes about a minute to process 500 files, the window appears to freeze occasionally, that's okay.\n\nWARNING: password is saved in plaintext in the .lyrx files, so select Ouput folder within personal profile. Password is not tested for validity.", 
                     wraplength=width-40, font="TkDefaultFont 9")
 subtitle.grid(row=1, column=0, columnspan=3, pady=(0,10), sticky="w")
 
@@ -244,7 +261,7 @@ show_password.grid(row=0, column=1, padx=(5,0))
 # Input dir
 ttk.Label(frame, text="In Layerfiles folder:").grid(row=4, column=0, sticky="w")
 input_dir = ttk.Entry(frame)
-input_dir.insert(0, r"\\portal-prd\ProLayerfiles\Administrative Boundaries\Yukon Border")
+input_dir.insert(0, DEFAULT_INPUT)
 input_dir.grid(row=4, column=1, padx=5, pady=5, sticky="ew")
 ttk.Button(frame, text="Browse", 
            command=lambda: browse_directory(input_dir)).grid(row=4, column=2)
@@ -252,7 +269,7 @@ ttk.Button(frame, text="Browse",
 # Output dir
 ttk.Label(frame, text="Output folder:").grid(row=5, column=0, sticky="w")
 output_dir = ttk.Entry(frame)
-output_dir.insert(0, str(Path(get_documents_path()) / "ArcGIS" / "Layers"))
+output_dir.insert(0, DEFAULT_OUTPUT)
 output_dir.grid(row=5, column=1, padx=5, pady=5, sticky="ew")
 ttk.Button(frame, text="Browse",
            command=lambda: browse_directory(output_dir)).grid(row=5, column=2)

@@ -11,6 +11,9 @@ Processes all .lyrx files in a directory, updating their connection strings
 with the provided Database username and password. Skips layers that don't
 use DBMS authentication.
 
+WARNING: password is saved in plaintext in the .lyrx files, so save results
+only within personal profile.
+
 Interactive Usage (will prompt for input):
 
     uv run save_layers_my_credentials.py
