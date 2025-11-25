@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>How To: Silently Uninstall ArcGIS Products</title>
+        <meta name="description" content="Instructions provided describe how to silently uninstall ArcGIS products using the Windows Installer command line options.Note:Product Codes for most Esri setups can be found in the setup.ini file del"/>
+        <link rel="canonical" href="https://support.esri.com/en-us/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200"/>
+    
+    <link rel="alternate" href="https://support.esri.com/en-us/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200" hreflang="en-us"/>
+    <link rel="alternate" href="https://support.esri.com/de-de/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200" hreflang="de-de"/>
+    <link rel="alternate" href="https://support.esri.com/es-es/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200" hreflang="es-es"/>
+    <link rel="alternate" href="https://support.esri.com/fr-fr/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200" hreflang="fr-fr"/>
+    <link rel="alternate" href="https://support.esri.com/pt-br/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200" hreflang="pt-br"/>
+    <link rel="alternate" href="https://support.esri.com/zh-cn/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200" hreflang="zh-cn"/>
+    <link rel="alternate" href="https://support.esri.com/en-us/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200" hreflang="x-default"/>
+
+     <!-- Fav Icons-->
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/content/dam/esrisites/en-us/common/favicon/esri-favicon-light-180.png"/>
+    <link rel="icon" media="(prefers-color-scheme:dark)" type="image/png" sizes="32x32" href="/content/dam/esrisites/en-us/common/favicon/esri-favicon-dark-32.png"/>
+    <link rel="icon" media="(prefers-color-scheme:light)" type="image/png" sizes="32x32" href="/content/dam/esrisites/en-us/common/favicon/esri-favicon-light-32.png"/>
+    <link rel="icon" type="image/svg+xml" sizes="16x16 32x32 48x48 180x180" href="/content/dam/esrisites/en-us/common/favicon/esri-favicon.svg"/>
+
+
+    <!-- meta data for search filters -->
+
+    <meta name="search-title" content="Silently uninstall ArcGIS products"/>
+    <meta name="last-modified" content="11/18/2025"/>
+    <meta name="date-sort" content="2016-06-02"/>
+    <meta name="first-published" content="06/02/2016"/>
+    <meta name="last-published" content="11/18/2025"/>
+    <meta name="created" content="11/18/2025"/>
+    <meta name="product" content="ArcGIS Data Store,Portal for ArcGIS,ArcGIS Server"/>
+    <meta name="product_label" content="ArcGIS Data Store,Portal for ArcGIS,ArcGIS Server"/>
+    <meta name="search-category" content="knowledgebase/technical-articles"/>
+    <meta name="search-collection" content="knowledgebase"/>
+    <meta name="sub-category" content="tech-articles"/>
+    <meta name="article-type" content="How To"/>
+    <meta name="article-number" content="000013200"/>
+
+         <meta name="cardtype" content="knowledge base"/>
+    
+     <meta name="robots" content="index, follow "/>
+
+    <!-- global-nav -->
+    <script type="text/JavaScript" src="https://webapps-cdn.esri.com/CDN/components/global-nav/js/gn.js"></script>
+    <script src="https://webapps-cdn.esri.com/CDN/jslibs/es6-polyfill.min.js"></script>
+    <link rel="stylesheet" href="https://webapps-cdn.esri.com/CDN/components/global-nav/css/gn.css" />
+
+    <!-- calcite-components -->
+    <script rel="preload" as="script" src="https://js.arcgis.com/calcite-components/1.8.0/calcite.esm.js" type="module"></script>
+    <link rel="stylesheet preload" as="style" href="https://js.arcgis.com/calcite-components/1.8.0/calcite.css" type="text/css" crossorigin />
+
+    <!-- local js and css -->
+    <link rel="stylesheet" href="https://www.esri.com/etc.clientlibs/esri-sites/clientlibs/components.css" type="text/css" >
+    <script src="/en-us/knowledge-base/static/js/script.js"></script>
+    <link rel="stylesheet" href="https://support.esri.com/etc.clientlibs/esri-sites/components/content/local-navigation/clientlibs.css" type="text/css">
+    <link rel="stylesheet" href="/en-us/knowledge-base/static/css/components.css" type="text/css" crossorigin>
+    <link rel="stylesheet" href="/en-us/knowledge-base/static/css/technical-site.css" type="text/css" crossorigin>
+
+
+    <link rel="stylesheet" href="https://webapps-cdn.esri.com/CDN/react/support-ai-chatbot/static/css/support-ai-chatbot.css" type="text/css">
+    <script type="text/javascript" src="https://mtags.esri.com/tags.js"></script>
+
+    <link rel="stylesheet" href="https://webapps-cdn.esri.com/CDN/react/support-ai-chatbot/static/css/support-ai-chatbot.css" type="text/css">
+    <script type="text/javascript">
+    window.dataLayer = Object.assign({}, window.dataLayer, {
+        pageTitle: 'How To: Silently Uninstall ArcGIS Products',
+        pageName: 'Knowledge base:articles:How To: Silently Uninstall ArcGIS Products',
+        pagePath: '/en-us/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200',
+        pageType: "Knowledgebase",
+        pageSubType: 'Knowledgebase-artcle-types',
+        domain: 'support.esri.com',
+        environment: "node-ejs",
+        hierarchy1: 'en-us',
+        hierarchy2: 'knowledge-base',
+        hierarchy3: 'how-to-silently-uninstall-arcgis-products-000013200',
+        hierarchy4: '',
+        locale: 'en-us',
+        language: 'en',
+        countryCode: 'us',
+        tags: 'adobe-analytics---only-for-sites:page-type/knowledgebase,adobe-analytics---only-for-sites:page-sub-type/knowledgebase-article-types'
+    });
+</script>    <meta property="og:title" content="How To: Silently Uninstall ArcGIS Products"/>
+  <meta name="og:description" content="Instructions provided describe how to silently uninstall ArcGIS products using the Windows Installer command line options.Note:Product Codes for most Esri setups can be found in the setup.ini file del">
+  <meta property="og:image" content="https://support.esri.com/content/dam/support/en-us/social/technical-support-social-share.jpg" />
+<meta property="og:url" content="https://support.esri.com/en-us/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200"/>
+<meta property="og:type" content="website"/>
+
+<meta name="twitter:site" content="@Esri"/>
+<meta name="twitter:title" content="How To: Silently Uninstall ArcGIS Products"/>
+ <meta name="twitter:description" content="Instructions provided describe how to silently uninstall ArcGIS products using the Windows Installer command line options.Note:Product Codes for most Esri setups can be found in the setup.ini file del">
+  <meta name="twitter:image" content="https://support.esri.com/content/dam/support/en-us/social/technical-support-social-share.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:url" content="https://support.esri.com/en-us/knowledge-base/how-to-silently-uninstall-arcgis-products-000013200"/></head>
+
+<body>
+<div class="local-navigation">
+   <nav id="second-nav" navtype="newNavigation" domain="https://support.esri.com" path="/content/support/en-us/overview">
+   </nav>
+</div>        <div class="esri-technical grid-container calcite-theme-light">
+            <div class="esri-text__iconContainer column-24 margin-top--10">
+
+                    <img loading="lazy" decoding="async" class="esri-text__icon nonResp svg" alt=""
+                        src="https://www.esri.com/content/dam/esrisites/en-us/common/icons/meridian-/workflow-64.svg" />
+
+                    <div class="sharelinks">
+                        <div class="sharelink margin-top--6 esri-font--1">
+                            <calcite-tooltip placement="top" id="virtual-tooltip">URL copied</calcite-tooltip>
+                            <calcite-link href="" id="share-url-tooltip" icon-end="copy-to-clipboard">Share URL</calcite-link>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="esri-technical-header column-24 padding-bottom--8 margin-bottom--8">
+                <div class="esri-technical-header-content">
+                    <p class="esri-text__category">
+                    
+                        
+                            HOW TO
+                        
+                    </p>
+
+                    <h1 class="esri-text__title">Silently uninstall ArcGIS products</h1>
+                    
+                    <calcite-chip scale="s" appearance="solid" color="grey" class="margin-top--2">
+                        Last Published: November 18, 2025
+                    </calcite-chip>
+                    
+                </div>
+            </div>
+        
+            <div class="column-24">
+
+    <div class="esri-technical-container">
+<!-- information section -->
+        <div class="item leftcontent">
+            <div class="esri-technical-info-text">
+                <!-- <section>
+                    <iframe id="kmsembed-1_2wsc3glt"
+                        src="https://mediaspace.esri.com/embed/secure/iframe/entryId/1_2wsc3glt/uiConfId/49028003/st/0"
+                        class="kmsembed kaltura-video" allowfullscreen webkitallowfullscreen mozAllowFullScreen
+                        allow="autoplay *; fullscreen *; encrypted-media *" referrerPolicy="no-referrer-when-downgrade"
+                        sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation"
+                        frameborder="0" title="Exploring with GIS Overview"></iframe>
+                </section>
+                <section>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse suscipit sapien ac sapien
+                        malesuada fringilla. Fusce venenatis, mauris id sagittis dapibus, mauris velit sollicitudin
+                        ante, a pulvinar leo orci vel erat. Nam mattis erat augue, at luctus ex dignissim et. Donec
+                        suscipit, dui at efficitur tristique, nulla nisi ornare lorem, vel dictum lectus eros nec felis.
+                    </p>
+                </section> -->
+                 
+                    
+                <section>
+                 
+                    <h2>
+                    
+                        Summary
+                    
+                    </h2>
+                
+                    <p><p>Instructions provided describe how to silently uninstall ArcGIS products using the Windows Installer command line options.</p>
+
+<pre class='ckeditor_codeblock' style='white-space: pre-wrap;background-color: #c7eaff; border: 1px solid #77bde7;'>
+<b>Note:</b>
+Product Codes for most Esri setups can be found in the setup.ini file delivered with the other installation files.</pre>
+
+<pre class='ckeditor_codeblock' style='white-space: pre-wrap;background-color: #c7eaff; border: 1px solid #77bde7;'>
+<b>Note:</b>
+ArcGIS Enterprise Builder does not have an individual product code, as it is structured differently around multiple installer files. Refer to <a href='https://enterprise.arcgis.com/en/enterprise/latest/install/windows/uninstalling-arcgis-enterprise-web-gis.htm#ESRI_SECTION1_B6E55014E0114A3B84ED0AD29258B0D5' target='_blank'>Uninstalling ArcGIS Enterprise Builder</a> for more information.</pre><p>
+                
+                </section>
+                
+
+
+                
+
+                
+                <section>
+                    
+                    <h2> 
+                        Procedure
+                    </h2>
+                    
+                    <p>To uninstall a product silently, use the following Windows Installer command line:</p>
+<pre class='ckeditor_codeblock' style='background-color: whitesmoke;'>msiexec.exe /x &lt;{product code}&gt; /qb</pre>
+<p>For example, to uninstall ArcGIS Desktop 10.7 silently, use the following command line:</p>
+<pre class='ckeditor_codeblock' style='background-color: whitesmoke;'>msiexec.exe /x {BFB4F32E-38DF-4E8F-8180-C99FC9A14BBE} /qb</pre>
+<p>The following are the product codes for ArcGIS products:</p>
+<ul><li><b>ArcGIS 12.0</b><br>ArcGIS Data Store {E62C9D19-53FE-45C2-B9C5-C86C7C703B8F}<br>ArcGIS Mission Server {16AF7BDF-E692-4490-A3F6-1F41812CF155}<br>ArcGIS Notebook Server {42B859BB-95D1-4778-B2A7-991F3DD812E1}<br>Portal for ArcGIS {C898DDF9-D6BE-45DF-9A10-3263660BB39F}<br>ArcGIS Server {97DB2F11-2C92-41DF-9C6D-F71648CD2AC9}<br>ArcGIS Video Server {A08F57C3-0681-4D57-AEE8-51BB55ABA32D}<br>ArcGIS License Manager 2025.1 {7917E829-F495-4FDE-8213-F59B49D51545}</li></ul>
+<ul><li><b>ArcGIS 11.5</b><br>ArcGIS Data Store {622B3833-6239-4857-96D5-4294D1E85F94}<br>ArcGIS Mission Server {F0FEE17E-2CB7-4C42-B091-5E8AC7945666}<br>ArcGIS Notebook Server {C9AB6062-B63C-4745-AB1F-2532D594379F}<br>Portal for ArcGIS {366A0EAF-7974-4EA3-9A43-74D76FB77C47}<br>ArcGIS Server {BBFCF183-6CB3-409F-A855-21D48C5F079B}<br>ArcGIS Video Server {BBFCF183-6CB3-409F-A855-21D48C5F079B}<br>ArcGIS License Manager 2025.0 {6D41720D-070B-4023-B58A-74F507FC4AD7}</li></ul>
+<ul><li><b>ArcGIS 11.4</b><br>ArcGIS Data Store {4AC2C588-DFDC-449E-8DFF-3701C3C3824A}<br>ArcGIS Mission Server {3338445A-81E9-421C-A331-BA1BFBE8A8DE}<br>ArcGIS Notebook Server {A853CA10-4978-4882-8629-571FBA02618D}<br>Portal for ArcGIS {CFB543E4-7FB7-4F9D-BD1F-483347B142DF}<br>ArcGIS Server {C5CF7CE9-7501-4ECC-9C48-A7DD5A259AE2}<br>ArcGIS Video Server {016CE7D6-3D42-4D1A-8AEE-4846433173D1}<br>ArcGIS License Manager 2024.1 {2BCB59D3-E25C-4F17-8C94-121A12B68A6C}</li></ul>
+<ul><li><b>ArcGIS 11.3</b><br>ArcGIS Data Store  {E4FC0BED-0F94-49D4-9AF5-BBA64AED3787}<br>ArcGIS Mission Server {6A92CAEF-653B-47F0-885D-A82CA38B4C58}<br>ArcGIS Notebook Server {FA4C02E7-1BFB-4895-AE47-24CBCE443304}<br>Portal for ArcGIS {6B72E29F-B27F-452E-8FCF-C2CFB9417891}<br>ArcGIS Server  {BFADF38F-B9D3-40E6-AFD5-7DA1DA5BD349}<br>ArcGIS Video Server  {401FBD2C-0D81-4D3B-8BCF-8D08C8F18EC9}<br>ArcGIS License Manager 2024.0  {D9D91CDE-048A-47B5-AFE7-FB397DAF87D9}</li></ul>
+<ul><li><b>ArcGIS 11.2</b><br>ArcGIS Data Store  {A02634B0-03FD-4DF3-A5C6-BACBE5DF3979}<br>ArcGIS Mission Server  {5721BCA3-D4BB-42D3-A719-787D0B11F478}<br>ArcGIS Notebook Server {7CF68441-8657-48C3-93C2-DB2DC3EFA9E5}<br>Portal for ArcGIS {F03C23C1-1F2C-42D0-85C4-38F49B710035}<br>ArcGIS Server  {30269B69-BC12-45EB-BE81-A76831CA6644}<br>ArcGIS Video Server  {D68D1CBB-990B-4F5B-916A-A7B89EE33716}<br>ArcGIS License Manager 2023.0  {C5E546F7-5E07-4AAB-A367-15FF52D0C683}</li></ul>
+<ul><li><b>ArcGIS 11.1</b><br>ArcGIS Data Store {391B3A39-0951-43E3-991D-82C82CA6E4A4}<br>ArcGIS Mission Server {C8723ED4-272B-43B5-88D6-98F484DFFF09}<br>ArcGIS Notebook Server {B449287C-6C2B-4D83-BD27-B416A2171FD5}<br>Portal for ArcGIS {BED48866-C615-4790-AD87-01F114C1A999}<br>ArcGIS Server {0F6C2D4F-9D41-4D25-A8AF-51E328D7CD8F}<br>ArcGIS License Manager 2022.1 {96804860-2C2F-4448-AE47-76CB160AD043}</li></ul>
+<ul><li><b>ArcGIS 11.0</b><br>ArcGIS Data Store {ABCEFF81-861D-482A-A20E-8542814C03BD}<br>ArcGIS Mission Server {A0E25148-B33D-442F-9EE4-B35AEC2DEA6D}<br>ArcGIS Notebook Server {62777D3B-5F08-4945-8EA2-C2B518D88AEA}<br>Portal for ArcGIS {EB809599-C650-486A-85C6-D37618754AE4}<br>ArcGIS Server {A14CF942-415B-461C-BE3C-5B37E34BC6AE}<br>ArcGIS License Manager 2022.0 {A3AC9C93-E045-4CAE-AAE4-F62A8E669E02}</li></ul>
+<ul><li><b>ArcGIS 10.9.1</b><br>ArcGIS Data Store {30BB3697-7815-406B-8F0C-EAAFB723AA97}<br>ArcGIS Mission Server {2BE7F20D-572A-4D3E-B989-DC9BDFFB75AA}<br>ArcGIS Notebook Server {39DA210D-DE33-4223-8268-F81D2674B501}<br>Portal for ArcGIS {B5C5195E-2446-45F9-B49E-CC0E1C358E7C}<br>ArcGIS Server {E4A5FD24-5C61-4846-B084-C7AD4BB1CF19}<br>ArcGIS License Manager 2021.0 {DA36A877-1BF2-4E28-9CE3-D3A07FB645A3}</li></ul>
+<ul><li><b>ArcGIS 10.8.2</b><br>ArcGIS Desktop {791AB03F-1AF2-43FE-8F5D-8FDC9509D7CF}<br>ArcGIS Desktop Background Geoprocessing {DE0069B6-F646-49BB-82EC-8E29F5CE8937}<br>ArcGIS Engine {CDD2DD75-7054-4BBA-AA76-11378B4F5556}<br>ArcGIS ArcReader {CA793D52-1E61-4277-A475-B58055EE2E2C}<br>ArcGIS Engine Background Geoprocessing {D14CDD57-312A-4611-AE0C-7F63354413AC}</li></ul>
+<ul><li><b>ArcGIS 10.9</b><br>ArcGIS Data Store {7A7D3A39-DBC0-48E8-B2C2-3466A84FE89E}<br>ArcGIS Mission Server {94280A6F-6501-42CE-A627-FCE20B01A9D7}<br>ArcGIS Notebook Server {9D0291C2-D01E-4411-A2D8-BB42740C9ECC}<br>Portal for ArcGIS {46FDB40E-6489-42CE-88D6-D35DFC5CABAF}<br>ArcGIS License Manager 2021.0 {9DDD72DA-75D2-4FB0-BC19-25F8B53254FF}</li></ul>
+<ul><li><b>ArcGIS 10.8.1</b><br>ArcGIS Desktop {7C4FF945-CE6A-415E-8EB9-2B61B0B35DCD}<br>Desktop Background Geoprocessing {1EBC0FD8-8A64-4E8C-9565-F9784A3B96D2}<br>ArcGIS Data Store {45E1C306-B1AB-4AE5-8435-818F0F9F8821}<br>ArcGIS Server {E9B85E31-4C31-4528-996B-F06E213F8BB3}<br>ArcReader {31DC82B5-74F7-46CD-955E-1DEC72EE7070}<br>ArcGIS Engine {F7B59921-A34C-42DB-87ED-DDEE8FCC7B45}<br>Engine Background Geoprocessing {2355C02B-A920-4B1E-8301-CC7830793A10}<br>Notebook Server {55DE1B3D-DDFB-4906-81F2-B573BAC25018}<br>Mission Server {26F574C6-C9F8-487C-977A-A906AAA60136}<br>Portal for ArcGIS {0803DE56-BAE9-49F5-A120-BA249BD924E2}<br>ArcGIS License Manager 2019.1 {EEE800C6-930D-4DA4-A61A-0B1735AF2478}</li></ul>
+<ul><li><b>ArcGIS 10.8</b><br>ArcGIS Desktop {3DB5C522-636F-4FC2-9C38-298DBEBFD0BC}<br>Desktop Background Geoprocessing {C28E8BF1-8707-40D3-A048-15C965475A09}<br>ArcGIS Data Store {2018A7D8-CBE8-4BCF-AF0E-C9AAFB4C9B6D}<br>ArcGIS Server {458BF5FF-2DF8-426B-AEBC-BE4C47DB6B54}<br>ArcReader {C8878401-F2BB-498B-90E2-6BB028ACFC71}<br>ArcGIS Engine {C75EB22D-BD9B-4850-9D98-99473B0E3F42}<br>Engine Background Geoprocessing {CBFABCF9-946F-4819-84F7-96F9EC9F7435}<br>Notebook Server {B1DB581E-E66C-4E58-B9E3-50A4D6CB5982}<br>Mission Server {A1A58B32-2ADF-4EAD-AC84-BE97318CA569}<br>Portal for ArcGIS {7D432555-69F9-4945-8EE7-FC4503A94D6A}<br>ArcGIS License Manager 2019.1 {BA3C546E-6FAC-405C-B2C9-30BC6E26A7A9}</li></ul>
+<ul><li><b>ArcGIS 10.7.1</b><br>ArcGIS Desktop {69262D87-3697-492B-ABED-765DDC15118B}<br>Desktop Background Geoprocessing {39E26603-505E-4CE3-ABC6-5721CADF41D3}<br>ArcGIS Data Store {112E5FD0-9DD2-45DA-ACD5-A21AA45F67E2}<br>ArcGIS Server {08E03E6F-95D3-4D33-A171-E0DC996E08E3}<br>ArcReader {E66C63D0-D856-4FDA-B523-7581E2E5BEA4}<br>ArcGIS Engine {E06EB984-F5AD-4339-A7C3-5D9035191843}<br>Engine Background Geoprocessing {1AD97CB6-412C-49FC-85D7-14002C369D01}<br>Notebook Server {F6DF77B9-F35E-4877-A7B1-63E1918B4E19}<br>Portal for ArcGIS {7FDEEE00-6641-4E27-A54E-82ACCCE14D00}<br>ArcGIS License Manager 2019.0 {CB1E78B5-9914-45C6-8227-D55F4CD5EA6F}</li></ul>
+<ul><li><b>ArcGIS 10.7</b><br>ArcGIS Desktop   {BFB4F32E-38DF-4E8F-8180-C99FC9A14BBE}<br>Desktop Background Geoprocessing   {F4A727FC-1E11-4380-8171-5E4FF508E6CB}<br>ArcGIS Data Store  {2B19AB45-1A17-45CD-8001-0608E8D72447}<br>ArcGIS Server    {98D5572E-C435-4841-A747-B4C72A8F76BB} <br>ArcReader     {FAFCC7AA-C0E2-4545-90BD-7BE84777248C}<br>ArcGIS Engine    {F95F3DF6-7674-43C2-8567-2C668DC7C837}<br>Engine Background Geoprocessing  {F07405DD-739A-4DF0-BE53-34573E1BECF7}<br>Notebook Server {3721E3C6-6302-4C74-ACA4-5F50B1E1FE3A}  (NEW) <br>Portal for ArcGIS    {6A640642-4D74-4A2F-8350-92B6371378C5}<br>ArcGIS License Manager 2018.1   {E1C26E47-C6AB-4120-A3DE-2FA0F723C876}</li></ul>
+<ul><li><b>ArcGIS 10.6.1</b><br>ArcGIS Desktop {FA2E2CBC-0697-4C71-913E-8C65B5A611E8}<br>Desktop Background Geoprocessing {E02F36E6-2ED8-47A9-A6D2-C7C9AEFDE364}<br>ArcGIS Data Store {53160721-93D8-48F8-9EDD-038794AE756E}<br>ArcGIS Server {F62B418D-E9E4-41CE-9E02-167BE4276105}<br>ArcReader {E7E37071-864D-4BB3-87B4-5465D34A2DD1}<br>ArcGIS Engine {EEAB02A0-0262-44D6-9C06-2E7AD2A3A2B6}<br>Engine Background Geoprocessing {E85FA88B-2EAC-45D9-9F97-F2DFAEBEB2F8}<br>Portal for ArcGIS {ECC6B3B9-A875-4AE3-9C03-8664EB38EED9}</li></ul>
+<pre class='ckeditor_codeblock' style='white-space: pre-wrap;background-color: #c7eaff; border: 1px solid #77bde7;'><b>Note:</b>
+The License Manager is no longer tied to a product release, and is released on its own schedule.</pre>
+<ul><li><b>ArcGIS 10.6</b><br>ArcGIS Desktop {F8206086-367E-44E4-9E24-92E9E057A63D}<br>Desktop Background Geoprocessing {D9A37390-98EF-4DDD-BD1E-06BBADFE8CE6}<br>ArcGIS Data Store {846636C1-53BB-459D-B66D-524F79E40396}<br>ArcGIS Server {07606F78-D997-43AE-A9DC-0738D91E8D02}<br>ArcReader {D64593A0-E19E-4796-8E55-1DF70CD1BD4F}<br>ArcGIS Engine {D2CD36EF-5E54-4E2F-A26A-0D99999C25D1}<br>Engine Background Geoprocessing {D635F9C0-3E5A-4D55-BEE6-36C67194D33A}<br>Portal for ArcGIS {FFE4808A-1AD2-41A6-B5AD-2BA312BE6AAA}<br>ArcGIS License Manager {D6AF20B5-825F-44A9-915D-C2868CBD59F3}</li></ul>
+<ul><li><b>ArcGIS 10.5.1</b><br>ArcGIS Desktop {4740FC57-60FE-45BB-B513-3309F6B73183}<br>Desktop Background Geoprocessing {C444EB5E-7CC1-4F05-A17E-0632F3F20071}<br>ArcGIS Data Store {75276C83-E88C-43F6-B481-100DA4D64F71}<br>ArcGIS Server {40CC6E89-93A4-4D87-A3FB-11413C218D2C}<br>ArcReader {C09FD9B6-D7DA-4140-9F78-0F213A3F9D6D}<br>ArcGIS Engine {C089C13D-F409-4385-B303-9A6DFCB60DE8}<br>Engine Background Geoprocessing {C449F6FA-DC86-410E-9F7E-B4986717B50A}<br>Portal for ArcGIS {C7E44FBE-DFA6-4A95-8779-B6C40F3947B7}<br>ArcGIS License Manager {DF06C3DC-54B5-49A1-9756-B68FD65A0AD0}</li></ul>
+<ul><li><b>ArcGIS 10.5</b><br>ArcGIS for Desktop {76B58799-3448-4DE4-BA71-0FDFAA2A2E9A}<br>Desktop Background Geoprocessing {BEA81533-2A03-48C5-B3F3-3FF44632CC6A}<br>ArcGIS Data Store {5EA81114-6FA7-4B4C-BD72-D1C882088AAC}<br>ArcGIS for Server {CD87013B-6559-4804-89F6-B6F1A7B31CBC}<br>ArcReader {BC687D0B-E635-4452-A2C3-E16A43B54303}<br>ArcGIS Engine {BEA73ADC-C933-49BC-BF60-3C4DD56FA506}<br>Engine Background Geoprocessing {B18DD3AD-6E3D-4C8D-BD55-E83743F52B9B}<br>Portal for ArcGIS {43EF63C6-957B-4DA7-A222-6904053BF222}<br>ArcGIS License Manager {3A024FEA-3E14-4257-87D0-8FCA03257560}</li></ul>
+<ul><li><b>ArcGIS 10.4.1</b><br>ArcGIS Data Store {A944E0A7-D268-41CA-B96E-8434457B051B}<br>ArcGIS for Server {88A617EF-89AC-418E-92E1-926908C4D50F}<br>ArcReader {AF0889EF-B04D-44B6-AA9E-100C67CC3E63}<br>ArcGIS for Desktop {CB0C9578-75CB-45E5-BD81-A600BA33B0C3}<br>Desktop Background Geoprocessing {A7F97D04-D911-4241-B5FD-6172CB954ADD}<br>ArcGIS Engine {A0AD1EC8-AA58-4654-B66D-108BC8B88727}<br>Engine Background Geoprocessing {A71CCBEB-760C-4452-A5D4-6627C497EF99}<br>Portal for ArcGIS {31373E04-9B5A-4CD7-B668-0B1DE7F0D45F}<br>ArcGIS License Manager {3A1CD688-1225-4513-B932-B5CA31853A5D}<br>ArcGIS Data Reviewer for Desktop {46E12EB9-CA2A-453D-BBAA-DA479555FAD1}<br>ArcGIS Data Interoperability for Desktop {A68E2327-A622-42A8-B95A-1BA21CE2751D}</li></ul>
+<ul><li><b>ArcGIS 10.4</b><br>ArcGIS Data Store {C351BC6D-BF25-487D-99AB-C963D590A8E8}<br>ArcGIS for Server {687897C7-4795-4B17-8AD0-CB8C364778AD}<br>ArcReader {EBAE93EA-E533-4C62-8EF8-FD17B3E19105}<br>ArcGIS for Desktop {72E7DF0D-FFEE-43CE-A5FA-43DFC25DC087}<br>Desktop Background Geoprocessing {E9C1FA5F-72FD-48CB-BA20-78B9ECA783F2}<br>ArcGIS Engine {E2CFC1B8-ECD3-492B-911B-CF9F57CDF2FC}<br>Engine Background Geoprocessing {ECE85BA6-5F17-4535-81E4-7F0500ACC4AC}<br>Portal for ArcGIS {FA6FCD2D-114C-4C04-A8DF-C2E43979560E}<br>ArcGIS License Manager {E1393226-725C-42F8-A672-4E5AC55EFBDE}</li></ul>
+<ul><li><b>ArcGIS 10.3.1</b><br>ArcGIS Data Store {F96FDD36-E3C7-44F1-9E2B-DFAFB9F8F876}<br>ArcGIS for Server {2E921914-9B87-4C60-AB4F-00AEEB77A243}<br>ArcGIS ArcReader {ACBE4FBE-8E60-435F-93A0-6BD92A0F95FC}<br>ArcGIS for Desktop {831DD630-F230-49C6-AD41-312E8E0F9CEE}<br>Desktop Background Geoprocessing {CF273DD4-999B-464D-BD8E-AAD066A65C39}<br>ArcGIS Engine {BF760380-500A-48D2-80F5-82373236E3DB}<br>Engine Background Geoprocessing {E77F15F9-F007-4363-9D8A-FDFC1363C0E9}<br>Portal for ArcGIS {F042ED1E-4E36-4980-AB2C-CBF90D11A973}<br>ArcGIS Web Adaptor (IIS) {10A57135-2051-41AE-B2D3-0B10470CDB9B}<br>ArcGIS Web Adaptor (Java Platform) {65C25345-EF47-44BD-AD25-2A626F5DD305}<br>ArcGIS License Manager {FE023CB6-11C5-4B63-B364-DB927FFFC87E}<br>ArcGIS Case Tools {F2E03F95-D5CF-4905-9FD7-9197A68D7B97}<br>ArcGIS Data Reviewer for Desktop {4A45C83C-1EC3-428C-AE97-5D226E59DFBD}<br>ArcGIS Data Interoperability for Desktop {BE9CC8C2-CE36-4EEB-85C5-AF5382B3A5CA}</li></ul>
+<ul><li><b>ArcGIS 10.3</b><br>ArcGIS Data Store {273B8FDF-1D00-43D7-9599-67F03EE6114F}<br>ArcGIS for Server {4F477C55-302B-4A3A-A8AB-9C09A20678AB}<br>ArcGIS ArcReader {4B4523DC-DC6C-4FC3-BFDD-B03A5FB65E62}<br>ArcGIS for Desktop {9A0BC33A-EAA8-4ED4-8D0C-CB9B42B06D7F}<br>ArcGIS Engine {08514D48-2A9F-40F2-A34D-1D52797C7E9A}<br>ArcGIS License Manager {710C34F3-9270-4DF9-AB44-BC8D71DB24F0}<br>Portal for ArcGIS {54E3789B-848A-4485-B84B-93DAF9FCD8C6}<br>ArcGIS Web Adaptor (IIS) {B52143C3-3085-4976-9795-ED134AEA0099}<br>ArcGIS Web Adaptor (Java){FE719171-3AED-4D9C-8DC2-FC0F1A715D62}<br>Desktop Background Geoprocessing {9F966681-A424-4FD8-939B-5B50B120DBF4}<br>Engine Background Geoprocessing {08D09C1F-DAAC-45E1-924D-8ECC004BC386}</li></ul>
+<ul><li><b>ArcGIS 10.2.2</b><br>ArcGIS Tutorial Data {84FC829B-8795-4403-8623-B6814D8AEE4F}<br>ArcGIS License Manager {527DC263-3F5C-4333-A14B-5F88CD66AF6E}<br>ArcGIS Web Adaptor (Java) {DC6E3BFB-E525-473C-A139-92AD3A0E11A4}<br>ArcGIS Web Adaptor (IIS) Base Instance {5D50CC1F-63E9-400E-A62C-EEAD948618EC}<br>ArcReader {5081F424-9EB2-4984-9A2B-4F5D8BA6D836}<br>ArcGIS Engine {295A2129-9BB1-4853-8079-403E46A58317}<br>ArcGIS for Desktop {761CB033-D425-4A16-954D-EA8DEF4D053B}<br>ArcGIS for Server {86566F55-42F9-4806-94FA-1F38280B2216}<br>ArcSDE for IBM DB2 {5A0DC6E4-F568-4634-9E8D-A25E426E0309}<br>ArcSDE IBM Informix {A0464D52-DB1F-49D7-B9C4-C9C43434D424}<br>ArcSDE for Oracle10g {942B2C3A-8CFE-401B-9ACC-3A5DB7472864}<br>ArcSDE for Oracle11g {07DB7358-AA7C-41EE-B7CC-6CA34FE40F3A}<br>ArcSDE for PostgreSQL {1725F874-D8D7-4DA9-A11D-B115DD696CBB}<br>ArcSDE for Microsoft SQL Server {F2EDFC6C-A44A-45D0-BA40-BD2FE62AAC95}<br>ArcGIS Case Tools for Desktop {0D8F164B-48AF-404E-911C-1BE82E3C391A}<br>Desktop Background GP {380D1829-5A92-4EF1-8EDF-A306136368C5}<br>Engine Background Geoprocessing {B63C7A35-C97E-43A8-A960-A7858BB1C67F}<br>Portal for ArcGIS {92F51881-12A3-4D87-9A74-68F3F29D26C0}<br>ArcGIS Data Reviewer for Desktop {004AB2FF-DB6B-42F5-B187-060B64E37440}<br>ArcGIS Data Interoperability for Desktop {7BBD4EFC-F67D-4979-B010-C909BEE12F61}</li></ul>
+<ul><li><b>ArcGIS 10.2.1</b><br>ArcGIS Tutorial Data {19418AE4-521D-42E8-B775-C0B642BC92AE}<br>ArcGIS License Manager {94C02C9C-5015-4DC0-96B4-18FD04095FAC}<br>ArcGIS Web Adaptor (Java) {59AF9009-0147-4119-90F0-A22FF545F1C2}<br>ArcGIS Web Adaptor (IIS) Base Instance {18C45289-5BB0-448E-813D-34D31DF68104}<br>ArcReader {44482D45-9130-4F62-9F77-516076D59ED6}<br>ArcGIS Engine {99F2415C-4D35-4AA9-90C8-8A57BEAB9B99}<br>ArcGIS for Desktop {8777990C-4F53-4782-9A38-E60343B5053D}<br>ArcGIS for Server {910B55C5-C154-4894-B07B-6DB5CDE6EC77}<br>ArcSDE Command Line Tools {CEE929D1-2186-46FC-BAE2-B0A70D2D0C1D}<br>ArcSDE for IBM DB2 {44C752B7-0C11-4765-9323-81753FE682F3}<br>ArcSDE IBM Informix {1907CD17-8A78-44E9-AFF7-543E94CD7373}<br>ArcSDE for Oracle10g {AF9E44D1-9DE4-43BD-9F60-E52997562D14}<br>ArcSDE for Oracle11g {C5F222DF-587E-4583-B3D1-AD5FF39E2680}<br>ArcSDE for PostgreSQL {59136E06-6414-48D6-B9AF-A1BF595DF08A}<br>ArcSDE for Microsoft SQL Server {3A23981E-5A73-4CA7-8CC4-CFBD294AF65D}<br>ArcGIS Case Tools for Desktop {1BB9E23D-BACF-4D4C-805E-AF1522D706C8}<br>Desktop Background GP {3EE7B963-D55E-43BB-A78F-391B4612B280}<br>Engine Background Geoprocessing {8840EE53-98EE-4A5E-98D0-B9051446587D}<br>Portal for ArcGIS {EB5FFD64-EE12-4411-8D86-C4FB73A2C078}</li></ul>
+<ul><li><b>ArcGIS 10.2</b><br>ArcGIS Tutorial Data {41B76534-B3C2-4FCF-B171-5291A3561051}<br>ArcGIS License Manager {62534DA8-A58B-49E7-860A-708C16229ED9}<br>ArcGIS Web Adaptor (Java) {D9F0D397-64A8-494B-83CF-0A71A2751AC2}<br>ArcGIS Web Adaptor (IIS) Base Instance {1803FE22-6164-4DC4-B14E-EBD4148A8429}<br>ArcReader {E88980E3-5DEE-4F7C-9A3B-DE54515783B4}<br>ArcGIS Engine {6D8D10FB-643C-4582-92B6-D19BD3C0A1C5}<br>ArcGIS for Desktop {44EF0455-5764-4158-90B3-CA483BCB1F75}<br>ArcGIS for Server {AF087270-3EDD-402D-BD8F-3401AC75F9D7}<br>ArcSDE Command Line Tools {2AE89514-236D-4BE8-97D2-A5935C8D1428}<br>ArcSDE for IBM DB2 {097EC4B6-287B-435C-9220-DF2278F25265}<br>ArcSDE IBM Informix {7D5B1D37-EC4F-420C-98AA-2D701BF276DA}<br>ArcSDE for Oracle10g {A039E2FC-D62F-403B-9FB4-7FF427188713}<br>ArcSDE for Oracle11g {C5AB81A7-AEE4-4964-AE41-C28E656C1CBF}<br>ArcSDE for PostgreSQL {3236C0B2-8E45-4025-8D06-F031F69CF707}<br>ArcSDE for Microsoft SQL Server {91F80718-3CF0-4612-A73E-9E4B039B9251}<br>ArcGIS Case Tools for Desktop {C5E341C5-D587-4B22-BE05-E5A0C5160B8A}<br>Desktop Background GP {06A1857D-52E1-431A-BAF2-5B917C2929A0}<br>Engine Background Geoprocessing {354BE341-CA85-4E04-9501-E29C117EC7D7}<br>Portal for ArcGIS {E74D70AE-8B20-4BC8-853E-E1F6D9F37E18}</li></ul>
+<ul><li><b>ArcGIS 10.1</b><br>ArcGIS Tutorial Data 10.1 {41B76534-B3C2-4FCF-B171-5291A3561051}<br>ArcGIS License Manager {1DD1D1E9-FC96-4B17-BE0A-A5481F8B0D67}<br>ArcGIS Web Adaptor (Java) {02013567-A06D-4B27-9CDB-4777ED7473F3}<br>ArcGIS Web Adaptor (IIS) Base Instance {11CCA428-4679-4D79-ADC0-A13F43290ACF}<br>ArcGIS Web ADF Runtime for.NET {D6D43686-570F-477E-BC62-62C3F9076273}<br>ArcGIS Web Applications .NET {9FB86290-E16D-47BF-8A98-906C32920941}<br>ArcGIS Web Applications for Java {A78F790F-08D8-4B62-BE0E-3078A975B11C}<br>ArcReader {EDAB0E56-29C2-48BE-BBC7-B170A41D15CE}<br>ArcGIS Engine {056B7D19-2454-45A8-81D5-501670AB1CA0}<br>ArcGIS for Desktop {6C8365F4-1102-4064-B696-68842D20B933}<br>ArcGIS for Server {CCE5C609-EF54-49F3-A779-3D1BC82D95A4}<br>ArcGIS for Windows Mobile {61D5B5ED-6D17-4E24-B059-D269E82AC2EA}<br>ArcGIS Spatial Data Server for Java {FAA3411E-55F7-4B72-841A-9A54D301A6A5}<br>ArcGIS 10.1 Spatial Data Server for IIS {FC9E9F14-FCE2-42AD-A068-B6D8CDA65ED5}<br>ArcSDE 10.1 Command Line Tools {09C368B7-483F-4168-A996-63A417A584C3}<br>ArcSDE for IBM DB2 {2153B288-3D62-476F-9278-05FE874BF27C}<br>ArcSDE IBM Informix {A42FD797-124F-49E1-9E90-3BBF74EAC410}<br>ArcSDE for Oracle10g {20DBE3BD-3758-454A-B1BF-680C58A27C64}<br>ArcSDE for Oracle11g {1402DFC2-3D45-4935-AAE7-AF818A99FAAC}<br>ArcSDE for PostgreSQL {482E0D8C-481C-496F-90EB-7060C6990555}<br>ArcGIS Case Tools for Desktop {082CB0E6-EF51-4D2C-8A8B-83A7E2FAFFA6}</li></ul>
+<ul><li><b>ArcGIS 10</b><br>ArcGIS Tutorial Data 10 {41B76534-B3C2-4FCF-B171-5291A3561051}<br>ArcGIS Desktop {64665955-E1A1-4A8B-BFFA-673A95318909}<br>ArcGIS ArcReader 10 {F1D00E37-3B2F-4A08-8765-486EB440CD04}<br>ArcGIS Server Java {596BEF01-DD8C-415D-A23D-D2C5299E7A66}<br>ArcGIS Server 10 - GIS Services {3483C2D0-C8D6-42EE-AB33-690C9A66719E}<br>ArcGIS Server 10 - Web Applications {33B10241-ECBC-4E6F-9121-3D3691A629AD}<br>ArcGIS ArcIMS {A37DEBA3-8F64-4578-97EF-CB10FCCA9650}<br>ArcIMS 10 Web ADF for the Java Platform {98542284-B1BE-4426-84B8-184C9E5707E0}<br>ArcGIS ArcSDE for DB2 {9E6BABE1-55E5-40B9-9C99-0F03DF01B3FB}<br>ArcGIS ArcSDE for DB2 z/OS {80FFE80E-04B4-4C06-A6AA-2B58D1129620}<br>ArcGIS ArcSDE for DB2 for Windows 64 {D2DDE7EC-0682-4670-99F1-2993FE4C22D8}<br>ArcGIS ArcSDE for Informix {9303CEF0-2B6A-4C75-915D-DC0A0B40E965}<br>ArcGIS ArcSDE for Informix for Windows 64 {FB58F643-C4DD-4039-8529-D9EA939F3A8C}<br>ArcGIS ArcSDE for Oracle10g {E68477E8-537D-43E7-8118-D9BE56325B99}<br>ArcGIS ArcSDE for Oracle10g for Windows 64 {6BC303A2-2B5D-4F3B-BC2E-6F2C12FCA127}<br>ArcGIS ArcSDE for Oracle11g {5834E9E4-2717-442A-B0F8-CA1F3D86D1D8}<br>ArcGIS ArcSDE for Oracle11g for Windows 64 {445C372E-1908-4ADE-A891-89789D40175F}<br>ArcGIS ArcSDE for PostgreSQL {5B0EE8C7-1422-4A63-A7E0-2E3116943546}<br>ArcGIS ArcSDE for Microsoft SQL Server {1A9B529E-0033-4667-948F-E1CE69D7073F}<br>ArcGIS ArcSDE for SqlServer for Windows 64 {AE1BBACA-CFA2-481B-A9D9-7C51AF992EDF}<br>ArcInfo Workstation {D0E7F669-6109-4AFD-9C8B-56C9D5C86A38}<br>ArcGIS Engine Runtime 10 {4384DA75-4135-4B0F-8B56-37BB281CAAE8}<br>ArcObjects SDK for Cross Platform C++ {CC793F02-6D2A-4F23-A2AE-5196D0DFA64C}<br>ArcObjects SDK for the Microsoft .NET Framework {ABFD2603-877A-474E-B595-339D900B4E60}<br>ArcObjects SDK for the Java Platform {7069FBA2-F993-484A-A60B-A4D021B6E32A}<br>ArcGIS VBA Resources {85E1ACC2-D07E-47BB-A75E-D35E048B14B4}<br>ArcGIS Data Interoperability Extension {A94E95FB-0E38-4E36-B5B7-0A2C3528ED34}</li></ul>
+<ul><li><b>ArcGIS 9.3 and 9.3.1</b><br>ArcGIS Desktop {5033400B-0977-45AB-94CE-CC135A8E1BBB}<br>ArcGIS Tutorial Data {41B76534-B3C2-4FCF-B171-5291A3561051}<br>ArcGIS Desktop SDK for the Microsoft .NET Framework {FDDE9E05-0C99-452A-8BEF-2A8CA5D63BD9}<br>ArcGIS Desktop SDK for VB6 {0BEA7956-25DA-455E-877E-7E9D97DA9559}<br>ArcGIS Desktop VBA Developer Resources {34779D41-898A-43A2-8A1E-FD15DCD2166D}<br>ArcGIS Desktop SDK for Visual C++ {FCF6B51D-CE32-437B-8556-016F08A677C5}<br>ArcGIS Engine Runtime {993E1907-DC8A-485F-B724-9BCD3F9EA468}<br>ArcGIS Engine SDK for C++ {E98BEDD5-5AA9-421C-973C-CB14E1752988}<br>ArcGIS Engine SDK for the Java Platform {7C96C8E7-C511-4C13-B787-124475EBB418}ArcGIS Engine SDK for the Microsoft .NET Framework {2662F66D-CE89-4747-A468-AC14C8906460}<br>ArcGIS Engine SDK for Visual Basic 6 {5D3A6A96-0FB7-4BD8-BD40-2AD357B24C12}<br>ArcGIS Engine SDK for Visual C++ {2E5EB60C-D096-48AD-B248-AC30FF2CD281}<br>ArcGIS Help System for the Java Platform {A9DB4901-5FAB-4104-B0F9-DF11D1C7D362}<br>ArcInfo Workstation {2B0AEAE7-6EF2-4642-8F95-DDBC9B72721D}<br>ArcGIS Server for the Microsoft .NET Framework {9ACB5D84-EC39-48E8-9970-4812B6F6738E}<br>ArcGIS Server for the Java Platform {3B556DE7-7D12-493A-A010-BAA46FDC9F85}<br>ArcGIS ArcIMS {AF3EB55C-DC39-4770-9F0F-077B65C94CB7}<br>ArcIMS Web ADF for the Microsoft .NET Framework {22CABC57-BF82-4CE3-BF8F-49413AD8ED77}<br>ArcIMS Web ADF for the Java Platform {A05805ED-806A-464C-BF77-6287D295624E}<br>ArcGIS ArcReader {7E6618B7-F401-46DE-98CA-E5B5B9C07BCD}<br>VBA 6.5 {A13D16C5-38A9-4D96-9647-59FCCAB12A85}<br>VBA 6.5 {FB97C283-1F3C-42D4-AE01-ADC1DC12F774}<br>ArcGIS Crystal Reports Wizard {15FB6880-728F-4DF6-BEBB-046302A8E25A}</li></ul>
+<ul><li><b>ArcGIS 9.2 </b><br>ArcGIS Desktop {1F34839E-4826-4B64-B1B3-42E5AE8DEC5A}<br>ArcGIS Tutorial Data {1032F58F-D319-42C1-A25F-2D3C9A26705B}<br>ArcGIS Desktop SDK for the Microsoft .NET Framework {0CCCA447-8A01-41E2-92D0-5B8ED1E7B665}<br>ArcGIS Desktop SDK for VB6 {DEE23DF7-BB97-46DE-B384-0DCB0F5DF0A9}<br>ArcGIS Desktop VBA Developer Resources {1FD0DD4B-A072-4FE7-BDCD-84E3B1302678}<br>ArcGIS Desktop SDK for Visual C++ {FE5655A6-E2DF-4BEA-97B8-4F9A11F44747}<br>ArcGIS Engine Runtime {9B139B36-F1FF-4DB8-89F9-4DA3D5C12BE8}<br>ArcGIS Engine SDK for C++ {4E2A301F-8A7B-447F-AF24-1ED1C9E69A81}<br>ArcGIS Engine SDK for the Java Platform {17A643B2-A659-4859-AEEB-D1CD6A62FC8D}<br>ArcGIS Engine SDK for the Microsoft .NET Framework {7132A6AB-FB83-4E81-98E0-88F748AA9DD4}<br>ArcGIS Engine SDK for Visual Basic 6 {84A7AF81-6B9F-44D0-8316-682C3CB09748}<br>ArcGIS Engine SDK for Visual C++ {571AA05F-FDAE-40A0-9979-A91C3E2BD5F9}<br>ArcGIS Help System for the Java Platform {DB78CD8E-77D9-450F-9150-B68DDCFE75AE}<br>ArcInfo Workstation {494D3701-9D5E-44AC-BF3B-1BC682EE797C}<br>ArcGIS Server for the Microsoft .NET Framework {B4E1F242-76E1-4C8C-BF15-59DED0EE6D8C}<br>ArcGIS Server for the Java Platform {00B1C980-318A-4505-A578-5FA9825A2AFB}<br>ArcGIS ArcIMS {752AE27D-0AE5-4728-B615-308926C04A91}<br>ArcIMS Web ADF for the Microsoft .NET Framework {9620E027-4D61-4DE3-BB68-5632565BA546}<br>ArcIMS Web ADF for the Java Platform {0DBB552C-BEB3-4385-BA79-DCB2AD6CD29D}<br>ArcGIS ArcReader {191DCDE8-C24A-495D-AEA7-F7F07F4AA70F}</li></ul>
+<ul><li><b>ArcGIS 9.1 </b><br>ArcGIS Desktop {40F8FD5F-4701-48D6-A8FC-1F188007DF38}<br>ArcGIS Desktop Developer Kit {3E166714-D5E1-4215-8D68-58452EAA46F1}<br>ArcGIS Tutorial Data {E0CA85B5-113A-4E76-A018-6D7ECE65767D}<br>ArcInfo Workstation {0C35348E-DA25-44E2-AF7A-78BF9C12C5EE}<br>ArcGIS Engine Runtime {7A2BB4EB-126F-4958-A47B-1F5340600DA1}<br>ArcGIS Engine Developer Kit {8ED91E21-5237-4762-A42D-175E71B8165E}<br>ArcReader stand-alone application {C675A5D9-E38F-42F0-B862-C46C3CC93D5F}<br>ArcGIS Server {529CC8E9-5F7C-46AB-87CC-480A44F1A718}<br>ArcGIS Server Dot Net ADF {885466F5-21D6-4927-8882-E9405BBFFB98}<br>ArcGIS Server Java ADF {957C3C56-6283-4E45-A873-CE7DA4BC5CF4}<br>ArcIMS {982EAE44-0024-4B21-B90A-13DDF7F541A7}</li></ul>
+<ul><li><b>ArcGIS 9.0</b><br>ArcGIS Desktop {5DC8D05F-2FEA-4D8B-B300-A8F2F758C53F}<br>ArcGIS Desktop Developer Kit {E4A065AE-49E5-4F00-8A6E-41494C0D71E1}<br>ArcGIS Tutorial Data {6AC7F416-78D5-4D98-B104-F8A39B2CF3A7}<br>ArcIMS {F04DC097-19C0-42FE-AB0B-D4A1CFFD184D}<br>ArcReader stand-alone application {2A4478CE-A91F-4614-BFF0-C0E89DD7BDE1}<br>ArcGIS Server {01F5DD11-0EF6-4990-B4C4-516A2F0B04D8}<br>ArcGIS Server DotNet ADF {1A4D1A36-F333-40F7-A7D9-1FEE5BDD0991}<br>ArcGIS Server Java ADF {9B999457-8FDC-4E38-9121-9F2EE53DB937}<br>Engine Runtime {19A3A1A7-2A87-47CB-BE11-E46A5BBDC1B1}<br>Engine Developer Kit {7BD74F39-151F-422C-A3C0-47F3F57553C9}<br>ArcInfo Workstation {02149814-393E-4E19-8CA4-FE096093695B}</li></ul>
+<ul><li><b>ArcGIS 8.3</b><br>ArcGIS Desktop {A149DEA2-1D5B-11D5-9F76-00C04F6BC7A1}<br>ArcObjects Developer Kit {E4A065AE-49E5-4F00-8A6E-41494C0D71E1}<br>ArcGIS Tutorial Data {E3B8F189-2C19-473F-811B-1748187F98E2}<br>ArcInfo Workstation {0AD11430-1D5C-11D5-9F76-00C04F6BC7A1}<br>Sample Maps {906719EE-0A9B-4AFA-8B32-44E0265F8B37}<br>ArcReader Standalone {8B162101-FC35-40E8-992C-72D60E93B96E}</li></ul>
+<ul><li><b>ArcGIS 8.2</b><br>ArcGIS Desktop {A149DEA2-1D5B-11D5-9F76-00C04F6BC7A1}<br>ArcGIS ArcObjects Developer Kit {52069752-B5E9-11D5-8110-00C04FA070E5}<br>ArcGIS Tutorial Data {440A069B-9016-11D4-80CB-00C04FA070E5}<br>ArcInfo Workstation {0AD11430-1D5C-11D5-9F76-00C04F6BC7A1}<br>Sample Maps and Digital Books {0B1DE126-4340-11D4-A0E2-00C04F68E699}<br>ArcReader Standalone {F8163054-45C3-4606-A11E-4DDED63C1DCB}</li></ul>
+<p>For ArcGIS Pro products, refer to <a href='https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-installation-administration.htm#ESRI_SECTION1_67212BAF6E974551A1E0F32EC58642E3' target='_blank'>Uninstall the ArcGIS Pro products silently</a> for the product codes.</p>
+
+                </section>
+                
+
+            </div>
+  
+            <div class="esri-technical-info-caption">
+                
+                <p>Article ID: 000013200</p>
+                
+
+                
+                <div class="productCategoryList">
+                 <span>Software:</span>
+                  <ul><li>ArcGIS Data Store</li><li>Portal for ArcGIS</li><li>ArcGIS Server</li></ul>
+                    </div>
+                    
+
+            </div>
+
+        </div>
+
+        <!-- notification section -->
+        <div class="item rightcontent">
+            <div class="size-3 notification-sidebar">
+                <div>
+                    <svg fill="none" height="64" viewBox="0 0 64 64" width="64" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m64 32c0-17.6731-14.3269-32-32-32s-32 14.3269-32 32 14.3269 32 32 32 32-14.3269 32-32z" fill="#288835"></path>
+                        <path d="m36.1444 22.7612h-5.4903l.0927-.8997h5.5914zm9.7999-.8997h-4.8352l.1939.8997h4.6413c.8596 0 1.5591.681 1.5591 1.5186v.9634l.9252.1889v-1.1523c0-1.3335-1.1147-2.4183-2.4843-2.4183zm1.5591 18.6754c0 .8377-.6995 1.5187-1.5591 1.5187h-15.4893l-8.5981 5.3089v-5.3089h-5.3726c-.8596 0-1.5591-.681-1.5591-1.5187v-16.2571c0-.8376.6995-1.5186 1.5591-1.5186h11.8243l-.0926-.8997h-11.7317c-1.3697 0-2.4843 1.0848-2.4843 2.4183v16.2571c0 1.3336 1.1146 2.4183 2.4843 2.4183h4.4474v6.0448l9.7918-6.0448h15.2208c1.3696 0 2.4843-1.0847 2.4843-2.4183v-12.3477l-.9252.189zm-18.022-17.6631.4755-3.4739 3.568-.463-3.568-.4631-.4755-3.4738-.4757 3.4738-3.5679.4631 3.5679.463zm.6796 11.3475-3.5679.4631 3.5679.463.4757 3.4739.4755-3.4739 3.568-.463-3.568-.4631-.4755-3.4738zm8.5627-12.8098-.9212 4.5022-4.6242.8969 4.6242.8967.9212 4.5025.9212-4.5025 4.6242-.8967-4.6242-.8969zm0-4.6058.9064 4.43.8006 3.9129 4.019.7795 4.5503.8826-4.5505.8825-4.0189.7794-.8005 3.913-.9064 4.4302-.9065-4.4302-.8005-3.913-4.0189-.7794-4.5504-.8825 4.5503-.8826 4.0189-.7795.8006-3.9129z" fill="#fff"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3>Get support with AI</h3>
+                    <p>Resolve your issue quickly with the Esri Support AI Chatbot.</p>
+                    <div class="download-icons">
+                        <a href="https://apps.apple.com/us/app/esri-support/id1446065834"><img src="https://www.esri.com/content/dam/esrisites/en-us/common/badges/2022/apple-app-store.png" /></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.esri.esrisupport&pli=1"><img src="https://www.esri.com/content/dam/esrisites/en-us/common/badges/2022/google-play-store.png" /></a>
+                    </div>
+                    <calcite-link icon-end="arrow-right" href="javascript:document.querySelector('#support-ai-chatbot button.chat-minimize-button.minimized').click();">Start chatting now</calcite-link>
+                </div>
+            </div>
+            
+            <div class="size-3 esri-technical-info-sidebar">
+                
+                    <h2 class="esri-text__title">Related Information</h2>
+                    <div class="esri-technical-relatedLinks padding-bottom--4">
+                            <ul><li><a href='https://learn.microsoft.com/en-us/windows/win32/msi/standard-installer-command-line-options' target='_blank'>Microsoft Standard Installer command-line options</a></li><li><a href='https://enterprise.arcgis.com/en/data-store/latest/install/windows/uninstall-arcgis-data-store.htm#ESRI_SECTION1_D9D85D08E6144CA88B682BFA0157DDE7' target='_blank'>ArcGIS Enterprise: Uninstall ArcGIS Data Store silently</a></li><li><a href='https://enterprise.arcgis.com/en/server/latest/install/windows/uninstalling-arcgis-server.htm#ESRI_SECTION1_63CFCE840FE74E38B411D1AA42A7115D' target='_blank'>ArcGIS Enterprise: Uninstall ArcGIS Server silently</a></li></ul>
+                    </div>
+                
+
+                <h2 class="esri-text__title">Discover more on this topic</h2>
+                <div class="related-info-wrapper">
+                    <div class="related-info-content">
+                        <img loading="lazy" decoding="async" width="36" height="36"  class="margin-bottom--2" alt=""
+                        src="https://www.esri.com/content/dam/esrisites/en-us/common/icons/meridian-/esri-community-48.svg"/>
+                        <calcite-link href="https://community.esri.com/t5/forums/searchpage/tab/message?advanced=false&amp;allow_punctuation=false&amp;q=how to silently uninstall arcgis products" class="margin-bottom--1  esri-font-0">Esri Community</calcite-link>
+                        <p class="esri-font--2">Search for related information</p>
+                    </div>
+                    <div class="related-info-content">
+                        <img loading="lazy" decoding="async" width="36" height="36"  class="margin-bottom--2" alt=""
+                        src="https://www.esri.com/content/dam/esrisites/en-us/common/icons/meridian-/arcmap-training-48.svg"/>
+                        <calcite-link href="https://www.esri.com/training/" class="margin-bottom--1  esri-font-0">Training</calcite-link>
+                        <p class="esri-font--2">Find training related to this topic</p>
+                    </div>
+                    <div class="related-info-content">
+                        <img loading="lazy" decoding="async" width="36" height="36"  class="margin-bottom--2" alt=""
+                        src="https://www.esri.com/content/dam/esrisites/en-us/common/icons/meridian-/idea-48.svg"/>
+                        <calcite-link href="https://community.esri.com/t5/forums/searchpage/tab/message?filter=includeIdeas&amp;q=how to silently uninstall arcgis products&amp;include_ideas=true&amp;noSynonym=false&amp;collapse_discussion=true" class="margin-bottom--1 esri-font-0 ">ArcGIS Ideas</calcite-link>
+                        <p class="esri-font--2">Explore ideas and give feedback</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- contact section -->
+        <div class="item contactsection">
+            <div class="esri-technical-info">
+                <div class="esri-technical-info-details">
+                    <div class="esri-technical-info-contact">
+
+                    <!-- Uncomment fedback-section once walkme integration is ready to use -->
+                        <!-- <div class="feedback-section">
+                            <div class="feedback-section-click">
+                                <span>Was this article helpful </span>
+                                <calcite-button appearance="clear" color="blue" scale="l" href="" alignment="center" width="auto" calcite-hydrated=""><calcite-icon icon="thumbsUp" scale="m" aria-hidden="true" calcite-hydrated=""></calcite-icon>
+                                </calcite-button>
+                                <calcite-button appearance="clear" color="blue" scale="l" href="" alignment="center" width="auto" calcite-hydrated=""><calcite-icon icon="thumbsDown" scale="m" aria-hidden="true" calcite-hydrated=""></calcite-icon>
+                                </calcite-button>
+
+                            </div>
+
+                            <div class="feedback-section-email">
+                                <calcite-link href="http://www.esri.com" role="presentation" calcite-hydrated="">Give feedback about this article</calcite-link>
+                            </div>
+
+                        </div> -->
+                        <div class="more-help-section">
+                            <div>
+
+                                <svg id="icon-ui-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M20 12.086C9.027 12.086.1 18.176.1 25.662c0 4 2.483 7.504 7.185 10.151l-2.275 6.34 10.31-3.596c.538.066 3.179.38 4.68.38 11.159 0 19.9-5.83 19.9-13.275 0-7.486-8.927-13.576-19.9-13.576zm0 26.052c-1.592 0-4.644-.383-4.674-.387l-.093-.011-8.904 3.106 1.94-5.406-.302-.164C4.743 33.522.9 30.43.9 25.662c0-7.044 8.568-12.776 19.1-12.776s19.1 5.732 19.1 12.776c0 6.996-8.39 12.476-19.1 12.476zm23.335-23.055l.47.646-2.424 1.767-.47-.646zm-7.517-2.822l-.681-.419 1.57-2.556.681.42zM47 24.101v.799h-3v-.8zm-27.5.374a1.025 1.025 0 1 0 1.025 1.025 1.026 1.026 0 0 0-1.025-1.025zm-.225 1.025a.225.225 0 0 1 .45 0c0 .248-.45.248-.45 0zM9.5 24.475a1.025 1.025 0 1 0 1.025 1.025A1.026 1.026 0 0 0 9.5 24.475zM9.275 25.5a.225.225 0 1 1 .45 0c0 .248-.45.248-.45 0zM29.5 24.475a1.025 1.025 0 1 0 1.025 1.025 1.026 1.026 0 0 0-1.025-1.025zm-.225 1.025a.225.225 0 0 1 .45 0c0 .248-.45.248-.45 0z" id="icon-ui-svg--base"></path></svg>                                <p class="margin-bottom--1">Get help from ArcGIS experts</p>
+                                <calcite-link href="https://support.esri.com/en-us/contact" class="esri-font--1" role="presentation" calcite-hydrated="">Contact technical support</calcite-link>
+                            </div>
+                            <div>
+                                
+<svg id="icon-ui-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M23.138 37l-.55 1.1h3.823l-.55-1.1h.895l.95 1.9h-6.412l.95-1.9zm19.96-1.9H6v.8h37.099zm-8.09-14.2H37v-.8h-1.993zM46.9 37.474V39.5a4.405 4.405 0 0 1-4.4 4.4h-36a4.405 4.405 0 0 1-4.4-4.4v-2.026h.021a3.374 3.374 0 0 1 .283-1.38l7.27-16A3.405 3.405 0 0 1 12.77 18.1h1.237v.8H12.77a2.602 2.602 0 0 0-2.367 1.524l-7.27 16A2.6 2.6 0 0 0 5.499 40.1h38.002a2.6 2.6 0 0 0 2.366-3.676l-7.27-16A2.602 2.602 0 0 0 36.23 18.9h-1.223v-.8h1.223a3.405 3.405 0 0 1 3.095 1.993l7.27 16a3.372 3.372 0 0 1 .284 1.38zm-.818 2.197a3.362 3.362 0 0 1-2.581 1.229H5.499a3.364 3.364 0 0 1-2.581-1.229 3.595 3.595 0 0 0 3.582 3.43h36a3.595 3.595 0 0 0 3.582-3.43zM12 20.9h2.007v-.8H12zM24.507.1c-5.495 0-8.4 2.183-8.4 6.313v16.329l8.4 8.455 8.4-8.455V6.412c0-4.13-2.905-6.312-8.4-6.312zm7.6 22.312l-7.6 7.65-7.6-7.65v-16c0-3.657 2.557-5.512 7.6-5.512s7.6 1.855 7.6 5.513zM24.506 5.1a4.4 4.4 0 1 0 4.4 4.4 4.405 4.405 0 0 0-4.4-4.4zm0 8a3.6 3.6 0 1 1 3.6-3.6 3.604 3.604 0 0 1-3.6 3.6z" id="icon-ui-svg--base"></path></svg>
+                                <p class="margin-bottom--1">Start chatting now</p>
+                                <calcite-link href="https://support.esri.com/en-us/app" class="esri-font--1" role="presentation" calcite-hydrated="">Go to download options</calcite-link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+        
+            </div>
+        </div>
+    
+    </div>
+
+
+
+
+
+            </div>
+        </div>
+        <div id="support-ai-chatbot">
+            <script type="text/javascript" src="https://webapps-cdn.esri.com/CDN/react/support-ai-chatbot/static/js/support-ai-chatbot.js"></script>
+        </div>
+   <script type="text/javascript" src="https://support.esri.com/etc.clientlibs/esri-sites/clientlibs/localNav.js"></script>    </body>
+</html>

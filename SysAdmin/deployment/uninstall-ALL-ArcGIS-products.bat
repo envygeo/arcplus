@@ -1,7 +1,7 @@
 @echo off
 :: Homepage: https://github.com/envygeo/arcplus/tree/master/SysAdmin/deployment
-:: Copyright 2013-2017 Environment Yukon, License: MIT/X (open source)
-:: Author:  Matt.Wilkie@gov.yk.ca
+:: Copyright 2013-2025 Environment Yukon, License: MIT/X (open source)
+:: Author:  Matt.Wilkie@yukon.ca
 ::
 setlocal
 set _product_codes=%1

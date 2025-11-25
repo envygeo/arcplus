@@ -23,8 +23,8 @@ If `product-codes.txt` exists in same folder as the .bat file, uninstall will us
 
 Product codes were taken from Esri KB article _Silently uninstall ArcGIS products_
 
-* http://support.esri.com/en/knowledgebase/techarticles/detail/28709 *Last Modified: 2016-08-19*
 * https://support.esri.com/en/technical-article/000013200 *Last Modified: 2021-11-18*
+* https://support.esri.com/en/knowledgebase/techarticles/detail/28709 *Last Modified: 2016-08-19*, 2025: no longer available
 
 The list was then manually supplemented by looking at the `setup.ini` for the various products I have installation media for.   
 
